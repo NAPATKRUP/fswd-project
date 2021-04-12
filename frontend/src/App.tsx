@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import HomeScreen from "./screens/Home";
+import HomeScreen from "./pages/Home";
 
 const App: FunctionComponent = () => {
   return (
