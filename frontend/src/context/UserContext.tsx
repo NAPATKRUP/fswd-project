@@ -1,0 +1,21 @@
+import React, { createContext, FC, useState } from 'react'
+
+interface UserContextProps {
+    role:any,
+    user:any,
+    setUser:any,
+    setRole:any
+}
+
+export const UserContext = createContext({} as UserContextProps);
+
+export const UserProvider: FC = ({ children }) => {
+    const [user, setUser] = useState(null)
+    const [role, setRole] = useState('')
+
+    return (
+        <UserContext.Provider value={{ user, setUser, role, setRole }}>
+            {children}
+        </UserContext.Provider>
+    )
+}
