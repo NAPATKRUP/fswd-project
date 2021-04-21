@@ -1,14 +1,17 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/UserContext"
+import Loading from "./components/commons/loading/Loading";
 
 ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
-      <App />
+      <Suspense fallback={<Loading />}>
+        <App />
+      </Suspense>
     </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")
