@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React, { FunctionComponent } from 'react';
 
-const ProductPage:FC = () =>{
+const ProductPage: FunctionComponent = () =>{
     return (
         <div>
             ProductPage
         </div>
-    )
+    );
 }
 
 export default ProductPage;

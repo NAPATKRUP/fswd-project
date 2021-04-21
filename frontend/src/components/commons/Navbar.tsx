@@ -1,11 +1,11 @@
-import React, { FC} from 'react'
+import React, { FunctionComponent } from 'react';
 
-const Navbar : FC = () =>{
+const Navbar: FunctionComponent = () => {
     return (
         <div className="w-1/5 h-100 nav-color">
             Navbar
         </div>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;
