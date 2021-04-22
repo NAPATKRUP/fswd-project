@@ -17,7 +17,7 @@ const App: FunctionComponent = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/product" component={ProductPage} />
+          <Route exact path="/products" component={ProductPage} />
           <Route exact path="/promotion" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} />
