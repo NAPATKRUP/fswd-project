@@ -1,7 +1,10 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactNode } from "react";
 
-const PageContent: FunctionComponent = (props: any) => {
-  const children: React.ReactNode = props?.children;
+interface PageContentProp {
+  children?: ReactNode;
+}
+
+const PageContent: FunctionComponent<PageContentProp> = ({ children }: PageContentProp) => {
   return <div className="w-4/5 overflow-y-scroll p-4">{children}</div>;
 };
 
