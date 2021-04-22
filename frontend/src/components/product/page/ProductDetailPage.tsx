@@ -43,7 +43,11 @@ const ProductPage: FunctionComponent = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <img src={product[0].image} className="w-50" />
+              <img
+                src={product[0].image}
+                className="w-full object-cover bg-center"
+                alt={product[0].name}
+              />
             </div>
             <div className="flex flex-col justify-center">
               <div className="text-4xl">{product[0].name}</div>
