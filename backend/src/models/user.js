@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import bcrypt from "mongoose-bcrypt";
-import { composeWithMongoose } from "graphql-compose-mongoose";
+import mongoose from 'mongoose';
+import bcrypt from 'mongoose-bcrypt';
+import { composeWithMongoose } from 'graphql-compose-mongoose';
 
 const { Schema } = mongoose;
 
@@ -21,8 +21,8 @@ const UserSchema = new Schema({
 
 UserSchema.plugin(bcrypt);
 
-export const UserModel = mongoose.model("User", UserSchema);
+export const UserModel = mongoose.model('User', UserSchema);
 
-export const UserTC = composeWithMongoose(UserModel).removeField("password");
+export const UserTC = composeWithMongoose(UserModel).removeField('password');
 
 export default UserModel;
