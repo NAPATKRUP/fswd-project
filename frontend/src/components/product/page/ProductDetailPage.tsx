@@ -26,14 +26,47 @@ const ProductPage: FunctionComponent = () => {
     <div className="flex h-screen">
       <Navbar />
       <PageContent>
-        <div>
-          <a href="../products">Products</a>/<a href="#">{product[0].brand}</a>/
-          <a href="#">{product[0].name}</a>
+        <div className="flex flex-col justify-center p-20">
+          <div className="inline-flex">
+            <a href="../products" className="hover:underline">
+              Products
+            </a>
+            <p className="mx-1">/</p>
+            <a href="#" className="hover:underline">
+              {product[0].brand}
+            </a>
+            <p className="mx-1">/</p>
+            <a href="#" className="hover:underline">
+              {product[0].name}
+            </a>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <img src={product[0].image} className="w-50" />
+            </div>
+            <div className="flex flex-col justify-center">
+              <div className="text-4xl">{product[0].name}</div>
+              <div className="text-2xl">{product[0].brand}</div>
+              <div className="text-1md">{product[0].description}</div>
+              <div className="text-right">{product[0].price} บาท</div>
+              <div className="flex flex-row">
+                <a
+                  href="#"
+                  className="border-2 border-black hover:bg-gray-300 px-3 py-2 mt-2 rounded-full font-bold mx-2"
+                >
+                  *
+                </a>
+                <a
+                  href="#"
+                  className="border-2 border-black hover:bg-gray-300 px-3 py-2 mt-2 rounded-full font-bold mx-2"
+                >
+                  +
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-        <img src={product[0].image} className="w-1/5" />
-        <div>{product[0].name}</div>
-        <div>{product[0].brand}</div>
-        <div>{product[0].description}</div>
       </PageContent>
     </div>
   );
