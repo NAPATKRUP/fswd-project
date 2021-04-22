@@ -51,7 +51,7 @@ const AdminRoute = (props: AdminRouteProps) => {
         ) : (
             <Redirect
               to={{
-                pathname: '/error-perrmission',
+                pathname: '/no-permission',
                 state: { from: routeProps.location }
               }}
             />
