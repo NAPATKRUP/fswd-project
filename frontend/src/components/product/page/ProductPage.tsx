@@ -1,11 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from "react";
 
-const ProductPage: FunctionComponent = () =>{
-    return (
-        <div>
-            ProductPage
-        </div>
-    );
-}
+const ProductPage: FunctionComponent = () => {
+  return <div>ProductPage</div>;
+};
 
 export default ProductPage;
