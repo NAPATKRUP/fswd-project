@@ -1,15 +1,14 @@
 import React, { FunctionComponent, Fragment, useContext } from "react";
-import { BrowserRouter, Route, Redirect, Switch, RouteProps } from 'react-router-dom';
-import LoginPage from './components/login/page/LoginPage';
-import ProductPage from './components/product/page/ProductPage';
-import HomePage from './components/home/page/HomePage';
-import PromotionPage from './components/promotion/page/PromotionPage';
-import ManageProduct from './components/manageProduct/page/ManageProduct';
-import { UserContext } from './context/UserContext';
+import { BrowserRouter, Route, Redirect, Switch, RouteProps } from "react-router-dom";
+import LoginPage from "./components/login/page/LoginPage";
+import ProductPage from "./components/product/page/ProductPage";
+import HomePage from "./components/home/page/HomePage";
+import PromotionPage from "./components/promotion/page/PromotionPage";
+import ManageProduct from "./components/manageProduct/page/ManageProduct";
+import { UserContext } from "./context/UserContext";
 import NotPermissionPage from "./components/error/page/NotPermissionPage";
 
 const App: FunctionComponent = () => {
-
   const user = useContext(UserContext);
 
   const renderRoute = () => {
@@ -25,13 +24,10 @@ const App: FunctionComponent = () => {
         </Switch>
       </Fragment>
     );
-  }
+  };
 
-  return (
-    <BrowserRouter>{renderRoute()}</BrowserRouter>
-  );
+  return <BrowserRouter>{renderRoute()}</BrowserRouter>;
 };
-
 
 interface AdminRouteProps extends RouteProps {
   // tslint:disable-next-line:no-any
@@ -46,16 +42,16 @@ const AdminRoute = (props: AdminRouteProps) => {
     <Route
       {...rest}
       render={(routeProps) =>
-        role === 'admin' ? (
+        role === "admin" ? (
           <Component {...routeProps} />
         ) : (
-            <Redirect
-              to={{
-                pathname: '/error-perrmission',
-                state: { from: routeProps.location }
-              }}
-            />
-          )
+          <Redirect
+            to={{
+              pathname: "/error-perrmission",
+              state: { from: routeProps.location },
+            }}
+          />
+        )
       }
     />
   );

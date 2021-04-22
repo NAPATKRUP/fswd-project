@@ -1,11 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC } from "react";
 
-const PromotionPage: FC = () =>{
-    return (
-        <div>
-            PromotionPage
-        </div>
-    )
-}
+const PromotionPage: FC = () => {
+  return <div>PromotionPage</div>;
+};
 
-export default PromotionPage
+export default PromotionPage;
