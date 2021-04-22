@@ -1,11 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC } from "react";
 
 const ManageProduct: FC = () => {
-    return (
-        <div>
-            ManageProduct
-        </div>
-    )
-}
+  return <div>ManageProduct</div>;
+};
 
-export default ManageProduct
+export default ManageProduct;

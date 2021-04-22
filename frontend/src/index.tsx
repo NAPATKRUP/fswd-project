@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { UserProvider } from "./context/UserContext"
+import { UserProvider } from "./context/UserContext";
 import Loading from "./components/commons/loading/Loading";
 
 ReactDOM.render(
