@@ -2,6 +2,7 @@ import React, { FunctionComponent, Fragment, useContext } from "react";
 import { BrowserRouter, Route, Redirect, Switch, RouteProps } from "react-router-dom";
 import LoginPage from "./components/login/page/LoginPage";
 import ProductPage from "./components/product/page/ProductPage";
+import ProductDetailPage from "./components/product/page/ProductDetailPage";
 import HomePage from "./components/home/page/HomePage";
 import PromotionPage from "./components/promotion/page/PromotionPage";
 import ManageProduct from "./components/manageProduct/page/ManageProduct";
@@ -18,6 +19,7 @@ const App: FunctionComponent = () => {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/products" component={ProductPage} />
+          <Route exact path="/products/detail" component={ProductDetailPage} />
           <Route exact path="/promotion" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} />
