@@ -7,7 +7,7 @@ interface UserContextProps {
   setRole: any;
 }
 
-export const UserContext = createContext({} as UserContextProps);
+export const UserContext = createContext({});
 
 export const UserProvider: FunctionComponent = ({ children }) => {
   const [user, setUser] = useState(null);

@@ -19,7 +19,7 @@ const App: FunctionComponent = () => {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/product" component={ProductPage} />
           <Route exact path="/promotion" component={PromotionPage} />
-          <Route exact path="/error-perrmission" component={NotPermissionPage} />
+          <Route exact path="/no-permission" component={NotPermissionPage} />
           <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} />
         </Switch>
       </Fragment>
@@ -47,7 +47,7 @@ const AdminRoute = (props: AdminRouteProps) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/error-perrmission",
+              pathname: "/no-permission",
               state: { from: routeProps.location },
             }}
           />
