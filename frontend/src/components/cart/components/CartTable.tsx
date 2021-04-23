@@ -22,11 +22,23 @@ const CartTable: FunctionComponent<ItemProps> = ({ items }: ItemProps) => {
           {items?.map((item: IItem, index: number) => (
             <tr>
               <td className="text-center">{index + 1}</td>
-              <td className="">
-                {item.brand} | {item.name}{" "}
-                <div className="text-xs m-1 bg-gold-300 rounded-full w-20 text-center">
-                  {item.promotion?.type} {item.promotion?.amount} {item.promotion?.discount}
-                </div>
+              <td>
+                {item.brand} | {item.name}
+                {item.promotion && (
+                  <div className="text-xs m-1 bg-gold-300 rounded-full p-2 text-center">
+                    {item?.promotion?.type === "ลดราคา" && (
+                      <p>
+                        {item?.promotion?.type} {item.promotion?.discount} บาท
+                      </p>
+                    )}
+                    {item?.promotion?.type === "1 แถม 1" && (
+                      <p>
+                        {item?.promotion?.type} คุณได้รับสินค้าเพิ่มขึ้นอีก {item.promotion?.amount}{" "}
+                        ชิ้น
+                      </p>
+                    )}
+                  </div>
+                )}
               </td>
               <td className="text-right">{item.amount}</td>
               <td className="text-right">{item.amount * item.price}</td>

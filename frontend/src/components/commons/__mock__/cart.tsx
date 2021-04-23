@@ -22,7 +22,7 @@ const cart: ICart = {
       amount: 3,
       promotion: {
         type: "1 แถม 1",
-        amount: 6,
+        amount: 3,
         discount: undefined,
       },
     },
