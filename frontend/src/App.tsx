@@ -4,9 +4,9 @@ import LoginPage from "./components/login/page/LoginPage";
 import ProductPage from "./components/product/page/ProductPage";
 import HomePage from "./components/home/page/HomePage";
 import PromotionPage from "./components/promotion/page/PromotionPage";
-import ManageProduct from "./components/manageProduct/page/ManageProduct";
 import { UserContext } from "./context/UserContext";
 import NotPermissionPage from "./components/error/page/NotPermissionPage";
+import AdminManagerPage from "./components/admin/page/AdminManagerPage";
 
 const App: FunctionComponent = () => {
   const user = useContext(UserContext);
@@ -20,7 +20,7 @@ const App: FunctionComponent = () => {
           <Route exact path="/product" component={ProductPage} />
           <Route exact path="/promotion" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
-          <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} />
+          <AdminRoute role={user.role} path="/admin" component={AdminManagerPage} />
         </Switch>
       </Fragment>
     );

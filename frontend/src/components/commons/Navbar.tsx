@@ -22,13 +22,12 @@ const Navbar: FC = () => {
             Promotion
           </NavLink>
         </li>
-        {/* To-do: Admin role checking
-          <li className="p-5">
-            <NavLink to={`/admin`} activeClassName="text-gold-200">
-              Admin
-            </NavLink>
-          </li>
-        */}
+        {/* To-do: Admin role checking */}
+        <li className="p-5">
+          <NavLink to={`/admin`} activeClassName="text-gold-200">
+            Admin
+          </NavLink>
+        </li>
       </ul>
       <ul className="flex flex-row justify-between p-10 w-100 mt-auto">
         <li className="p-5">
