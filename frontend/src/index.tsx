@@ -4,14 +4,36 @@ import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/UserContext";
+import { SessionProvider } from "./context/SessionContext";
 import Loading from "./components/commons/loading/Loading";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: process.env.REACT_APP_GRAPHQL_URI || "http://localhost:3001/graphql",
+  cache: new InMemoryCache({
+    typePolicies: {
+      Project: {
+        fields: {
+          members: {
+            merge: false,
+          },
+        },
+      },
+    },
+  }),
+  credentials: "include",
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
-      <Suspense fallback={<Loading />}>
-        <App />
-      </Suspense>
+      <ApolloProvider client={client}>
+        <SessionProvider>
+          <Suspense fallback={<Loading />}>
+            <App />
+          </Suspense>
+        </SessionProvider>
+      </ApolloProvider>
     </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")
