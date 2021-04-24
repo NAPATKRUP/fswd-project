@@ -7,6 +7,7 @@ import { UserProvider } from "./context/UserContext";
 import { SessionProvider } from "./context/SessionContext";
 import Loading from "./components/commons/loading/Loading";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { BrowserRouter } from "react-router-dom";
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI || "http://localhost:3001/graphql",
@@ -28,11 +29,13 @@ ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
       <ApolloProvider client={client}>
-        <SessionProvider>
-          <Suspense fallback={<Loading />}>
-            <App />
-          </Suspense>
-        </SessionProvider>
+        <BrowserRouter>
+          <SessionProvider>
+            <Suspense fallback={<Loading />}>
+              <App />
+            </Suspense>
+          </SessionProvider>
+        </BrowserRouter>
       </ApolloProvider>
     </UserProvider>
   </React.StrictMode>,
