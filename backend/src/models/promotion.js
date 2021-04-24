@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { composeWithMongooseDiscriminators } from "graphql-compose-mongoose";
+
 import { ProductSchema } from "./product";
 
 const { Schema } = mongoose;
@@ -29,7 +30,7 @@ const PromotionSchema = new Schema({
 });
 const GiveawayPromotionSchema = new Schema({
   condition: { type: Number, require: true },
-  amount: { type: String, require: true },
+  amount: { type: Number, require: true },
 });
 const SaleFlatPromotionSchema = new Schema({
   condition: { type: Number, require: false },

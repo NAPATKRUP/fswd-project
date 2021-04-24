@@ -4,7 +4,6 @@ import { composeWithMongoose } from "graphql-compose-mongoose";
 const { Schema } = mongoose;
 
 const PaymentSchema = new Schema({
-  slug: { type: String, required: true },
   name: { type: String, required: true },
   fullName: { type: String, required: true },
   cardNumber: { type: Number, required: true },

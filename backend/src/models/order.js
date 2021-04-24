@@ -10,7 +10,6 @@ const enumOrderType = {
 };
 
 const OrderSchema = new Schema({
-  slug: { type: String, required: true },
   checkoutAt: { type: Date, default: Date.now },
   orderStatus: {
     type: String,

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { composeWithMongoose } from "graphql-compose-mongoose";
+
 import { ProductSchema } from "./product";
 
 const { Schema } = mongoose;
@@ -15,7 +16,6 @@ const CartItemsSchema = new Schema({
 });
 
 const CartSchema = new Schema({
-  slug: { type: String, required: true },
   status: {
     type: String,
     require: true,
