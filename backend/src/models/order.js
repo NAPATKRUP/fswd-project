@@ -10,13 +10,13 @@ const enumOrderType = {
 };
 
 const OrderSchema = new Schema({
-  checkoutAt: { type: Date, default: Date.now },
   orderStatus: {
     type: String,
     require: true,
     enum: Object.keys(enumOrderType),
     index: true,
   },
+  checkoutAt: { type: Date, default: Date.now },
   userId: { type: String, required: true, ref: "User" },
   cartId: { type: String, required: true, ref: "Cart" },
   paymentId: { type: String, required: false, ref: "Payment" },
