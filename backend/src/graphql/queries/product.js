@@ -2,8 +2,8 @@ import { schemaComposer } from "graphql-compose";
 
 import { ProductModel, ProductTC } from "../../models/product";
 
-export const lastestProductResolver = schemaComposer.createResolver({
-  name: "lastestProduct",
+export const latestProductResolver = schemaComposer.createResolver({
+  name: "latestProduct",
   kind: "query",
   type: [ProductTC.getType()],
   args: {
