@@ -11,7 +11,7 @@ export const UserContext = createContext<UserContextProps>({} as UserContextProp
 
 export const UserProvider: FunctionComponent = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState<string>("customer");
 
   return (
     <UserContext.Provider value={{ user, setUser, role, setRole }}>{children}</UserContext.Provider>
