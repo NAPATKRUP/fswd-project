@@ -16,6 +16,7 @@ export const ProductSchema = new Schema({
   },
   createAt: { type: Date, default: Date.now },
   updateAt: { type: Date, default: Date.now },
+  stock: { type: Number, default: 0 },
   promotionId: { type: String, require: true, ref: "Promotion" },
 });
 
