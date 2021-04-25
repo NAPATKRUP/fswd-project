@@ -26,7 +26,6 @@ const PromotionSchema = new Schema({
   endDate: { type: Date, default: Date.now },
   createAt: { type: Date, default: Date.now },
   updateAt: { type: Date, default: Date.now },
-  products: { type: [ProductSchema], require: false, ref: "Product" },
 });
 const GiveawayPromotionSchema = new Schema({
   condition: { type: Number, require: true },
