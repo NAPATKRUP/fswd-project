@@ -15,7 +15,9 @@ export const PRODUCTFILTER_QUERY = gql`
       image
       price
       stock
-      promotionId
+      promotion {
+        name
+      }
       updateAt
     }
   }
