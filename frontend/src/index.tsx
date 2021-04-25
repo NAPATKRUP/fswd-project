@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { UserProvider } from "./context/UserContext";
 import { SessionProvider } from "./context/SessionContext";
 import Loading from "./components/commons/loading/Loading";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
@@ -27,17 +26,15 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserProvider>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <SessionProvider>
-            <Suspense fallback={<Loading />}>
-              <App />
-            </Suspense>
-          </SessionProvider>
-        </BrowserRouter>
-      </ApolloProvider>
-    </UserProvider>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <SessionProvider>
+          <Suspense fallback={<Loading />}>
+            <App />
+          </Suspense>
+        </SessionProvider>
+      </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
