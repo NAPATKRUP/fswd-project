@@ -2,8 +2,8 @@ import { schemaComposer } from "graphql-compose";
 
 import { PromotionModel, PromotionTC } from "../../models/promotion";
 
-export const lastestPromotionResolver = schemaComposer.createResolver({
-  name: "lastestPromotion",
+export const latestPromotionResolver = schemaComposer.createResolver({
+  name: "latestPromotion",
   kind: "query",
   type: [PromotionTC.getType()],
   args: {
