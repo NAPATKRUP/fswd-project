@@ -39,6 +39,11 @@ const Navbar: FC = () => {
             </NavLink>
           </li>
         */}
+        <li className="p-5">
+          <NavLink to={`/cart`} activeClassName="text-gold-200">
+            Cart
+          </NavLink>
+        </li>
       </ul>
 
       <ul className="flex flex-row justify-between p-10 w-100 mt-auto">

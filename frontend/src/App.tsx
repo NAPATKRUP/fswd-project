@@ -7,6 +7,7 @@ import PromotionPage from "./components/promotion/page/PromotionPage";
 import ManageProduct from "./components/manageProduct/page/ManageProduct";
 import NotPermissionPage from "./components/error/page/NotPermissionPage";
 // import { useSession } from "./context/SessionContext";
+// import CartPage from "./components/cart/page/CartPage";
 
 const App: FunctionComponent = () => {
   // const { user } = useSession();
@@ -22,6 +23,7 @@ const App: FunctionComponent = () => {
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <Route exact path="/manage-product" component={ManageProduct} />
           {/* <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} /> */}
+          {/* <CustomerRoute role={user.role} exact path="/cart" component={CartPage} /> */}
         </Switch>
       </Fragment>
     );
@@ -35,7 +37,7 @@ const App: FunctionComponent = () => {
 //   component: any;
 //   role: string;
 // }
-
+// Admin Permission
 // const AdminRoute = (props: AdminRouteProps) => {
 //   const { component: Component, role, ...rest } = props;
 
@@ -49,6 +51,35 @@ const App: FunctionComponent = () => {
 //           <Redirect
 //             to={{
 //               pathname: "/no-permission",
+//               state: { from: routeProps.location },
+//             }}
+//           />
+//         )
+//       }
+//     />
+//   );
+// };
+
+//Customer Permission
+// interface CustomerRouteProps extends RouteProps {
+//   // tslint:disable-next-line:no-any
+//   component: any;
+//   role: string;
+// }
+
+// const CustomerRoute = (props: CustomerRouteProps) => {
+//   const { component: Component, role, ...rest } = props;
+
+//   return (
+//     <Route
+//       {...rest}
+//       render={(routeProps) =>
+//         role === "customer" ? (
+//           <Component {...routeProps} />
+//         ) : (
+//           <Redirect
+//             to={{
+//               pathname: "/",
 //               state: { from: routeProps.location },
 //             }}
 //           />
