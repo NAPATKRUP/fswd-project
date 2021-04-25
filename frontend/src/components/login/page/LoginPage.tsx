@@ -7,7 +7,7 @@ import { useSession } from "../../../context/SessionContext";
 import useModal from "../../../hooks/useModal";
 
 const Login: FC = () => {
-  const { login }: any = useSession();
+  const { login } = useSession();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
@@ -37,8 +37,7 @@ const Login: FC = () => {
       //   return handleErrorMessage("กรุณาใส่รหัสผ่าน", "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร");
 
       try {
-        const result = await login(username, password);
-        // console.log(result);
+        await login(username, password);
       } catch ({ message }) {
         console.log(message);
         if (message === "Username not found")
