@@ -7,7 +7,7 @@ interface ProductBoxProps {
 
 const ProductBox: FunctionComponent<ProductBoxProps> = ({ item }: ProductBoxProps) => {
   return (
-    <div className="w-1/3 p-4 hover:bg-gray-100">
+    <div className="p-4 hover:bg-gray-100">
       <div>
         <img src={item?.image} className="w-full object-cover bg-center" alt={item?.name} />
         <div className="p-4 h-36">

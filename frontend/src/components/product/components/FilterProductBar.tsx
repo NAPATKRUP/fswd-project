@@ -1,26 +1,49 @@
-import React, { FunctionComponent } from "react";
+import React, { FC, useState, useCallback } from "react";
 
-const FilterProductBar: FunctionComponent = () => {
+interface FilterProductProps {
+  callBackFunction: (searchType: string, name: string, minPrice: number, maxPrice: number) => void;
+}
+
+const FilterProductBar: FC<FilterProductProps> = ({ callBackFunction }: FilterProductProps) => {
+  const [searchType, setSearchType] = useState<string>("PRICE_ASC");
+  const [name, setName] = useState<string>("");
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(100000);
+
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
+      return callBackFunction(searchType, name, minPrice, maxPrice);
+    },
+    [callBackFunction, minPrice, maxPrice, name, searchType]
+  );
+
   return (
     <div className="px-20 py-10">
       <div className="text-2xl">ค้นหาน้ำหอม</div>
-      <form action="" method="post">
-        <select name="searchType" id="searchType" className="border border-black rounded p-1">
+      <form onSubmit={handleSubmit}>
+        <select
+          name="searchType"
+          id="searchType"
+          className="border border-black rounded p-1"
+          onChange={(event) => setSearchType(event.target.value)}
+        >
           <option value="เรียงจากราคามากสุด" selected>
             เรียงจากราคามากสุด
           </option>
-          <option value="เรียงจากราคาต่ำสุด">เรียงจากราคาต่ำสุด</option>
-          <option value="เรียงตามชื่อสินค้า (A-Z)">เรียงตามชื่อสินค้า (A-Z)</option>
-          <option value="เรียงตามชื่อสินค้า (Z-A)">เรียงตามชื่อสินค้า (Z-A)</option>
-          <option value="เรียงตามชื่อแบรนด์ (A-Z)">เรียงตามชื่อแบรนด์ (A-Z)</option>
-          <option value="เรียงตามชื่อแบรนด์ (Z-A)">เรียงตามชื่อแบรนด์ (Z-A)</option>
+          <option value="PRICE_ASC">เรียงจากราคาต่ำสุด</option>
+          <option value="PRICE_DESC">เรียงจากราคาสูงสุด</option>
+          <option value="NAME_ASC">เรียงตามชื่อสินค้า (A-Z)</option>
+          <option value="NAME_DESC">เรียงตามชื่อสินค้า (Z-A)</option>
+          <option value="BRAND_ASC">เรียงตามชื่อแบรนด์ (A-Z)</option>
+          <option value="BRAND_DESC">เรียงตามชื่อแบรนด์ (Z-A)</option>
         </select>
         <input
           type="text"
           name="name"
           className="border-b border-black mx-4 p-1"
           placeholder="ค้นหาชื่อน้ำหอม"
-          value=""
+          onChange={(event) => setName(event.target.value)}
         />
         <label>ในราคา</label>
         <input
@@ -28,7 +51,8 @@ const FilterProductBar: FunctionComponent = () => {
           name="minPrice"
           className="border-b border-black mx-2 p-1"
           placeholder="ราคาขั้นต่ำ"
-          value=""
+          min="1"
+          onChange={(event) => setMinPrice(parseFloat(event.target.value))}
         />
         <label>ถึง</label>
         <input
@@ -36,7 +60,8 @@ const FilterProductBar: FunctionComponent = () => {
           name="maxPrice"
           className="border-b border-black mx-2 p-1"
           placeholder="ราคาขั้นสูง"
-          value=""
+          min="1"
+          onChange={(event) => setMaxPrice(parseFloat(event.target.value))}
         />
         <button
           type="submit"

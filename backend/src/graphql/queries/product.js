@@ -16,5 +16,37 @@ export const lastestProductResolver = schemaComposer.createResolver({
   },
 });
 
+export const filterProductResolver = schemaComposer.createResolver({
+  name: "filterProduct",
+  kind: "query",
+  type: [ProductTC.getType()],
+  args: {
+    typeFilter: "String!",
+    name: "String",
+    minPrice: "Int",
+    maxPrice: "Int",
+  },
+  resolve: async ({ args }) => {
+    const { typeFilter, name, minPrice, maxPrice } = args;
+
+    const sortType = typeFilter.toLowerCase().split("_");
+
+    const minimum = minPrice === undefined ? 0 : minPrice;
+    const maximum = maxPrice === undefined ? 100000 : maxPrice;
+
+    let sort;
+    if (sortType[0] === "name") sort = { name: sortType[1] };
+    if (sortType[0] === "brand") sort = { brand: sortType[1] };
+    if (sortType[0] === "price") sort = { price: sortType[1] };
+
+    const product = await ProductModel.find({
+      name: { $regex: new RegExp(name, "i") },
+      price: { $gte: minimum, $lte: maximum },
+    }).sort(sort);
+
+    return product;
+  },
+});
+
 export const productById = ProductTC.getResolver("findById");
 export const productByMany = ProductTC.getResolver("findMany");
