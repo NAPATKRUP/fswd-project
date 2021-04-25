@@ -16,7 +16,7 @@ const ProductPage: any = () => {
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(100000);
 
-  const { loading, error, data }: any = useQuery(PRODUCTFILTER_QUERY, {
+  const { loading, error, data } = useQuery(PRODUCTFILTER_QUERY, {
     variables: {
       typeFilter: searchType,
       name: name,

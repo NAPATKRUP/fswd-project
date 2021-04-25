@@ -42,7 +42,7 @@ const FilterProductBar: FC<FilterProductProps> = ({ callBackFunction }: FilterPr
           type="text"
           name="name"
           className="border-b border-black mx-4 p-1"
-          placeholder="ค้นหาชื่อน้ำหอม"
+          placeholder="ค้นหาชื่อและแบรนด์น้ำหอม"
           onChange={(event) => setName(event.target.value)}
         />
         <label>ในราคา</label>

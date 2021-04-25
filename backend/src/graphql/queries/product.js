@@ -40,8 +40,16 @@ export const filterProductResolver = schemaComposer.createResolver({
     if (sortType[0] === "price") sort = { price: sortType[1] };
 
     const product = await ProductModel.find({
-      name: { $regex: new RegExp(name, "i") },
-      price: { $gte: minimum, $lte: maximum },
+      $or: [
+        {
+          name: { $regex: new RegExp(name, "i") },
+          price: { $gte: minimum, $lte: maximum },
+        },
+        {
+          brand: { $regex: new RegExp(name, "i") },
+          price: { $gte: minimum, $lte: maximum },
+        },
+      ],
     }).sort(sort);
 
     return product;
