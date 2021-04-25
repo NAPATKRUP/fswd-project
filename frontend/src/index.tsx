@@ -5,14 +5,33 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/UserContext";
 import Loading from "./components/commons/loading/Loading";
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: process.env.REACT_APP_GRAPHQL_URI || "http://localhost:5001/graphql",
+  cache: new InMemoryCache({
+    typePolicies: {
+      Project: {
+        fields: {
+          members: {
+            merge: false,
+          },
+        },
+      },
+    },
+  }),
+  credentials: "include",
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserProvider>
-      <Suspense fallback={<Loading />}>
-        <App />
-      </Suspense>
-    </UserProvider>
+    <ApolloProvider client={client}>
+      <UserProvider>
+        <Suspense fallback={<Loading />}>
+          <App />
+        </Suspense>
+      </UserProvider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
