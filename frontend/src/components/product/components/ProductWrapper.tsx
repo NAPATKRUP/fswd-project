@@ -12,7 +12,7 @@ const ProductWrapper: FC<ProductProps> = ({ product }: ProductProps) => {
       <div className="text-1xl">ค้นพบน้ำหอมทั้งหมด {product.length} รายการ</div>
       <div className="grid grid-cols-4">
         {product?.map((item: IProduct) => (
-          <ProductBox item={item} key={item._id} />
+          <ProductBox product={item} key={item._id} />
         ))}
       </div>
     </div>

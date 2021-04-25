@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from "react";
-import product from "../../commons/__mock__/product";
 // import { useQuery } from '@apollo/client'
 // import Loading from '../../commons/loading/Loading'
 // import { PRODUCTPAGE_QUERY } from '../graphql/productpageQuery'
@@ -22,7 +21,7 @@ const ProductDetailPage: FunctionComponent = () => {
 
   return (
     <ContentWithSidebarLayout>
-      <div className="flex flex-col justify-center p-20">
+      {/* <div className="flex flex-col justify-center p-20">
         <div className="inline-flex">
           <a href="../products" className="hover:underline">
             Products
@@ -66,7 +65,7 @@ const ProductDetailPage: FunctionComponent = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </ContentWithSidebarLayout>
   );
 };
