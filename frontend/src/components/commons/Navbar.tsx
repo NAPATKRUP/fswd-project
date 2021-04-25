@@ -13,7 +13,7 @@ const Navbar: FC = () => {
           </NavLink>
         </li>
         <li className="p-5">
-          <NavLink to={`/product`} activeClassName="text-gold-200">
+          <NavLink to={`/products`} activeClassName="text-gold-200">
             Products
           </NavLink>
         </li>

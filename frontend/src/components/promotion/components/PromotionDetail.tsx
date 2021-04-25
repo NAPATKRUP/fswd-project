@@ -48,6 +48,16 @@ const PromotionCard: FC<PromotionProps> = ({ promotions }: PromotionProps) => {
             <span>
               เริ่มตั้งแต่วันที่ {startDateLabel} จนถึง {endDateLabel} นี้ ด่วนเลย
             </span>
+            <span>
+              สินค้าที่ร่วมรายการ :{" "}
+              {e?.products.map((e, index) => {
+                return (
+                  <p>
+                    {e.brand} || {e.name}
+                  </p>
+                );
+              })}
+            </span>
           </div>
         );
       })}

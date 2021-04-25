@@ -11,6 +11,10 @@ export const PromotionQuery = gql`
       endDate
       image
       updateAt
+      products {
+        name
+        brand
+      }
     }
   }
 `;

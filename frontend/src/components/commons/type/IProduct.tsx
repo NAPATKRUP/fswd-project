@@ -1,9 +1,14 @@
+import { IPromotion } from "./IPromotion";
+
 export interface IProduct {
-  _id: number;
+  _id: string;
+  slug: string;
   name: string;
   brand: string;
-  price: number;
   description?: string;
+  price: number;
   image?: string;
-  createAt: string;
+  stock?: number;
+  promotion?: IPromotion;
+  updateAt: string;
 }
