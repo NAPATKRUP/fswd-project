@@ -70,7 +70,7 @@ const Navbar: FC = () => {
               </NavLink>
             </li>
             <li className="p-5">
-              <div className="text-gold-200" onClick={handleOnClick}>
+              <div role="button" className="text-gold-200" onClick={handleOnClick}>
                 Logout
               </div>
               {/* <NavLink to={`/logout`} activeClassName="text-gold-200">
