@@ -5,6 +5,7 @@ ProductTC.addRelation("promotion", {
   prepareArgs: {
     filter: (source) => ({
       _operators: {
+        startDate: { lte: Date.now() },
         endDate: { gte: Date.now() },
       },
       _id: source.promotionId,
