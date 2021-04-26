@@ -8,6 +8,7 @@ export const PRODUCTFILTER_QUERY = gql`
       minPrice: $minPrice
       maxPrice: $maxPrice
     ) {
+      _id
       slug
       name
       brand
