@@ -9,6 +9,7 @@ import ManageProduct from "./components/manageProduct/page/ManageProduct";
 import { UserContext } from "./context/UserContext";
 import NotPermissionPage from "./components/error/page/NotPermissionPage";
 import CartPage from "./components/cart/page/CartPage";
+import AboutProductPage from "./components/product/page/AboutProductPage";
 
 const App: FunctionComponent = () => {
   const user = useContext(UserContext);
@@ -19,10 +20,14 @@ const App: FunctionComponent = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route path="/product">
+            <AboutProductPage />
+          </Route>
           <Route exact path="/products" component={ProductPage} />
           <Route exact path="/products/detail" component={ProductDetailPage} />
           <Route exact path="/promotion" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
+
           <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} />
           <CustomerRoute role={user.role} exact path="/cart" component={CartPage} />
         </Switch>

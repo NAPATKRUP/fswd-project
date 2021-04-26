@@ -56,5 +56,19 @@ export const filterProductResolver = schemaComposer.createResolver({
   },
 });
 
+export const productBySlug = schemaComposer.createResolver({
+  name: "productBySlug",
+  kind: 'query',
+  type: ProductTC.getType(),
+  args: {
+    slug: "String!"
+  },
+  resolve: async ({ args }) => {
+    const { slug } = args
+    const product = await ProductModel.findOne({ slug: slug })
+    return product
+  }
+})
+
 export const productById = ProductTC.getResolver("findById");
 export const productByMany = ProductTC.getResolver("findMany");
