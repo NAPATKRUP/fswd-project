@@ -1,4 +1,14 @@
-import { CartTC } from '../../models/cart';
+import { schemaComposer } from 'graphql-compose';
 
-export const cartById = CartTC.getResolver('findById');
-export const cartByMany = CartTC.getResolver('findMany');
+import { CartModel, CartTC } from '../../models/cart';
+
+export const waitingCart = schemaComposer.createResolver({
+  name: 'waitingCart',
+  kind: 'query',
+  type: CartTC.getType(),
+  resolve: async ({ context }) => {
+    const { _id } = context.user;
+    const cart = await CartModel.findOne({ userId: _id, status: 'WAITING' });
+    return cart;
+  },
+});
