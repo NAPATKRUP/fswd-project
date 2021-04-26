@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import { composeWithMongooseDiscriminators } from "graphql-compose-mongoose";
 
-import { ProductSchema } from "./product";
-
 const { Schema } = mongoose;
 
 const DKey = "type";

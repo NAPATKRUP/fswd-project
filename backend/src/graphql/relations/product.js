@@ -1,9 +1,14 @@
 import { ProductTC, PromotionTC } from "../../models";
 
 ProductTC.addRelation("promotion", {
-  resolver: () => PromotionTC.getResolver("findById"),
+  resolver: () => PromotionTC.getResolver("findOne"),
   prepareArgs: {
-    _id: (source) => source.promotionId,
+    filter: (source) => ({
+      _operators: {
+        endDate: { gte: Date.now() },
+      },
+      _id: source.promotionId,
+    }),
   },
   projection: { promotionId: 1 },
 });
