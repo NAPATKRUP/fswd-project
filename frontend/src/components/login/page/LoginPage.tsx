@@ -33,8 +33,8 @@ const Login: FC = () => {
           "ชื่อผู้ใช้งานต้องมีอย่างน้อย 6 ตัวอักษร"
         );
 
-      // if (password.length <= 7)
-      //   return handleErrorMessage("กรุณาใส่รหัสผ่าน", "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร");
+      if (password.length <= 7)
+        return handleErrorMessage("กรุณาใส่รหัสผ่าน", "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร");
 
       try {
         await login(username, password);
@@ -53,6 +53,14 @@ const Login: FC = () => {
   const handleCallBack = (stats: boolean) => {
     if (!stats) toggle();
   };
+
+  const handleUsernameChange = useCallback(async (event) => {
+    setUsername(event.target.value);
+  }, []);
+
+  const handlePasswordChange = useCallback(async (event) => {
+    setPassword(event.target.value);
+  }, []);
 
   return (
     <div>
@@ -73,14 +81,14 @@ const Login: FC = () => {
             <div className="mt-16">
               <p className="text-md">ชื่อผู้ใช้งาน</p>
               <input
-                onChange={(event) => setUsername(event.target.value)}
+                onChange={handleUsernameChange}
                 className="form-input w-full bg-white-100 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-dark-200"
                 type="text"
                 placeholder="ชื่อผู้ใช้งาน"
               />
               <p className="mt-5 text-md">รหัสผ่าน</p>
               <input
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={handlePasswordChange}
                 className="form-input w-full bg-white-100 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-dark-200"
                 type="password"
                 placeholder="รหัสผ่าน"
