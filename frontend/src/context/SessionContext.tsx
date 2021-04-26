@@ -24,14 +24,13 @@ const SessionContext: React.Context<{
 export const SessionProvider: FC = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [, setCookie, removeCookie] = useCookies(["token"]);
+  const history = useHistory();
+  const location = useLocation();
 
   const [queryMe, { loading, data, client }] = useLazyQuery(ME_QUERY, {
     fetchPolicy: "network-only",
   });
   const [login] = useMutation(LOGIN_MUTATION);
-
-  const history = useHistory();
-  const location = useLocation();
 
   const handleLogin = useCallback(
     async (username, password) => {
