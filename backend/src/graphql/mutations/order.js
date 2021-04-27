@@ -4,10 +4,9 @@ import { schemaComposer } from 'graphql-compose';
 import OrderModel, { OrderTC } from '../../models/order';
 import AddressModel from '../../models/address';
 import PaymentModel from '../../models/payment';
-
-export const createOrder = OrderTC.getResolver('createOne');
-export const updateOrderById = OrderTC.getResolver('updateById');
-export const removeOrderById = OrderTC.getResolver('removeById');
+import CartModel from '../../models/cart';
+import ProductModel from '../../models/product';
+import { requiredAuth } from '../middlewares';
 
 export const confirmOrder = schemaComposer.createResolver({
   name: 'confirmOrder',
@@ -29,6 +28,9 @@ export const confirmOrder = schemaComposer.createResolver({
     }
     if (order.orderStatus === 'SUCCESS') {
       throw new ValidationError('This Order Has Been Paid.');
+    }
+    if (order.orderStatus === 'CANCEL') {
+      throw new ValidationError('This Order Has Been Cancel.');
     }
 
     const address = await AddressModel.findOne({ userId, _id: addressId });
@@ -56,17 +58,41 @@ export const confirmOrder = schemaComposer.createResolver({
     return updateOrder;
   },
 });
+// .wrapResolve(requiredAuth);
 
-// export const cancelOrder = schemaComposer.createResolver({
-//   name: 'confirmOrder',
-//   kind: 'mutation',
-//   type: OrderTC.getType(),
-//   args: {
-//     orderId: 'MongoID!',
-//   },
-//   resolve: async ({ args, context }) => {
-//     const { orderId } = args;
-//     // const { _id: userId } = context;
-//     const userId = '6086470c1a67f5279c406ab0';
-//   },
-// });
+export const cancelOrder = schemaComposer.createResolver({
+  name: 'confirmOrder',
+  kind: 'mutation',
+  type: OrderTC.getType(),
+  args: {
+    orderId: 'MongoID!',
+  },
+  resolve: async ({ args, context }) => {
+    const { orderId } = args;
+    // const { _id: userId } = context;
+    const userId = '6086470c1a67f5279c406ab0';
+
+    const order = await OrderModel.findOne({ userId, _id: orderId });
+    if (!order) {
+      throw new ValidationError('Invalid Order ID');
+    }
+    if (order.orderStatus === 'CANCEL') {
+      throw new ValidationError('This Order Has Been Cancel.');
+    }
+
+    const cart = await CartModel.findOne({ userId, _id: order.cartId });
+    for (const item of cart.items) {
+      const product = await ProductModel.findById(item.product._id);
+      await ProductModel.findByIdAndUpdate(item.product._id, {
+        stock: product.stock + item.amount,
+      });
+      // Refund Money To Customer
+    }
+
+    await OrderModel.findOneAndUpdate({ userId, _id: orderId }, { orderStatus: 'CANCEL' });
+
+    const updateOrder = await OrderModel.findOne({ userId, _id: orderId });
+    return updateOrder;
+  },
+});
+// .wrapResolve(requiredAuth);
