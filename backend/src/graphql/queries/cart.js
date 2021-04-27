@@ -8,8 +8,8 @@ export const waitingCart = schemaComposer.createResolver({
   kind: 'query',
   type: CartTC.getType(),
   resolve: async ({ context }) => {
-    const { _id: userId } = context.user;
-    // const userId = '6086470c1a67f5279c406ab0';
+    // const { _id: userId } = context.user;
+    const userId = '6086470c1a67f5279c406ab0';
     const cart = await CartModel.findOne({ userId, status: 'WAITING' });
 
     let totalPrice = 0;
