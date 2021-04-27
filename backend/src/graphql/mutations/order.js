@@ -89,7 +89,10 @@ export const cancelOrder = schemaComposer.createResolver({
       // Refund Money To Customer
     }
 
-    await OrderModel.findOneAndUpdate({ userId, _id: orderId }, { orderStatus: 'CANCEL' });
+    await OrderModel.findOneAndUpdate(
+      { userId, _id: orderId },
+      { orderStatus: 'CANCEL', cancelAt: Date.now() }
+    );
 
     const updateOrder = await OrderModel.findOne({ userId, _id: orderId });
     return updateOrder;
