@@ -8,7 +8,7 @@ import PromotionPage from './components/promotion/page/PromotionPage';
 import ManageProduct from './components/manageProduct/page/ManageProduct';
 import NotPermissionPage from './components/error/page/NotPermissionPage';
 // import { useSession } from "./context/SessionContext";
-// import CartPage from "./components/cart/page/CartPage";
+import CartPage from './components/cart/page/CartPage';
 
 const App: FunctionComponent = () => {
   // const { user } = useSession();
@@ -25,7 +25,7 @@ const App: FunctionComponent = () => {
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <Route exact path="/manage-product" component={ManageProduct} />
           {/* <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} /> */}
-          {/* <CustomerRoute role={user.role} exact path="/cart" component={CartPage} /> */}
+          <Route exact path="/cart" component={CartPage} />
         </Switch>
       </Fragment>
     );

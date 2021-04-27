@@ -1,11 +1,45 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC, useCallback } from 'react';
 import { IItem } from '../../commons/type/ICart';
+
+import { useMutation } from '@apollo/client';
+import { ADD_ITEM_IN_CART_MUTATION } from '../graphql/addItemInCartMutation';
+import { REMOVE_ITEM_IN_CART_MUTATION } from '../graphql/removeItemInCartMutation';
+import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
 
 interface ItemProps {
   items: IItem[];
 }
 
-const CartTable: FunctionComponent<ItemProps> = ({ items }: ItemProps) => {
+const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
+  const [addItemInCart] = useMutation(ADD_ITEM_IN_CART_MUTATION);
+  const [removeItemInCart] = useMutation(REMOVE_ITEM_IN_CART_MUTATION);
+
+  const handleAddItemInCart = useCallback(
+    async (e, id) => {
+      e.preventDefault();
+      await addItemInCart({
+        variables: {
+          productId: id,
+        },
+        refetchQueries: [{ query: WAITING_CART_QUERY }],
+      });
+    },
+    [addItemInCart]
+  );
+
+  const handleRemoveItemInCart = useCallback(
+    async (e, id) => {
+      e.preventDefault();
+      await removeItemInCart({
+        variables: {
+          productId: id,
+        },
+        refetchQueries: [{ query: WAITING_CART_QUERY }],
+      });
+    },
+    [removeItemInCart]
+  );
+
   return (
     <div className="px-20 pt-20">
       <div className="text-2xl">Your Cart</div>
@@ -20,28 +54,51 @@ const CartTable: FunctionComponent<ItemProps> = ({ items }: ItemProps) => {
         </thead>
         <tbody>
           {items?.map((item: IItem, index: number) => (
-            <tr>
+            <tr key={item.product._id}>
               <td className="text-center">{index + 1}</td>
               <td>
-                {item.brand} | {item.name}
-                {item.promotion && (
-                  <div className="text-xs m-1 bg-gold-300 rounded-full p-2 text-center">
-                    {item?.promotion?.type === 'ลดราคา' && (
+                {item.product.brand} | {item.product.name}
+                {item.product.promotion && (
+                  <div className="text-xs m-1 bg-gold-300 rounded-full p- text-center w-full">
+                    {item.product.promotion?.type === 'Giveaway' && (
                       <p>
-                        {item?.promotion?.type} {item.promotion?.discount} บาท
+                        {item.product.promotion?.type} | สินค้านี้มีโปรโมชั่นเมื่อซื้อครบ{' '}
+                        {item.product.promotion?.condition} แถม {item.product.promotion?.amount}{' '}
+                        ชิ้น
                       </p>
                     )}
-                    {item?.promotion?.type === '1 แถม 1' && (
+                    {item.product.promotion?.type === 'SaleFlat' && (
                       <p>
-                        {item?.promotion?.type} คุณได้รับสินค้าเพิ่มขึ้นอีก {item.promotion?.amount}{' '}
-                        ชิ้น
+                        {item.product.promotion?.type} | สินค้านี้มีโปรโมชั่นเมื่อซื้อครบ{' '}
+                        {item.product.promotion?.condition} ลด {item.product.promotion?.discount}{' '}
+                        บาท
+                      </p>
+                    )}
+                    {item.product.promotion?.type === 'SalePercent' && (
+                      <p>
+                        {item.product.promotion?.type} | สินค้านี้มีโปรโมชั่นเมื่อซื้อครบ{' '}
+                        {item.product.promotion?.condition} ลด {item.product.promotion?.discount} %
                       </p>
                     )}
                   </div>
                 )}
               </td>
               <td className="text-right">{item.amount}</td>
-              <td className="text-right">{item.amount * item.price}</td>
+              <td className="text-right">{item.amount * item.product.price}</td>
+              <td>
+                <button
+                  onClick={(e) => handleAddItemInCart(e, item.product._id)}
+                  className="border-2 border-black hover:bg-dark-500 px-2 py-1 rounded-full font-bold mx-1"
+                >
+                  +
+                </button>
+                <button
+                  onClick={(e) => handleRemoveItemInCart(e, item.product._id)}
+                  className="border-2 border-black hover:bg-dark-500 px-2 py-1 rounded-full font-bold mx-1"
+                >
+                  -
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

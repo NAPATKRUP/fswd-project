@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 
 interface SummaryProps {
   totalPrice: number;
@@ -6,7 +6,7 @@ interface SummaryProps {
   totalFinalPrice: number;
 }
 
-const SummaryWrapper: FunctionComponent<SummaryProps> = ({
+const SummaryWrapper: FC<SummaryProps> = ({
   totalPrice,
   promotionDiscount,
   totalFinalPrice,

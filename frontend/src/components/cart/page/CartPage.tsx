@@ -1,21 +1,50 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
-import cart from '../../commons/__mock__/cart';
+// import cart from '../../commons/__mock__/cart';
+import { useQuery, useMutation } from '@apollo/client';
+import Loading from '../../commons/loading/Loading';
+import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
+import { CHECKOUT_MUTATION } from '../graphql/checkoutCartMutation';
 
 const CartTable = React.lazy(() => import('../components/CartTable'));
 const SummaryWrapper = React.lazy(() => import('../components/SummaryWrapper'));
 
-const CartPage: FC = () => {
+const CartPage: any = () => {
+  const [checkoutCart] = useMutation(CHECKOUT_MUTATION);
+  const handleCheckoutCart = useCallback(
+    async (e) => {
+      e.preventDefault();
+      await checkoutCart({
+        refetchQueries: [{ query: WAITING_CART_QUERY }],
+      });
+    },
+    [checkoutCart]
+  );
+
+  const { loading, error, data } = useQuery(WAITING_CART_QUERY);
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    return 'Error !!';
+  }
+  const { waitingCart } = data;
+
   return (
     <ContentWithSidebarLayout>
-      <CartTable items={cart.items} />
+      <CartTable items={waitingCart.items} />
       <SummaryWrapper
-        totalPrice={cart.totalPrice}
-        promotionDiscount={cart.promotionDiscount}
-        totalFinalPrice={cart.totalFinalPrice}
+        totalPrice={waitingCart.totalPrice}
+        promotionDiscount={waitingCart.promotionDiscount}
+        totalFinalPrice={waitingCart.totalFinalPrice}
       />
       <div className="flex px-20 pt-10 justify-end">
-        <button className="bg-gold-200 hover:bg-gold-400 px-4 py-2 rounded">Payment</button>
+        <button
+          onClick={(e) => handleCheckoutCart(e)}
+          className="bg-gold-200 hover:bg-gold-400 px-4 py-2 rounded"
+        >
+          CHECKOUT
+        </button>
       </div>
     </ContentWithSidebarLayout>
   );

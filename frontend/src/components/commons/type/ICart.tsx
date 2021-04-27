@@ -1,4 +1,6 @@
+import { IProduct } from './IProduct';
 export interface ICart {
+  status: string;
   items: IItem[];
   totalPrice: number;
   promotionDiscount: number;
@@ -6,16 +8,7 @@ export interface ICart {
 }
 
 export interface IItem {
-  _id: number;
-  name: string;
-  brand: string;
-  price: number;
+  _id: string;
+  product: IProduct;
   amount: number;
-  promotion?: IPromotion;
-}
-
-interface IPromotion {
-  type: string;
-  amount?: number;
-  discount?: number;
 }
