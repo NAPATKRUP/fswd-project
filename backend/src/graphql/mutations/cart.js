@@ -4,6 +4,7 @@ import { schemaComposer } from 'graphql-compose';
 import CartModel, { CartTC } from '../../models/cart';
 import ProductModel from '../../models/product';
 import PromotionModel from '../../models/promotion';
+import OrderModel from '../../models/order';
 import { requiredAuth } from '../middlewares';
 
 const summaryCart = async (userId) => {
@@ -220,20 +221,29 @@ export const checkoutCart = schemaComposer.createResolver({
           product: `${itemProduct.brand} | ${itemProduct.name}`,
           promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ไม่ได้รับโปรโมชั่นเนื่องจากซื้อสินค้าไม่ครบตามที่กำหนด )`,
         });
-      } else if (
-        itemPromotion.type === 'SaleFlat' ||
-        itemPromotion.type === 'SalePercent' ||
-        isActive
-      ) {
+      } else if (itemPromotion.type === 'SaleFlat' && isActive) {
         usePromotionList.push({
           product: `${itemProduct.brand} | ${itemProduct.name}`,
           promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} บาท ได้รับส่วนลด ${itemPromotion.discount} บาท )`,
+        });
+      } else if (itemPromotion.type === 'SalePercent' && isActive) {
+        usePromotionList.push({
+          product: `${itemProduct.brand} | ${itemProduct.name}`,
+          promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} บาท ได้รับส่วนลด ${itemPromotion.discount} % )`,
         });
       }
     }
     console.log(usePromotionList);
 
     await CartModel.findByIdAndUpdate(cart._id, { $set: { status: 'CHECKOUT' } });
+
+    const order = new OrderModel({
+      orderStatus: 'WAITING',
+      userId: userId.toString(),
+      cartId: cart._id,
+      usePromotion: usePromotionList,
+    });
+    await order.save();
 
     const newCart = new CartModel({
       status: 'WAITING',

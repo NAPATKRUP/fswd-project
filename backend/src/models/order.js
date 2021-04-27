@@ -19,6 +19,7 @@ const OrderSchema = new Schema({
   checkoutAt: { type: Date, default: Date.now },
   userId: { type: String, required: true, ref: 'User' },
   cartId: { type: String, required: true, ref: 'Cart' },
+  usePromotion: { type: [Object], required: false },
   paymentId: { type: String, required: false, ref: 'Payment' },
   addressId: { type: String, required: false, ref: 'Address' },
 });
