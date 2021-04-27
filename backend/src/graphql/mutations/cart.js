@@ -1,14 +1,14 @@
-import { ValidationError } from "apollo-server-express";
-import { schemaComposer } from "graphql-compose";
+import { ValidationError } from 'apollo-server-express';
+import { schemaComposer } from 'graphql-compose';
 
-import CartModel, { CartTC } from "../../models/cart";
-import ProductModel from "../../models/product";
-import PromotionModel from "../../models/promotion";
-import OrderModel from "../../models/order";
-import { requiredAuth } from "../middlewares";
+import CartModel, { CartTC } from '../../models/cart';
+import ProductModel from '../../models/product';
+import PromotionModel from '../../models/promotion';
+import OrderModel from '../../models/order';
+import { requiredAuth } from '../middlewares';
 
 const summaryCart = async (userId) => {
-  const cartToSummary = await CartModel.findOne({ userId, status: "WAITING" });
+  const cartToSummary = await CartModel.findOne({ userId, status: 'WAITING' });
 
   let totalPrice = 0;
   let promotionDiscount = 0;
@@ -19,13 +19,13 @@ const summaryCart = async (userId) => {
       const infoPromotion = await PromotionModel.findById(promotionProduct);
       const promotionType = infoPromotion.type;
       const promotionCondition = infoPromotion?.condition || 0;
-      const isSalePromotion = promotionType === "SaleFlat" || promotionType === "SalePercent";
+      const isSalePromotion = promotionType === 'SaleFlat' || promotionType === 'SalePercent';
       const isActive = infoPromotion.startDate <= Date.now() && infoPromotion.endDate >= Date.now();
       const isPassPromotionCondition =
         priceOfItem >= promotionCondition && isSalePromotion && isActive;
-      if (isPassPromotionCondition && promotionType === "SaleFlat") {
+      if (isPassPromotionCondition && promotionType === 'SaleFlat') {
         promotionDiscount += infoPromotion.discount;
-      } else if (isPassPromotionCondition && promotionType === "SalePercent") {
+      } else if (isPassPromotionCondition && promotionType === 'SalePercent') {
         promotionDiscount += (priceOfItem * infoPromotion.discount) / 100;
       }
     }
@@ -34,7 +34,7 @@ const summaryCart = async (userId) => {
   const totalFinalPrice = totalPrice - promotionDiscount;
 
   await CartModel.findOneAndUpdate(
-    { userId, status: "WAITING" },
+    { userId, status: 'WAITING' },
     {
       $set: {
         totalPrice,
@@ -45,33 +45,33 @@ const summaryCart = async (userId) => {
   );
 };
 
-export const createCart = CartTC.getResolver("createOne");
+export const createCart = CartTC.getResolver('createOne');
 
 export const addItemInCart = schemaComposer.createResolver({
-  name: "addItemInCart",
-  kind: "mutation",
+  name: 'addItemInCart',
+  kind: 'mutation',
   type: CartTC.getType(),
   args: {
-    productId: "MongoID!",
+    productId: 'MongoID!',
   },
   resolve: async ({ args, context }) => {
     const { productId } = args;
     // const { _id: userId } = context;
-    const userId = "6086470c1a67f5279c406ab0";
+    const userId = '6086470c1a67f5279c406ab0';
 
     const product = await ProductModel.findById(productId);
     if (!product) {
-      throw new ValidationError("Invalid Product ID");
+      throw new ValidationError('Invalid Product ID');
     }
 
     if (product.stock <= 0) {
-      throw new ValidationError("No Stock");
+      throw new ValidationError('No Stock');
     }
     await ProductModel.findByIdAndUpdate(productId, { stock: product.stock - 1 });
 
-    const cart = await CartModel.findOne({ userId, status: "WAITING" });
+    const cart = await CartModel.findOne({ userId, status: 'WAITING' });
     if (!cart) {
-      throw new ValidationError("Invalid User have not cart please contact to admin");
+      throw new ValidationError('Invalid User have not cart please contact to admin');
     }
 
     let inCart = false;
@@ -79,10 +79,10 @@ export const addItemInCart = schemaComposer.createResolver({
       if (item.product._id.toString() === productId) {
         inCart = true;
         await CartModel.updateOne(
-          { _id: cart._id, "items._id": item._id },
+          { _id: cart._id, 'items._id': item._id },
           {
             $set: {
-              "items.$.amount": item.amount + 1,
+              'items.$.amount': item.amount + 1,
             },
           }
         ).exec();
@@ -95,35 +95,35 @@ export const addItemInCart = schemaComposer.createResolver({
 
     await summaryCart(userId);
 
-    const updateCart = await CartModel.findOne({ userId, status: "WAITING" });
+    const updateCart = await CartModel.findOne({ userId, status: 'WAITING' });
     return updateCart;
   },
 });
 // .wrapResolve(requiredAuth);
 
 export const removeItemInCart = schemaComposer.createResolver({
-  name: "removeItemInCart",
-  kind: "mutation",
+  name: 'removeItemInCart',
+  kind: 'mutation',
   type: CartTC.getType(),
   args: {
-    productId: "MongoID!",
+    productId: 'MongoID!',
   },
   resolve: async ({ args, context }) => {
     const { productId } = args;
     // const { _id: userId } = context;
-    const userId = "6086470c1a67f5279c406ab0";
+    const userId = '6086470c1a67f5279c406ab0';
 
     const product = await ProductModel.findById(productId);
 
     if (!product) {
-      throw new ValidationError("Invalid Product ID");
+      throw new ValidationError('Invalid Product ID');
     }
 
     await ProductModel.findByIdAndUpdate(productId, { stock: product.stock + 1 });
 
-    const cart = await CartModel.findOne({ userId, status: "WAITING" });
+    const cart = await CartModel.findOne({ userId, status: 'WAITING' });
     if (!cart) {
-      throw new ValidationError("Invalid User have not cart please contact to admin");
+      throw new ValidationError('Invalid User have not cart please contact to admin');
     }
 
     for (const item of cart.items) {
@@ -131,7 +131,7 @@ export const removeItemInCart = schemaComposer.createResolver({
         if (item.amount === 1) {
           await CartModel.findOne({ _id: cart._id }, (error, docs) => {
             if (error) {
-              throw new ValidationError("Cart Not Found");
+              throw new ValidationError('Cart Not Found');
             }
             docs.items.remove({ _id: item._id });
             docs.save();
@@ -139,10 +139,10 @@ export const removeItemInCart = schemaComposer.createResolver({
           break;
         }
         await CartModel.updateOne(
-          { _id: cart._id, "items._id": item._id },
+          { _id: cart._id, 'items._id': item._id },
           {
             $set: {
-              "items.$.amount": item.amount - 1,
+              'items.$.amount': item.amount - 1,
             },
           }
         ).exec();
@@ -152,31 +152,31 @@ export const removeItemInCart = schemaComposer.createResolver({
 
     await summaryCart(userId);
 
-    const updateCart = await CartModel.findOne({ userId, status: "WAITING" });
+    const updateCart = await CartModel.findOne({ userId, status: 'WAITING' });
     return updateCart;
   },
 });
 // .wrapResolve(requiredAuth);
 
 export const checkoutCart = schemaComposer.createResolver({
-  name: "checkoutCart",
-  kind: "mutation",
+  name: 'checkoutCart',
+  kind: 'mutation',
   type: CartTC.getType(),
   resolve: async ({ context }) => {
     // const { _id: userId } = context;
-    const userId = "6086470c1a67f5279c406ab0";
+    const userId = '6086470c1a67f5279c406ab0';
 
-    const cart = await CartModel.findOne({ userId, status: "WAITING" });
+    const cart = await CartModel.findOne({ userId, status: 'WAITING' });
     if (!cart) {
-      throw new ValidationError("Invalid Cart ID");
+      throw new ValidationError('Invalid Cart ID');
     }
 
-    if (cart.status === "CHECKOUT") {
-      throw new ValidationError("This Cart has been CHECKOUT");
+    if (cart.status === 'CHECKOUT') {
+      throw new ValidationError('This Cart has been CHECKOUT');
     }
 
     if (cart.items.length <= 0) {
-      throw new ValidationError("Checkout Cart Require Minimum item > 0");
+      throw new ValidationError('Checkout Cart Require Minimum item > 0');
     }
 
     await summaryCart(userId);
@@ -189,7 +189,7 @@ export const checkoutCart = schemaComposer.createResolver({
       if (itemPromotion === null) continue;
 
       const isActive = itemPromotion.startDate <= Date.now() && itemPromotion.endDate >= Date.now();
-      if (itemPromotion.type === "Giveaway" && item.amount >= itemPromotion.condition && isActive) {
+      if (itemPromotion.type === 'Giveaway' && item.amount >= itemPromotion.condition && isActive) {
         if (product.stock < itemPromotion.amount) {
           usePromotionList.push({
             product: `${itemProduct.brand} | ${itemProduct.name}`,
@@ -201,10 +201,10 @@ export const checkoutCart = schemaComposer.createResolver({
           stock: product.stock - itemPromotion.amount,
         });
         await CartModel.updateOne(
-          { _id: cart._id, "items._id": item._id },
+          { _id: cart._id, 'items._id': item._id },
           {
             $set: {
-              "items.$.amount": item.amount + itemPromotion.amount,
+              'items.$.amount': item.amount + itemPromotion.amount,
             },
           }
         ).exec();
@@ -213,7 +213,7 @@ export const checkoutCart = schemaComposer.createResolver({
           promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} ชิ้น แถม ${itemPromotion.amount} ชิ้น )`,
         });
       } else if (
-        itemPromotion.type === "Giveaway" &&
+        itemPromotion.type === 'Giveaway' &&
         item.amount < itemPromotion.condition &&
         isActive
       ) {
@@ -221,12 +221,12 @@ export const checkoutCart = schemaComposer.createResolver({
           product: `${itemProduct.brand} | ${itemProduct.name}`,
           promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ไม่ได้รับโปรโมชั่นเนื่องจากซื้อสินค้าไม่ครบตามที่กำหนด )`,
         });
-      } else if (itemPromotion.type === "SaleFlat" && isActive) {
+      } else if (itemPromotion.type === 'SaleFlat' && isActive) {
         usePromotionList.push({
           product: `${itemProduct.brand} | ${itemProduct.name}`,
           promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} บาท ได้รับส่วนลด ${itemPromotion.discount} บาท )`,
         });
-      } else if (itemPromotion.type === "SalePercent" && isActive) {
+      } else if (itemPromotion.type === 'SalePercent' && isActive) {
         usePromotionList.push({
           product: `${itemProduct.brand} | ${itemProduct.name}`,
           promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} บาท ได้รับส่วนลด ${itemPromotion.discount} % )`,
@@ -235,10 +235,10 @@ export const checkoutCart = schemaComposer.createResolver({
     }
     console.log(usePromotionList);
 
-    await CartModel.findByIdAndUpdate(cart._id, { $set: { status: "CHECKOUT" } });
+    await CartModel.findByIdAndUpdate(cart._id, { $set: { status: 'CHECKOUT' } });
 
     const order = new OrderModel({
-      orderStatus: "WAITING",
+      orderStatus: 'WAITING',
       userId: userId.toString(),
       cartId: cart._id,
       usePromotion: usePromotionList,
@@ -246,12 +246,12 @@ export const checkoutCart = schemaComposer.createResolver({
     await order.save();
 
     const newCart = new CartModel({
-      status: "WAITING",
+      status: 'WAITING',
       userId: userId.toString(),
     });
     await newCart.save();
 
-    const updateCart = CartModel.findOne({ userId, status: "WAITING" });
+    const updateCart = CartModel.findOne({ userId, status: 'WAITING' });
     return updateCart;
   },
 });
