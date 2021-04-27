@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from "react";
-import { IProduct } from "./type/IProduct";
+import React, { FunctionComponent } from 'react';
+import { IProduct } from './type/IProduct';
 
 interface ProductBoxProps {
   product: IProduct;

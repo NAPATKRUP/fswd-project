@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent } from 'react';
 // import { useQuery } from '@apollo/client'
 // import Loading from '../../commons/loading/Loading'
 // import { PRODUCTPAGE_QUERY } from '../graphql/productpageQuery'
 
 const ContentWithSidebarLayout = React.lazy(
-  () => import("../../commons/layouts/ContentWithSidebarLayout")
+  () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
 
 const ProductDetailPage: FunctionComponent = () => {

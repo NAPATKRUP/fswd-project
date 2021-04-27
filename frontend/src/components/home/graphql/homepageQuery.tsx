@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const HOMEPAGE_QUERY = gql`
   query($productShow: Int!) {

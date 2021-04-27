@@ -1,12 +1,12 @@
-import React, { FC, useState, useCallback } from "react";
+import React, { FC, useState, useCallback } from 'react';
 
 interface FilterProductProps {
   callBackFunction: (searchType: string, name: string, minPrice: number, maxPrice: number) => void;
 }
 
 const FilterProductBar: FC<FilterProductProps> = ({ callBackFunction }: FilterProductProps) => {
-  const [searchType, setSearchType] = useState<string>("PRICE_ASC");
-  const [name, setName] = useState<string>("");
+  const [searchType, setSearchType] = useState<string>('PRICE_ASC');
+  const [name, setName] = useState<string>('');
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(100000);
 

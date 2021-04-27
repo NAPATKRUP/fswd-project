@@ -1,9 +1,9 @@
-import React, { FC } from "react";
-import ContentWithSidebarLayout from "../../commons/layouts/ContentWithSidebarLayout";
-import cart from "../../commons/__mock__/cart";
+import React, { FC } from 'react';
+import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
+import cart from '../../commons/__mock__/cart';
 
-const CartTable = React.lazy(() => import("../components/CartTable"));
-const SummaryWrapper = React.lazy(() => import("../components/SummaryWrapper"));
+const CartTable = React.lazy(() => import('../components/CartTable'));
+const SummaryWrapper = React.lazy(() => import('../components/SummaryWrapper'));
 
 const CartPage: FC = () => {
   return (

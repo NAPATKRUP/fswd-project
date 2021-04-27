@@ -1,12 +1,12 @@
-import React, { FunctionComponent, Fragment } from "react";
-import { Route, Switch } from "react-router-dom";
-import LoginPage from "./components/login/page/LoginPage";
-import ProductPage from "./components/product/page/ProductPage";
-import ProductDetailPage from "./components/product/page/ProductDetailPage";
-import HomePage from "./components/home/page/HomePage";
-import PromotionPage from "./components/promotion/page/PromotionPage";
-import ManageProduct from "./components/manageProduct/page/ManageProduct";
-import NotPermissionPage from "./components/error/page/NotPermissionPage";
+import React, { FunctionComponent, Fragment } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import LoginPage from './components/login/page/LoginPage';
+import ProductPage from './components/product/page/ProductPage';
+import ProductDetailPage from './components/product/page/ProductDetailPage';
+import HomePage from './components/home/page/HomePage';
+import PromotionPage from './components/promotion/page/PromotionPage';
+import ManageProduct from './components/manageProduct/page/ManageProduct';
+import NotPermissionPage from './components/error/page/NotPermissionPage';
 // import { useSession } from "./context/SessionContext";
 // import CartPage from "./components/cart/page/CartPage";
 

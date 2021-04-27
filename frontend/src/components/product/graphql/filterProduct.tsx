@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const PRODUCTFILTER_QUERY = gql`
   query($typeFilter: String!, $name: String, $minPrice: Int, $maxPrice: Int) {

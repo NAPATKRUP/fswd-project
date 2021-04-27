@@ -1,6 +1,6 @@
-import React, { FC, useCallback } from "react";
-import { NavLink } from "react-router-dom";
-import { useSession } from "../../context/SessionContext";
+import React, { FC, useCallback } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSession } from '../../context/SessionContext';
 
 const Navbar: FC = () => {
   const { user, logout } = useSession();

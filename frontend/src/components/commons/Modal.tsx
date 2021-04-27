@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useCallback } from "react";
+import React, { FC, Fragment, useCallback } from 'react';
 
 interface IModal {
   isOpen: boolean;
@@ -31,7 +31,7 @@ const Modal: FC<IModal> = ({
       <div
         id="modal_overlay"
         className={`${
-          isOpen ? "" : "hidden"
+          isOpen ? '' : 'hidden'
         } absolute inset-0 bg-dark-100 bg-opacity-30 h-screen w-full flex justify-center items-center pt-10 md:pt-0 z-10`}
         onClick={() => handleOnClick(false)}
       >

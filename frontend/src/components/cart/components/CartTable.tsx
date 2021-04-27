@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from "react";
-import { IItem } from "../../commons/type/ICart";
+import React, { FunctionComponent } from 'react';
+import { IItem } from '../../commons/type/ICart';
 
 interface ItemProps {
   items: IItem[];
@@ -26,14 +26,14 @@ const CartTable: FunctionComponent<ItemProps> = ({ items }: ItemProps) => {
                 {item.brand} | {item.name}
                 {item.promotion && (
                   <div className="text-xs m-1 bg-gold-300 rounded-full p-2 text-center">
-                    {item?.promotion?.type === "ลดราคา" && (
+                    {item?.promotion?.type === 'ลดราคา' && (
                       <p>
                         {item?.promotion?.type} {item.promotion?.discount} บาท
                       </p>
                     )}
-                    {item?.promotion?.type === "1 แถม 1" && (
+                    {item?.promotion?.type === '1 แถม 1' && (
                       <p>
-                        {item?.promotion?.type} คุณได้รับสินค้าเพิ่มขึ้นอีก {item.promotion?.amount}{" "}
+                        {item?.promotion?.type} คุณได้รับสินค้าเพิ่มขึ้นอีก {item.promotion?.amount}{' '}
                         ชิ้น
                       </p>
                     )}

@@ -1,4 +1,4 @@
-import { IPromotion } from "./IPromotion";
+import { IPromotion } from './IPromotion';
 
 export interface IProduct {
   _id: string;

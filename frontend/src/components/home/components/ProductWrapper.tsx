@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from "react";
-import { IProduct } from "../../commons/type/IProduct";
-import ProductBox from "../../commons/ProductBox";
+import React, { FunctionComponent } from 'react';
+import { IProduct } from '../../commons/type/IProduct';
+import ProductBox from '../../commons/ProductBox';
 
 interface ProductProps {
   products: IProduct[];
