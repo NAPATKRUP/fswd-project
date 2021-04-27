@@ -13,6 +13,3 @@ ProductTC.addRelation('promotion', {
   },
   projection: { promotionId: 1 },
 });
-
-// ProductTC.addFields({
-// })
