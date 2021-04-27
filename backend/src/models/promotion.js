@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import { composeWithMongooseDiscriminators } from "graphql-compose-mongoose";
 
-import { ProductSchema } from "./product";
-
 const { Schema } = mongoose;
 
 const DKey = "type";
@@ -26,7 +24,6 @@ const PromotionSchema = new Schema({
   endDate: { type: Date, default: Date.now },
   createAt: { type: Date, default: Date.now },
   updateAt: { type: Date, default: Date.now },
-  products: { type: [ProductSchema], require: false, ref: "Product" },
 });
 const GiveawayPromotionSchema = new Schema({
   condition: { type: Number, require: true },

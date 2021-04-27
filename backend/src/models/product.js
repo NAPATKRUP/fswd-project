@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { composeWithMongoose } from "graphql-compose-mongoose";
+import mongoose from 'mongoose';
+import { composeWithMongoose } from 'graphql-compose-mongoose';
 
 const { Schema } = mongoose;
 
@@ -12,14 +12,15 @@ export const ProductSchema = new Schema({
   image: {
     type: String,
     default:
-      "https://backend.central.co.th/media/catalog/product/c/d/cds70224856-1.jpg?impolicy=resize&width=553",
+      'https://backend.central.co.th/media/catalog/product/c/d/cds70224856-1.jpg?impolicy=resize&width=553',
   },
   createAt: { type: Date, default: Date.now },
   updateAt: { type: Date, default: Date.now },
-  promotionId: { type: String, require: true, ref: "Promotion" },
+  stock: { type: Number, default: 0 },
+  promotionId: { type: String, require: true, ref: 'Promotion' },
 });
 
-export const ProductModel = mongoose.model("Product", ProductSchema);
+export const ProductModel = mongoose.model('Product', ProductSchema);
 
 export const ProductTC = composeWithMongoose(ProductModel);
 
