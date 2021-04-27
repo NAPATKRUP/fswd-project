@@ -1,11 +1,12 @@
-import React, { FunctionComponent, Fragment } from "react";
-import { Route, Switch } from "react-router-dom";
-import LoginPage from "./components/login/page/LoginPage";
-import ProductPage from "./components/product/page/ProductPage";
-import HomePage from "./components/home/page/HomePage";
-import PromotionPage from "./components/promotion/page/PromotionPage";
-import ManageProduct from "./components/manageProduct/page/ManageProduct";
-import NotPermissionPage from "./components/error/page/NotPermissionPage";
+import React, { FunctionComponent, Fragment } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import LoginPage from './components/login/page/LoginPage';
+import ProductPage from './components/product/page/ProductPage';
+import ProductDetailPage from './components/product/page/ProductDetailPage';
+import HomePage from './components/home/page/HomePage';
+import PromotionPage from './components/promotion/page/PromotionPage';
+import ManageProduct from './components/manageProduct/page/ManageProduct';
+import NotPermissionPage from './components/error/page/NotPermissionPage';
 // import { useSession } from "./context/SessionContext";
 // import CartPage from "./components/cart/page/CartPage";
 
@@ -18,7 +19,8 @@ const App: FunctionComponent = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/product" component={ProductPage} />
+          <Route exact path="/products" component={ProductPage} />
+          <Route exact path="/products/detail" component={ProductDetailPage} />
           <Route exact path="/promotion" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <Route exact path="/manage-product" component={ManageProduct} />

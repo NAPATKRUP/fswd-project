@@ -1,7 +1,7 @@
-import { ProductTC, PromotionTC } from "../../models";
+import { ProductTC, PromotionTC } from '../../models';
 
-ProductTC.addRelation("promotion", {
-  resolver: () => PromotionTC.getResolver("findOne"),
+ProductTC.addRelation('promotion', {
+  resolver: () => PromotionTC.getResolver('findOne'),
   prepareArgs: {
     filter: (source) => ({
       _operators: {

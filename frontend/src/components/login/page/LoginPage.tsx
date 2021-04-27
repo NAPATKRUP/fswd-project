@@ -1,17 +1,17 @@
-import React, { FC, useCallback, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { FC, useCallback, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import Modal from "../../commons/Modal";
-import "./LoginPageStyle.css";
-import { useSession } from "../../../context/SessionContext";
-import useModal from "../../../hooks/useModal";
+import Modal from '../../commons/Modal';
+import './LoginPageStyle.css';
+import { useSession } from '../../../context/SessionContext';
+import useModal from '../../../hooks/useModal';
 
 const Login: FC = () => {
   const { login } = useSession();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [title, setTitle] = useState("");
-  const [bodyMessage, setBodyMessage] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [title, setTitle] = useState('');
+  const [bodyMessage, setBodyMessage] = useState('');
   const { isShowing, toggle } = useModal(false);
 
   const handleErrorMessage = useCallback(
@@ -29,22 +29,22 @@ const Login: FC = () => {
 
       if (username.length <= 5)
         return handleErrorMessage(
-          "กรุณาใส่ชื่อผู้ใช้งาน",
-          "ชื่อผู้ใช้งานต้องมีอย่างน้อย 6 ตัวอักษร"
+          'กรุณาใส่ชื่อผู้ใช้งาน',
+          'ชื่อผู้ใช้งานต้องมีอย่างน้อย 6 ตัวอักษร'
         );
 
       if (password.length <= 7)
-        return handleErrorMessage("กรุณาใส่รหัสผ่าน", "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร");
+        return handleErrorMessage('กรุณาใส่รหัสผ่าน', 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร');
 
       try {
         await login(username, password);
       } catch ({ message }) {
         console.log(message);
-        if (message === "Username not found")
-          return handleErrorMessage("เข้าสู่ระบบไม่สำเร็จ", "ไม่พบบัญชีในระบบ");
+        if (message === 'Username not found')
+          return handleErrorMessage('เข้าสู่ระบบไม่สำเร็จ', 'ไม่พบบัญชีในระบบ');
 
-        if (message === "Incorrect password")
-          return handleErrorMessage("เข้าสู่ระบบไม่สำเร็จ", "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
+        if (message === 'Incorrect password')
+          return handleErrorMessage('เข้าสู่ระบบไม่สำเร็จ', 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
       }
     },
     [handleErrorMessage, login, password, username]
@@ -94,7 +94,7 @@ const Login: FC = () => {
                 placeholder="รหัสผ่าน"
               />
               <p className="text-right mt-5 text-sm">
-                ยังไม่มีบัญชีหรอ ?{" "}
+                ยังไม่มีบัญชีหรอ ?{' '}
                 <NavLink to="/register" className="text-blue-link">
                   สมัครสมาชิก
                 </NavLink>
