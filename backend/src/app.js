@@ -1,13 +1,13 @@
-import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
-import jwt from 'express-jwt';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
+import jwt from "express-jwt";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
-import './mongoose-connect';
-import schema from './graphql';
+import "./mongoose-connect";
+import schema from "./graphql";
 
-const path = '/graphql';
+const path = "/graphql";
 const app = express();
 const server = new ApolloServer({
   schema,
@@ -18,18 +18,18 @@ const server = new ApolloServer({
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(
   path,
   jwt({
-    secret: process.env.SECRET ?? 'default-secret',
-    algorithms: ['HS256'],
+    secret: process.env.SECRET ?? "default-secret",
+    algorithms: ["HS256"],
     getToken: (req) => {
       if (req?.cookies?.token) {
         return req?.cookies?.token;
       }
-      if (req?.headers?.authorization?.split(' ')?.[0] === 'Bearer') {
-        return req?.headers?.authorization?.split(' ')?.[1];
+      if (req?.headers?.authorization?.split(" ")?.[0] === "Bearer") {
+        return req?.headers?.authorization?.split(" ")?.[1];
       }
       if (req?.query?.token) {
         return req?.query?.token;
@@ -52,7 +52,7 @@ app.use(
 server.applyMiddleware({
   app,
   path,
-  cors: { origin: 'http://localhost:3000', credentials: true },
+  cors: { origin: "http://localhost:3000", credentials: true },
 });
 
 const port = process.env.PORT ?? 5001;

@@ -1,13 +1,13 @@
-import { schemaComposer } from 'graphql-compose';
+import { schemaComposer } from "graphql-compose";
 
-import { PromotionModel, PromotionTC } from '../../models/promotion';
+import { PromotionModel, PromotionTC } from "../../models/promotion";
 
 export const latestPromotionResolver = schemaComposer.createResolver({
-  name: 'latestPromotion',
-  kind: 'query',
+  name: "latestPromotion",
+  kind: "query",
   type: [PromotionTC.getType()],
   args: {
-    show: 'Int!',
+    show: "Int!",
   },
   resolve: async ({ args }) => {
     const { show } = args;
@@ -16,5 +16,5 @@ export const latestPromotionResolver = schemaComposer.createResolver({
   },
 });
 
-export const promotionById = PromotionTC.getResolver('findById');
-export const promotionByMany = PromotionTC.getResolver('findMany');
+export const promotionById = PromotionTC.getResolver("findById");
+export const promotionByMany = PromotionTC.getResolver("findMany");

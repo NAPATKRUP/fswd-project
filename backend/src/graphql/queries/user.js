@@ -1,9 +1,9 @@
-import { schemaComposer } from 'graphql-compose';
+import { schemaComposer } from "graphql-compose";
 
-import { UserModel, UserTC } from '../../models';
+import { UserModel, UserTC } from "../../models";
 
 export const me = schemaComposer.createResolver({
-  name: 'me',
+  name: "me",
   type: UserTC.getType(),
   resolve: async ({ context }) => {
     if (!context.user) {
@@ -14,4 +14,4 @@ export const me = schemaComposer.createResolver({
     return user;
   },
 });
-export const userById = UserTC.getResolver('findById');
+export const userById = UserTC.getResolver("findById");

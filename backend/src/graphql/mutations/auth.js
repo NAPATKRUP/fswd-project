@@ -1,23 +1,23 @@
-import { UserInputError } from 'apollo-server-express';
-import { schemaComposer } from 'graphql-compose';
-import jsonwebtoken from 'jsonwebtoken';
+import { UserInputError } from "apollo-server-express";
+import { schemaComposer } from "graphql-compose";
+import jsonwebtoken from "jsonwebtoken";
 
-import { UserModel, UserTC } from '../../models';
+import { UserModel, UserTC } from "../../models";
 
 const AuthPayload = schemaComposer.createObjectTC({
-  name: 'AuthPayload',
+  name: "AuthPayload",
   fields: {
-    token: 'String',
+    token: "String",
     user: UserTC.getType(),
   },
 });
 
 export const register = schemaComposer.createResolver({
-  name: 'register',
+  name: "register",
   args: {
-    displayName: 'String!',
-    username: 'String!',
-    password: 'String!',
+    displayName: "String!",
+    username: "String!",
+    password: "String!",
   },
   type: AuthPayload,
   resolve: async ({ args }) => {
@@ -28,20 +28,20 @@ export const register = schemaComposer.createResolver({
     }
 
     if (password.length <= 7) {
-      throw new UserInputError('Password is too weak.');
+      throw new UserInputError("Password is too weak.");
     }
 
     const user = await UserModel.create({
       displayName,
-      role: 'customer',
+      role: "customer",
       username,
       password,
     });
 
     return {
-      token: jsonwebtoken.sign({ _id: user._id }, process.env.SECRET ?? 'default-secret', {
-        expiresIn: '1d',
-        algorithm: 'HS256',
+      token: jsonwebtoken.sign({ _id: user._id }, process.env.SECRET ?? "default-secret", {
+        expiresIn: "1d",
+        algorithm: "HS256",
       }),
       user,
     };
@@ -49,26 +49,26 @@ export const register = schemaComposer.createResolver({
 });
 
 export const login = schemaComposer.createResolver({
-  name: 'login',
+  name: "login",
   args: {
-    username: 'String!',
-    password: 'String!',
+    username: "String!",
+    password: "String!",
   },
   type: AuthPayload,
   resolve: async ({ args }) => {
     const { username, password } = args;
     const user = await UserModel.findOne({ username });
     if (!user) {
-      throw new UserInputError('Username not found');
+      throw new UserInputError("Username not found");
     }
     const valid = await user.verifyPassword(password);
     if (!valid) {
-      throw new UserInputError('Incorrect password');
+      throw new UserInputError("Incorrect password");
     }
     return {
-      token: jsonwebtoken.sign({ _id: user._id }, process.env.SECRET ?? 'default-secret', {
-        expiresIn: '1d',
-        algorithm: 'HS256',
+      token: jsonwebtoken.sign({ _id: user._id }, process.env.SECRET ?? "default-secret", {
+        expiresIn: "1d",
+        algorithm: "HS256",
       }),
       user,
     };

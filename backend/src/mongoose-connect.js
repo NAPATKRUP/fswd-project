@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_ALTAS, {

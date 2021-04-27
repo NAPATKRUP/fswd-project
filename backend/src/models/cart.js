@@ -1,13 +1,13 @@
-import mongoose from 'mongoose';
-import { composeWithMongoose } from 'graphql-compose-mongoose';
+import mongoose from "mongoose";
+import { composeWithMongoose } from "graphql-compose-mongoose";
 
-import { ProductSchema } from './product';
+import { ProductSchema } from "./product";
 
 const { Schema } = mongoose;
 
 const enumCartType = {
-  WAITING: 'Waiting',
-  CHECKOUT: 'Checkout',
+  WAITING: "Waiting",
+  CHECKOUT: "Checkout",
 };
 
 const CartItemsSchema = new Schema({
@@ -26,10 +26,10 @@ const CartSchema = new Schema({
   totalPrice: { type: Number, default: 0 },
   promotionDiscount: { type: Number, default: 0 },
   totalFinalPrice: { type: Number, default: 0 },
-  userId: { type: String, required: true, ref: 'User' },
+  userId: { type: String, required: true, ref: "User" },
 });
 
-export const CartModel = mongoose.model('Cart', CartSchema);
+export const CartModel = mongoose.model("Cart", CartSchema);
 
 export const CartTC = composeWithMongoose(CartModel);
 

@@ -1,13 +1,13 @@
-import mongoose from 'mongoose';
-import { composeWithMongooseDiscriminators } from 'graphql-compose-mongoose';
+import mongoose from "mongoose";
+import { composeWithMongooseDiscriminators } from "graphql-compose-mongoose";
 
 const { Schema } = mongoose;
 
-const DKey = 'type';
+const DKey = "type";
 const enumPromotionType = {
-  GIVEAWAY: 'Giveaway',
-  SALEFLAT: 'SaleFlat',
-  SALEPERCENT: 'SalePercent',
+  GIVEAWAY: "Giveaway",
+  SALEFLAT: "SaleFlat",
+  SALEPERCENT: "SalePercent",
 };
 const PromotionSchema = new Schema({
   slug: { type: String, require: true },
@@ -37,16 +37,16 @@ const SalePercentPromotionSchema = new Schema({
   condition: { type: Number, require: false },
   discount: { type: Number, require: true },
 });
-PromotionSchema.set('discriminatorKey', DKey);
+PromotionSchema.set("discriminatorKey", DKey);
 
 // TO DO: Recheck
 const discriminatorOptions = {
   inputType: {
-    removeFields: ['createAt', 'updateAt'],
+    removeFields: ["createAt", "updateAt"],
   },
 };
 
-export const PromotionModel = mongoose.model('Promotion', PromotionSchema);
+export const PromotionModel = mongoose.model("Promotion", PromotionSchema);
 export const GiveawayPromotionModel = PromotionModel.discriminator(
   enumPromotionType.GIVEAWAY,
   GiveawayPromotionSchema
