@@ -1,6 +1,6 @@
 import React, { ReactNode, FC } from 'react';
-import Navbar from '../Navbar';
 
+const Navbar = React.lazy(() => import('../Navbar'));
 const PageContent = React.lazy(() => import('../PageContent'));
 
 interface ContentWithSidebarLayoutProp {

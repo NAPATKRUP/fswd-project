@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const HOMEPAGE_QUERY = gql`
   query($productShow: Int!) {
-    latestProductResolver(show: $productShow) {
+    latestProduct(show: $productShow) {
       _id
       slug
       name

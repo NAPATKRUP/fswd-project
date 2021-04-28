@@ -1,10 +1,10 @@
 import React, { FC, useCallback, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-
-import Modal from '../../commons/Modal';
 import './LoginPageStyle.css';
 import { useSession } from '../../../context/SessionContext';
 import useModal from '../../../hooks/useModal';
+
+const Modal = React.lazy(() => import('../../commons/Modal'));
 
 const Login: FC = () => {
   const { login } = useSession();

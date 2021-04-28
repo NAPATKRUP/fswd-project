@@ -1,17 +1,20 @@
 import React, { FC } from 'react';
-import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
 import { AVAILABLE_PROMOTION_QUERY } from '../graphql/availablePromotionQuery';
 import { useQuery } from '@apollo/client';
-import Loading from '../../commons/loading/Loading';
-import PromotionDetail from '../components/PromotionDetail';
 
-const PromotionPage: any = () => {
+const ContentWithSidebarLayout = React.lazy(
+  () => import('../../commons/layouts/ContentWithSidebarLayout')
+);
+const Loading = React.lazy(() => import('../../commons/loading/Loading'));
+const PromotionDetail = React.lazy(() => import('../components/PromotionDetail'));
+
+const PromotionPage: FC = () => {
   const { loading, error, data }: any = useQuery(AVAILABLE_PROMOTION_QUERY);
   if (loading) {
     return <Loading />;
   }
   if (error) {
-    return 'Error !!';
+    alert('error');
   }
 
   const { availablePromotion } = data;

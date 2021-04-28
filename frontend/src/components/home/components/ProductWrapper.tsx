@@ -1,12 +1,14 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
+
 import { IProduct } from '../../commons/type/IProduct';
-import ProductBox from '../../commons/ProductBox';
 
 interface ProductProps {
   products: IProduct[];
 }
 
-const ProductWrapper: FunctionComponent<ProductProps> = ({ products }: ProductProps) => {
+const ProductBox = React.lazy(() => import('../../commons/ProductBox'));
+
+const ProductWrapper: FC<ProductProps> = ({ products }: ProductProps) => {
   return (
     <div className="p-20">
       <div className="text-2xl">Latest Product</div>

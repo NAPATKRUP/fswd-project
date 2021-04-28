@@ -1,13 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const PRODUCTFILTER_QUERY = gql`
+export const FILTER_PRODUCT_QUERY = gql`
   query($typeFilter: String!, $name: String, $minPrice: Int, $maxPrice: Int) {
-    filterProductResolver(
-      typeFilter: $typeFilter
-      name: $name
-      minPrice: $minPrice
-      maxPrice: $maxPrice
-    ) {
+    filterProduct(typeFilter: $typeFilter, name: $name, minPrice: $minPrice, maxPrice: $maxPrice) {
       _id
       slug
       name

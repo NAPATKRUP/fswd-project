@@ -1,7 +1,8 @@
-import React, { FC, Fragment } from 'react';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/th';
+
 import { IPromotion } from '../../commons/type/IPromotion';
 
 interface PromotionProp {

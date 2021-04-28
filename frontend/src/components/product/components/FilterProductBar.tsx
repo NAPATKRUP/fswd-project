@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import { FC, useState, useCallback } from 'react';
 
 interface FilterProductProps {
   callBackFunction: (searchType: string, name: string, minPrice: number, maxPrice: number) => void;

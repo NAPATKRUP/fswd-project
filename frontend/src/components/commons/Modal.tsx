@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useCallback } from 'react';
+import { FC, Fragment, useCallback } from 'react';
 
 interface IModal {
   isOpen: boolean;

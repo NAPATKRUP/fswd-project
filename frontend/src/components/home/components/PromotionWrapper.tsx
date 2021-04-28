@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react';
+import { FC } from 'react';
 
-const PromotionBoxWrapper: FunctionComponent = () => {
+const PromotionBoxWrapper: FC = () => {
   return (
     <div className="flex flex-col items-center p-20">
       <div className="text-3xl">Latest Promotions</div>

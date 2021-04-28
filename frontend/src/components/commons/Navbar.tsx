@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSession } from '../../context/SessionContext';
 

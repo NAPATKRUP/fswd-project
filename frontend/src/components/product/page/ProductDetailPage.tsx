@@ -1,71 +1,73 @@
-import React, { FunctionComponent } from 'react';
-// import { useQuery } from '@apollo/client'
-// import Loading from '../../commons/loading/Loading'
-// import { PRODUCTPAGE_QUERY } from '../graphql/productpageQuery'
+import React, { FC } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { PRODUCT_BY_SLUG_QUERY } from '../graphql/productBySlugQuery';
 
 const ContentWithSidebarLayout = React.lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
+const Loading = React.lazy(() => import('../../commons/loading/Loading'));
+const NavigationBar = React.lazy(() => import('../../commons/NavigationBar'));
+const PromotionAvailableCard = React.lazy(() => import('../../commons/PromotionAvailableCard'));
 
-const ProductDetailPage: FunctionComponent = () => {
-  // const { loading, error, data }: any = useQuery(Detail_QUERY, { fetchPolicy: 'network-only' })
-  // if (loading) {
-  //     return (
-  //     <Loading />
-  //     )
-  // }
-  // if (error) {
-  //     return 'Error !!'
-  // }
-  // const { myData } = data
+interface RouteParams {
+  slug: string;
+}
+
+const ProductDetailPage: FC = () => {
+  const { slug } = useParams<RouteParams>();
+
+  const { loading, error, data } = useQuery(PRODUCT_BY_SLUG_QUERY, { variables: { slug: slug } });
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    alert('error');
+  }
+  const { productBySlug } = data;
 
   return (
     <ContentWithSidebarLayout>
-      {/* <div className="flex flex-col justify-center p-20">
-        <div className="inline-flex">
-          <a href="../products" className="hover:underline">
-            Products
-          </a>
-          <p className="mx-1">/</p>
-          <a href="#" className="hover:underline">
-            {product[0].brand}
-          </a>
-          <p className="mx-1">/</p>
-          <a href="#" className="hover:underline">
-            {product[0].name}
-          </a>
+      <NavigationBar listOfNode={['HOME', '>>', 'PRODUCTS', '>>', productBySlug.name]} />
+      <div className="grid grid-cols-2 p-20">
+        <div className="flex justify-center items-center">
+          <img
+            src={productBySlug.image}
+            className="w-2/3 object-cover bg-center"
+            alt={productBySlug.name}
+          />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col justify-around">
           <div>
-            <img
-              src={product[0].image}
-              className="w-full object-cover bg-center"
-              alt={product[0].name}
-            />
-          </div>
-          <div className="flex flex-col justify-center">
-            <div className="text-4xl">{product[0].name}</div>
-            <div className="text-2xl">{product[0].brand}</div>
-            <div className="text-1md">{product[0].description}</div>
-            <div className="text-right">{product[0].price} บาท</div>
-            <div className="flex flex-row">
-              <a
-                href="#"
-                className="border-2 border-black hover:bg-gray-300 px-3 py-2 mt-2 rounded-full font-bold mx-2"
-              >
-                *
-              </a>
-              <a
-                href="#"
-                className="border-2 border-black hover:bg-gray-300 px-3 py-2 mt-2 rounded-full font-bold mx-2"
-              >
-                +
-              </a>
+            <div>
+              <p className="text-3xl">{productBySlug.name}</p>
+              <p className="text-lg px-1">{productBySlug.brand}</p>
             </div>
+
+            <div className="mx-1 mt-4">
+              <p className="text-lg">รายระเอียดสินค้า</p>
+              <div className="mt-1 mb-3 border-b-2"></div>
+              {productBySlug?.description && <p className="text-sm">{productBySlug.description}</p>}
+              {productBySlug?.description === null && (
+                <p className="text-sm">ไม่พบรายระเอียดของสินค้า</p>
+              )}
+            </div>
+
+            {productBySlug.promotion && (
+              <PromotionAvailableCard promotion={productBySlug.promotion} />
+            )}
+          </div>
+          <div className="flex justify-end gap-4 mt-4">
+            <p className="text-md text-right bg-gold-300 font-bold py-2 px-4 rounded">
+              ราคา: {productBySlug.price}
+            </p>
+            <button className="px-4 py-2 bg-dark-400 hover:bg-dark-500 font-bold rounded">
+              เพิ่มไปยังตะกร้าสินค้า
+            </button>
           </div>
         </div>
-      </div> */}
+      </div>
     </ContentWithSidebarLayout>
   );
 };

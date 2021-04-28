@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
+
 import { IProduct } from '../../commons/type/IProduct';
-import ProductBox from '../../commons/ProductBox';
 
 interface ProductProps {
   product: IProduct[];
 }
+
+const ProductBox = React.lazy(() => import('../../commons/ProductBox'));
 
 const ProductWrapper: FC<ProductProps> = ({ product }: ProductProps) => {
   return (

@@ -1,12 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import { IProduct } from './type/IProduct';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
+
+import { IProduct } from './type/IProduct';
 
 interface ProductBoxProps {
   product: IProduct;
 }
 
-const ProductBox: FunctionComponent<ProductBoxProps> = ({ product }: ProductBoxProps) => {
+const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
   return (
     <NavLink to={`/product/${product.slug}`}>
       <div className="p-4 hover:bg-gray-100">

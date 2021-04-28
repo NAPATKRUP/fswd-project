@@ -1,10 +1,10 @@
-import React, { FC, useCallback } from 'react';
-import { IItem } from '../../commons/type/ICart';
-
+import { FC, useCallback } from 'react';
 import { useMutation } from '@apollo/client';
+import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
 import { ADD_ITEM_IN_CART_MUTATION } from '../graphql/addItemInCartMutation';
 import { REMOVE_ITEM_IN_CART_MUTATION } from '../graphql/removeItemInCartMutation';
-import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
+
+import { IItem } from '../../commons/type/ICart';
 
 interface ItemProps {
   items: IItem[];
@@ -59,25 +59,26 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
               <td>
                 {item.product.brand} | {item.product.name}
                 {item.product.promotion && (
-                  <div className="text-xs m-1 bg-gold-300 rounded-full p- text-center w-full">
+                  <div className="text-xs m-1 bg-gold-300 rounded-full p-1 text-center w-full">
                     {item.product.promotion?.type === 'Giveaway' && (
                       <p>
                         {item.product.promotion?.type} | สินค้านี้มีโปรโมชั่นเมื่อซื้อครบ{' '}
-                        {item.product.promotion?.condition} แถม {item.product.promotion?.amount}{' '}
-                        ชิ้น
+                        {item.product.promotion?.condition} ชิ้น แถมอีก{' '}
+                        {item.product.promotion?.amount} ชิ้นฟรี
                       </p>
                     )}
                     {item.product.promotion?.type === 'SaleFlat' && (
                       <p>
                         {item.product.promotion?.type} | สินค้านี้มีโปรโมชั่นเมื่อซื้อครบ{' '}
-                        {item.product.promotion?.condition} ลด {item.product.promotion?.discount}{' '}
-                        บาท
+                        {item.product.promotion?.condition} บาท จะได้รับส่วนลด{' '}
+                        {item.product.promotion?.discount} บาท
                       </p>
                     )}
                     {item.product.promotion?.type === 'SalePercent' && (
                       <p>
                         {item.product.promotion?.type} | สินค้านี้มีโปรโมชั่นเมื่อซื้อครบ{' '}
-                        {item.product.promotion?.condition} ลด {item.product.promotion?.discount} %
+                        {item.product.promotion?.condition} บาท จะได้รับส่วนลด{' '}
+                        {item.product.promotion?.discount} %
                       </p>
                     )}
                   </div>
