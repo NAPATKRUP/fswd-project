@@ -76,7 +76,7 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
   );
 
   return (
-    <div className="px-20 pt-20">
+    <div className="px-20 pt-12">
       <Modal
         isOpen={isShowing}
         isHasAccept={false}
@@ -132,13 +132,13 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
               <td>
                 <button
                   onClick={(e) => handleAddItemInCart(e, item.product._id)}
-                  className="border-2 border-black hover:bg-dark-500 px-2 py-1 rounded-full font-bold mx-1"
+                  className="border-2 border-black hover:bg-dark-100 hover:text-white-100 w-8 px-2 py-1 rounded-full font-semibold ml-2"
                 >
                   +
                 </button>
                 <button
                   onClick={(e) => handleRemoveItemInCart(e, item.product._id)}
-                  className="border-2 border-black hover:bg-dark-500 px-2 py-1 rounded-full font-bold mx-1"
+                  className="border-2 border-black hover:bg-dark-100 hover:text-white-100 w-8 px-2 py-1 rounded-full font-semibold ml-1 mb-2"
                 >
                   -
                 </button>

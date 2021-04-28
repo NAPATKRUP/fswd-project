@@ -9,6 +9,7 @@ const ContentWithSidebarLayout = React.lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
 const Loading = React.lazy(() => import('../../commons/loading/Loading'));
+const Navigator = React.lazy(() => import('../../commons/Navigator'));
 const CartTable = React.lazy(() => import('../components/CartTable'));
 const SummaryWrapper = React.lazy(() => import('../components/SummaryWrapper'));
 const Modal = React.lazy(() => import('../../commons/Modal'));
@@ -65,6 +66,7 @@ const CartPage: FC = () => {
         bodyMessage={bodyMessage}
         callBackFunction={handleCallBack}
       />
+      <Navigator listOfNode={['หน้าหลัก', '>>', 'ตะกร้า']} />
       <CartTable items={waitingCart.items} />
       <SummaryWrapper
         totalPrice={waitingCart.totalPrice}
@@ -74,7 +76,7 @@ const CartPage: FC = () => {
       <div className="flex px-20 pt-10 justify-end">
         <button
           onClick={(e) => handleCheckoutCart(e)}
-          className="bg-gold-200 hover:bg-gold-400 px-4 py-2 rounded"
+          className="bg-gold-100 hover:bg-dark-100 hover:text-gold-100 px-4 py-2 rounded"
         >
           ตรวจสอบตะกร้าสินค้า
         </button>

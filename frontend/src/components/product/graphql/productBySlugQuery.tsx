@@ -28,8 +28,6 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       }
       stock
       price
-      createAt
-      updateAt
     }
   }
 `;

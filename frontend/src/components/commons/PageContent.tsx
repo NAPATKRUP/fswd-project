@@ -5,7 +5,7 @@ interface PageContentProp {
 }
 
 const PageContent: FC<PageContentProp> = ({ children }: PageContentProp) => {
-  return <div className="w-4/5 container mx-auto px-4 py-12 overflow-y-scroll">{children}</div>;
+  return <div className="w-4/5 container mx-auto px-4 p-12 overflow-y-auto">{children}</div>;
 };
 
 export default PageContent;

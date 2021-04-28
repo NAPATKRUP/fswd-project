@@ -10,5 +10,4 @@ export interface IProduct {
   image?: string;
   stock: number;
   promotion?: IPromotion;
-  updateAt: string;
 }

@@ -10,7 +10,6 @@ export const AVAILABLE_PROMOTION_QUERY = gql`
       startDate
       endDate
       image
-      updateAt
       products {
         _id
         slug

@@ -32,13 +32,13 @@ const Modal: FC<IModal> = ({
         id="modal_overlay"
         className={`${
           isOpen ? '' : 'hidden'
-        } absolute inset-0 bg-dark-100 bg-opacity-30 h-screen w-full flex justify-center items-center pt-10 md:pt-0 z-10`}
+        } absolute inset-0 bg-dark-100 bg-opacity-70 h-screen w-full flex justify-center items-center pt-10 md:pt-0 z-10`}
         onClick={() => handleOnClick(false)}
       >
         <div className="bg-white-100 rounded-lg">
-          <div className="w-96 border-t-8 border-pink-600 rounded-lg flex">
+          <div className="w-96 border-t-8 border-gold-100 rounded-lg flex">
             <div className="w-full pt-9 p-4">
-              <h3 className="font-bold text-pink-700">{title}</h3>
+              <p className="font-semibold text-dark-100">{title}</p>
               <p className="py-4 text-sm text-gray-400">{bodyMessage}</p>
             </div>
           </div>
@@ -48,7 +48,7 @@ const Modal: FC<IModal> = ({
               {isHasDecline && (
                 <button
                   onClick={() => handleOnClick(false)}
-                  className="w-1/2 px-4 py-3 text-center bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
+                  className="w-1/2 px-4 py-3 text-center bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-black font-semibold rounded-lg text-sm"
                 >
                   ยกเลิก
                 </button>
@@ -56,7 +56,7 @@ const Modal: FC<IModal> = ({
               {isHasAccept && (
                 <button
                   onClick={() => handleOnClick(true)}
-                  className="w-1/2 px-4 py-3 text-center bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
+                  className="w-1/2 px-4 py-3 text-center bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-black font-semibold rounded-lg text-sm"
                 >
                   ยืนยัน
                 </button>

@@ -72,28 +72,28 @@ const Login: FC = () => {
         bodyMessage={bodyMessage}
         callBackFunction={handleCallBack}
       />
-      <div className="login-page flex justify-center items-center">
+      <div className="login-page bg-dark-100 flex justify-center items-center">
         <div className="login-box relative p-10">
           <form onSubmit={handleSubmit}>
             <p className="text-2xl">เข้าสู่ระบบ</p>
-            <p className="text-xs mt-1">กรอกชื่อผู้ใช้งานและรหัสผ่านเพื่อเข้าใช้งาน</p>
+            <p className="text-sm mt-1">กรอกชื่อผู้ใช้งานและรหัสผ่านเพื่อเข้าใช้งาน</p>
 
             <div className="mt-16">
-              <p className="text-md">ชื่อผู้ใช้งาน</p>
+              <p>ชื่อผู้ใช้งาน</p>
               <input
                 onChange={handleUsernameChange}
                 className="form-input w-full bg-white-100 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-dark-200"
                 type="text"
                 placeholder="ชื่อผู้ใช้งาน"
               />
-              <p className="mt-5 text-md">รหัสผ่าน</p>
+              <p className="mt-5">รหัสผ่าน</p>
               <input
                 onChange={handlePasswordChange}
                 className="form-input w-full bg-white-100 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-dark-200"
                 type="password"
                 placeholder="รหัสผ่าน"
               />
-              <p className="text-right mt-5 text-sm">
+              <p className="text-sm text-right mt-5">
                 ยังไม่มีบัญชีหรอ ?{' '}
                 <NavLink to="/register" className="text-blue-link">
                   สมัครสมาชิก
@@ -103,10 +103,10 @@ const Login: FC = () => {
             <div className="mt-16">
               <div className="flex justify-center items-center">
                 <div>
-                  <button className="bg-transparent hover:border-dark-200 text-blue-700 font-semibold hover:text-white py-2 px-4 border-2  border-gold-500 hover:border-transparent rounded">
+                  <button className="text-blue-700 font-semibold bg-transparent hover:border-dark-200 hover:text-white py-2 px-4 border-2 border-gold-500 hover:border-transparent rounded">
                     เข้าสู่ระบบ
                   </button>
-                  <NavLink to="/" className="text-center text-sm mt-5 block text-blue-link">
+                  <NavLink to="/" className="text-sm text-center mt-5 block text-blue-link">
                     กลับไปหน้าหลัก
                   </NavLink>
                 </div>

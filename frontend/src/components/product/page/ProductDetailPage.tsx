@@ -10,7 +10,7 @@ const ContentWithSidebarLayout = React.lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
 const Loading = React.lazy(() => import('../../commons/loading/Loading'));
-const NavigationBar = React.lazy(() => import('../../commons/NavigationBar'));
+const Navigator = React.lazy(() => import('../../commons/Navigator'));
 const PromotionAvailableCard = React.lazy(() => import('../../commons/PromotionAvailableCard'));
 const Modal = React.lazy(() => import('../../commons/Modal'));
 
@@ -76,12 +76,12 @@ const ProductDetailPage: FC = () => {
         bodyMessage={bodyMessage}
         callBackFunction={handleCallBack}
       />
-      <NavigationBar listOfNode={['หน้าหลัก', '>>', 'สินค้า', '>>', productBySlug.name]} />
-      <div className="grid grid-cols-2 p-20">
+      <Navigator listOfNode={['หน้าหลัก', '>>', 'สินค้า', '>>', productBySlug.name]} />
+      <div className="grid md:grid-cols-2 sm:grid-cols-1 lg:px-20 md:px-10 py-10">
         <div className="flex justify-center items-center">
           <img
             src={productBySlug.image}
-            className="w-2/3 object-cover bg-center"
+            className="lg:w-2/3 md:w-11/12 sm:w-3/5 object-cover bg-center"
             alt={productBySlug.name}
           />
         </div>
@@ -89,12 +89,12 @@ const ProductDetailPage: FC = () => {
         <div className="flex flex-col justify-around">
           <div>
             <div>
-              <p className="text-3xl">{productBySlug.name}</p>
-              <p className="text-lg px-1">{productBySlug.brand}</p>
+              <p className="lg:text-3xl text-2xl">{productBySlug.name}</p>
+              <p className="lg:text-lg px-1">{productBySlug.brand}</p>
             </div>
 
             <div className="mx-1 mt-4">
-              <p className="text-lg">รายละเอียดสินค้า</p>
+              <p className="lg:text-lg">รายละเอียดสินค้า</p>
               <div className="mt-1 mb-3 border-b-2"></div>
               {productBySlug?.description && <p className="text-sm">{productBySlug.description}</p>}
               {productBySlug?.description === null && (
@@ -106,21 +106,21 @@ const ProductDetailPage: FC = () => {
               <PromotionAvailableCard promotion={productBySlug.promotion} />
             )}
           </div>
-          <div className="flex justify-end gap-4 mt-4">
-            <p className="text-md text-right bg-gold-300 font-bold py-2 px-4 rounded">
+          <div className="flex justify-end lg:gap-4 md-gap-3 gap-2 mt-4">
+            <p className="text-sm font-semibold bg-gold-300 px-4 py-2 rounded">
               ราคา {productBySlug.price}
             </p>
             {productBySlug.stock > 0 && (
               <button
                 onClick={(e) => handleAddItemInCart(e, productBySlug._id)}
-                className="px-4 py-2 bg-dark-400 hover:bg-dark-500 font-bold rounded"
+                className="text-sm font-semibold bg-dark-500 hover:bg-dark-100 hover:text-white-100 px-4 py-2 rounded"
               >
                 เพิ่มไปยังตะกร้าสินค้า
               </button>
             )}
             {productBySlug.stock <= 0 && (
-              <div className="px-4 py-2 bg-dark-400 hover:bg-dark-500 font-bold rounded">
-                สินค้าหมด
+              <div className="bg-dark-400 hover:bg-dark-100 px-4 py-2 rounded">
+                <p className="text-sm font-semibold">สินค้าหมด</p>
               </div>
             )}
           </div>

@@ -14,7 +14,6 @@ export const FILTER_PRODUCT_QUERY = gql`
       promotion {
         name
       }
-      updateAt
     }
   }
 `;

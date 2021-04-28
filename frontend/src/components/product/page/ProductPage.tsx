@@ -6,6 +6,7 @@ const ContentWithSidebarLayout = React.lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
 const Loading = React.lazy(() => import('../../commons/loading/Loading'));
+const Navigator = React.lazy(() => import('../../commons/Navigator'));
 const FilterProductBar = React.lazy(() => import('../components/FilterProductBar'));
 const ProductWrapper = React.lazy(() => import('../components/ProductWrapper'));
 
@@ -40,12 +41,12 @@ const ProductPage: FC = () => {
 
   return (
     <ContentWithSidebarLayout>
-      <div className="flex flex-col justify-center items-center">
-        <div className="px-20 pt-10 text-3xl">สินค้า</div>
+      <Navigator listOfNode={['หน้าหลัก', '>>', 'สินค้า']} />
+      <div className="flex flex-col items-center lg:px-20 md:px-10 py-10">
         <FilterProductBar callBackFunction={handleCallBack} />
-        <hr className="h-1 w-4/5 color-gold mt-4"></hr>
+        <div className="w-full border-b-4 border-gold-200 rounded-full my-8"></div>
         <ProductWrapper product={filterProduct} />
-        <hr className="h-1 w-4/5 color-gold mt-4"></hr>
+        <div className="w-full border-b-4 border-gold-200 rounded-full my-8"></div>
       </div>
     </ContentWithSidebarLayout>
   );

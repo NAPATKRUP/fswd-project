@@ -10,7 +10,6 @@ export const HOMEPAGE_QUERY = gql`
       price
       description
       image
-      updateAt
       stock
       promotion {
         name

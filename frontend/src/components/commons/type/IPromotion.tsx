@@ -12,6 +12,5 @@ export interface IPromotion {
   amount?: number;
   startDate: Date;
   endDate: Date;
-  updateAt: Date;
   products: IProduct[];
 }

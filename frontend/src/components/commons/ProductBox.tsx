@@ -51,16 +51,8 @@ const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
     [addItemInCart, handleStatusMessage]
   );
 
-  // const handleBuyItemInCart = useCallback(
-  //   async (e, id) => {
-  //     await handleAddItemInCart(e, id);
-  //     // TODO Redirect
-  //   },
-  //   [handleAddItemInCart]
-  // );
-
   return (
-    <div className="p-4 hover:bg-white-200 rounded-2xl">
+    <div className="hover:bg-white-200 rounded-2xl">
       <Modal
         isOpen={isShowing}
         isHasAccept={false}
@@ -71,36 +63,38 @@ const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
       />
       <NavLink to={`/product/${product.slug}`}>
         <div className="relative">
-          <img src={product?.image} className="w-full object-cover bg-center" alt={product?.slug} />
-          <div className="flex flex-col items-around">
-            <h5 className="text-md font-bold mb-2 mt-1 uppercase">{product?.brand}</h5>
+          <div className="relative">
+            <img
+              src={product?.image}
+              className="w-full object-cover bg-center"
+              alt={product?.slug}
+            />
+            {product?.stock === 0 && (
+              <div className="flex justify-center items-center font-semibold absolute inset-0 px-4 py-1">
+                <div className="bg-dark-400 opacity-90 px-4 py-2 rounded-full">
+                  <p>สินค้าหมด</p>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col p-4">
+            <p className="font-semibold uppercase mt-1 mb-2">{product?.brand}</p>
             <p className="h-20">{product?.name}</p>
-            <p className="my-2 text-right -bottom-0">{product?.price} บาท</p>
+            <p className="text-right mt-2">{product?.price} บาท</p>
           </div>
           {product?.stock !== 0 && (
-            <div className="flex justify-center mt-2">
-              {/* <button
-                onClick={(e) => handleBuyItemInCart(e, product._id)}
-                className="border-2 border-black hover:bg-dark-500 px-2 py-1 rounded-full font-bold mx-1"
-              >
-                ซื้อด่วน
-              </button> */}
+            <div className="flex justify-center mb-2">
               <button
                 onClick={(e) => handleAddItemInCart(e, product._id)}
-                className="border-2 border-black hover:bg-dark-500 px-2 py-1 rounded-full font-bold mx-1"
+                className="font-semibold border-2 rounded-full hover:bg-dark-100 hover:text-white-100 mx-1 px-2 py-1"
               >
                 เพิ่มสินค้า
               </button>
             </div>
           )}
-          {product?.stock === 0 && (
-            <div className="text-center w-full absolute top-40 right-0 opacity-80 bg-dark-500 py-1 px-4 rounded-full font-bold">
-              สินค้าหมด
-            </div>
-          )}
           {product?.promotion && (
-            <div className="text-center text-md absolute top-0 right-0 bg-red-600 text-white-100 py-1 px-4 rounded-full transform rotate-12">
-              {product.promotion.name}
+            <div className="bg-red-600 rounded-lg absolute top-0 right-0 px-4 py-1 transform rotate-12">
+              <p className="text-center text-white-100">{product.promotion.name}</p>
             </div>
           )}
         </div>

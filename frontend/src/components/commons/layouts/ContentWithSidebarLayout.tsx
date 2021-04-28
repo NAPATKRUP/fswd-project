@@ -11,7 +11,7 @@ const ContentWithSidebarLayout: FC<ContentWithSidebarLayoutProp> = ({
   children,
 }: ContentWithSidebarLayoutProp) => {
   return (
-    <div className="flex h-screen">
+    <div className="h-screen flex">
       <Navbar />
       <PageContent>{children}</PageContent>
     </div>
