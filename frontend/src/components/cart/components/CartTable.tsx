@@ -1,8 +1,10 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_ITEM_IN_CART_MUTATION } from '../../commons/graphql/addItemInCartMutation';
 import { REMOVE_ITEM_IN_CART_MUTATION } from '../../commons/graphql/removeItemInCartMutation';
 import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
+
+import useModal from '../../../hooks/useModal';
 
 import { IItem } from '../../commons/type/ICart';
 
@@ -10,46 +12,87 @@ interface ItemProps {
   items: IItem[];
 }
 
+const Modal = React.lazy(() => import('../../commons/Modal'));
+
 const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
+  const [title, setTitle] = useState('');
+  const [bodyMessage, setBodyMessage] = useState('');
+  const { isShowing, toggle } = useModal(false);
+  const handleStatusMessage = useCallback(
+    (title: string, bodyMessage: string) => {
+      setTitle(title);
+      setBodyMessage(bodyMessage);
+      toggle();
+    },
+    [toggle]
+  );
+  const handleCallBack = (stats: boolean) => {
+    if (!stats) toggle();
+  };
+
   const [addItemInCart] = useMutation(ADD_ITEM_IN_CART_MUTATION);
   const [removeItemInCart] = useMutation(REMOVE_ITEM_IN_CART_MUTATION);
 
   const handleAddItemInCart = useCallback(
     async (e, id) => {
       e.preventDefault();
-      await addItemInCart({
-        variables: {
-          productId: id,
-        },
-        refetchQueries: [{ query: WAITING_CART_QUERY }],
-      });
+      try {
+        await addItemInCart({
+          variables: {
+            productId: id,
+          },
+          refetchQueries: [{ query: WAITING_CART_QUERY }],
+        });
+        return handleStatusMessage(
+          'เพิ่มจำนวนสินค้าเสร็จสิ้น',
+          'ระบบได้ทำการเพิ่มจำนวนรายการสินค้าที่ท่านเลือกในตะกร้าสินค้าแล้ว'
+        );
+      } catch (e) {
+        return handleStatusMessage('ทำรายการไม่สำเร็จ', e.toString().replace('Error: ', ''));
+      }
     },
-    [addItemInCart]
+    [addItemInCart, handleStatusMessage]
   );
 
   const handleRemoveItemInCart = useCallback(
     async (e, id) => {
       e.preventDefault();
-      await removeItemInCart({
-        variables: {
-          productId: id,
-        },
-        refetchQueries: [{ query: WAITING_CART_QUERY }],
-      });
+      try {
+        await removeItemInCart({
+          variables: {
+            productId: id,
+          },
+          refetchQueries: [{ query: WAITING_CART_QUERY }],
+        });
+        return handleStatusMessage(
+          'ลดจำนวนสินค้าเสร็จสิ้น',
+          'ระบบได้ทำการลดจำนวนรายการสินค้าที่ท่านเลือกในตะกร้าสินค้าแล้ว'
+        );
+      } catch (e) {
+        return handleStatusMessage('ทำรายการไม่สำเร็จ', e.toString().replace('Error: ', ''));
+      }
     },
-    [removeItemInCart]
+    [removeItemInCart, handleStatusMessage]
   );
 
   return (
     <div className="px-20 pt-20">
-      <div className="text-2xl">Your Cart</div>
+      <Modal
+        isOpen={isShowing}
+        isHasAccept={false}
+        isHasDecline={false}
+        title={title}
+        bodyMessage={bodyMessage}
+        callBackFunction={handleCallBack}
+      />
+      <div className="text-2xl">ตะกร้าสินค้า</div>
       <table className="table-auto w-full mt-10">
         <thead>
           <tr>
-            <th>No</th>
-            <th>Product Name</th>
-            <th>Amount</th>
-            <th>Price</th>
+            <th>รายการ</th>
+            <th>ชื่อสินค้า</th>
+            <th>จำนวนที่ซื้อ</th>
+            <th>ราคา</th>
           </tr>
         </thead>
         <tbody>

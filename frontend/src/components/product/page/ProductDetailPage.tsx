@@ -1,8 +1,10 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_ITEM_IN_CART_MUTATION } from '../../commons/graphql/addItemInCartMutation';
 import { PRODUCT_BY_SLUG_QUERY } from '../graphql/productBySlugQuery';
+
+import useModal from '../../../hooks/useModal';
 
 const ContentWithSidebarLayout = React.lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
@@ -10,6 +12,7 @@ const ContentWithSidebarLayout = React.lazy(
 const Loading = React.lazy(() => import('../../commons/loading/Loading'));
 const NavigationBar = React.lazy(() => import('../../commons/NavigationBar'));
 const PromotionAvailableCard = React.lazy(() => import('../../commons/PromotionAvailableCard'));
+const Modal = React.lazy(() => import('../../commons/Modal'));
 
 interface RouteParams {
   slug: string;
@@ -18,17 +21,40 @@ interface RouteParams {
 const ProductDetailPage: FC = () => {
   const { slug } = useParams<RouteParams>();
 
+  const [title, setTitle] = useState('');
+  const [bodyMessage, setBodyMessage] = useState('');
+  const { isShowing, toggle } = useModal(false);
+  const handleStatusMessage = useCallback(
+    (title: string, bodyMessage: string) => {
+      setTitle(title);
+      setBodyMessage(bodyMessage);
+      toggle();
+    },
+    [toggle]
+  );
+  const handleCallBack = (stats: boolean) => {
+    if (!stats) toggle();
+  };
+
   const [addItemInCart] = useMutation(ADD_ITEM_IN_CART_MUTATION);
   const handleAddItemInCart = useCallback(
     async (e, id) => {
       e.preventDefault();
-      await addItemInCart({
-        variables: {
-          productId: id,
-        },
-      });
+      try {
+        await addItemInCart({
+          variables: {
+            productId: id,
+          },
+        });
+        return handleStatusMessage(
+          'เพิ่มจำนวนสินค้าเสร็จสิ้น',
+          'ระบบได้ทำการเพิ่มจำนวนรายการสินค้าที่ท่านเลือกในตะกร้าสินค้าแล้ว สามารถตรวงสอบได้ที่ตะกร้าสินค้า'
+        );
+      } catch (e) {
+        return handleStatusMessage('ทำรายการไม่สำเร็จ', e.toString().replace('Error: ', ''));
+      }
     },
-    [addItemInCart]
+    [addItemInCart, handleStatusMessage]
   );
 
   const { loading, error, data } = useQuery(PRODUCT_BY_SLUG_QUERY, { variables: { slug: slug } });
@@ -42,7 +68,15 @@ const ProductDetailPage: FC = () => {
 
   return (
     <ContentWithSidebarLayout>
-      <NavigationBar listOfNode={['HOME', '>>', 'PRODUCTS', '>>', productBySlug.name]} />
+      <Modal
+        isOpen={isShowing}
+        isHasAccept={false}
+        isHasDecline={false}
+        title={title}
+        bodyMessage={bodyMessage}
+        callBackFunction={handleCallBack}
+      />
+      <NavigationBar listOfNode={['หน้าหลัก', '>>', 'สินค้า', '>>', productBySlug.name]} />
       <div className="grid grid-cols-2 p-20">
         <div className="flex justify-center items-center">
           <img
@@ -60,11 +94,11 @@ const ProductDetailPage: FC = () => {
             </div>
 
             <div className="mx-1 mt-4">
-              <p className="text-lg">รายระเอียดสินค้า</p>
+              <p className="text-lg">รายละเอียดสินค้า</p>
               <div className="mt-1 mb-3 border-b-2"></div>
               {productBySlug?.description && <p className="text-sm">{productBySlug.description}</p>}
               {productBySlug?.description === null && (
-                <p className="text-sm">ไม่พบรายระเอียดของสินค้า</p>
+                <p className="text-sm">ไม่พบรายละเอียดของสินค้า</p>
               )}
             </div>
 
@@ -74,7 +108,7 @@ const ProductDetailPage: FC = () => {
           </div>
           <div className="flex justify-end gap-4 mt-4">
             <p className="text-md text-right bg-gold-300 font-bold py-2 px-4 rounded">
-              ราคา: {productBySlug.price}
+              ราคา {productBySlug.price}
             </p>
             {productBySlug.stock > 0 && (
               <button

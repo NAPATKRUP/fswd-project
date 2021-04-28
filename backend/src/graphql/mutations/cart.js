@@ -61,17 +61,19 @@ export const addItemInCart = schemaComposer
 
       const product = await ProductModel.findById(productId);
       if (!product) {
-        throw new ValidationError('Invalid Product ID');
+        throw new ValidationError('ไม่พบสินค้า');
       }
 
       if (product.stock <= 0) {
-        throw new ValidationError('No Stock');
+        throw new ValidationError('สินค้าหมด');
       }
       await ProductModel.findByIdAndUpdate(productId, { stock: product.stock - 1 });
 
       const cart = await CartModel.findOne({ userId, status: 'WAITING' });
       if (!cart) {
-        throw new ValidationError('Invalid User have not cart please contact to admin');
+        throw new ValidationError(
+          'ไม่พบตะกร้าสินค้าที่สามารถใช้งานได้ โปรดทำการติดต่อฝ่ายดูแลผู้ใช้งาน'
+        );
       }
 
       let inCart = false;
@@ -116,14 +118,16 @@ export const removeItemInCart = schemaComposer
       const product = await ProductModel.findById(productId);
 
       if (!product) {
-        throw new ValidationError('Invalid Product ID');
+        throw new ValidationError('ไม่พบสินค้า');
       }
 
       await ProductModel.findByIdAndUpdate(productId, { stock: product.stock + 1 });
 
       const cart = await CartModel.findOne({ userId, status: 'WAITING' });
       if (!cart) {
-        throw new ValidationError('Invalid User have not cart please contact to admin');
+        throw new ValidationError(
+          'ไม่พบตะกร้าสินค้าที่สามารถใช้งานได้ โปรดทำการติดต่อฝ่ายดูแลผู้ใช้งาน'
+        );
       }
 
       for (const item of cart.items) {
@@ -131,7 +135,7 @@ export const removeItemInCart = schemaComposer
           if (item.amount === 1) {
             await CartModel.findOne({ _id: cart._id }, (error, docs) => {
               if (error) {
-                throw new ValidationError('Cart Not Found');
+                throw new ValidationError('ไม่พบตะกร้าสินค้า');
               }
               docs.items.remove({ _id: item._id });
               docs.save();
@@ -168,15 +172,15 @@ export const checkoutCart = schemaComposer
 
       const cart = await CartModel.findOne({ userId, status: 'WAITING' });
       if (!cart) {
-        throw new ValidationError('Invalid Cart ID');
+        throw new ValidationError('ไม่พบตะกร้าสินค้า');
       }
 
       if (cart.status === 'CHECKOUT') {
-        throw new ValidationError('This Cart has been CHECKOUT');
+        throw new ValidationError('ตะกร้าสินค้านี้ได้ทำการตรวจสอบสินค้าด้านในแล้ว');
       }
 
       if (cart.items.length <= 0) {
-        throw new ValidationError('Checkout Cart Require Minimum item > 0');
+        throw new ValidationError('สินค้าในตะกร้าต้องมีอย่างน้อย 1 ชิ้น');
       }
 
       await summaryCart(userId);

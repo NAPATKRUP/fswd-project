@@ -16,22 +16,22 @@ const NavigationBar: FC<NavigationBarProp> = ({ listOfNode }: NavigationBarProp)
             </p>
           );
         } else {
-          if (n === 'HOME') {
+          if (n === 'หน้าหลัก') {
             return (
               <NavLink to="/" key={n} className="hover:text-gold-200">
-                HOME
+                หน้าหลัก
               </NavLink>
             );
-          } else if (n === 'PRODUCTS') {
+          } else if (n === 'สินค้า') {
             return (
               <NavLink to="/products" key={n} className="hover:text-gold-200">
-                PRODUCTS
+                สินค้า
               </NavLink>
             );
-          } else if (n === 'PROMOTIONS') {
+          } else if (n === 'โปรโมชั่น') {
             return (
               <NavLink to="/promotions" key={n} className="hover:text-gold-200">
-                PROMOTIONS
+                โปรโมชั่น
               </NavLink>
             );
           } else {
