@@ -1,19 +1,17 @@
-import React from "react";
-import { useRouteMatch, useLocation } from "react-router-dom";
-import { PRODUCT_BY_SLUG_QUERY } from "../graphql/productBySlug";
-import { useQuery } from "@apollo/client";
-import Loading from "../../commons/loading/Loading";
+import React from 'react';
+import { useRouteMatch, useLocation } from 'react-router-dom';
+import { PRODUCT_BY_SLUG_QUERY } from '../graphql/productBySlug';
+import { useQuery } from '@apollo/client';
+import Loading from '../../commons/loading/Loading';
 
 const ContentWithSidebarLayout = React.lazy(
-  () => import("../../commons/layouts/ContentWithSidebarLayout")
+  () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
 
 const AboutProductPage = () => {
-  const match = useRouteMatch<any>("/product/:slug");
+  const match = useRouteMatch<any>('/product/:slug');
   const slug = match?.params.slug;
   const location = useLocation();
-  console.log(location);
-  console.log(typeof slug);
 
   const { loading, error, data } = useQuery(PRODUCT_BY_SLUG_QUERY, {
     variables: {
@@ -24,9 +22,10 @@ const AboutProductPage = () => {
   if (loading) {
     return <Loading />;
   }
-
+  if (error) {
+    return 'Error !!';
+  }
   const { productBySlug } = data;
-  console.log(productBySlug);
 
   return (
     <ContentWithSidebarLayout>

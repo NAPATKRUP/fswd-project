@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const PRODUCT_BY_SLUG_QUERY = gql`
   query($slug: String!) {
