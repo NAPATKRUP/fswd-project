@@ -11,8 +11,8 @@ const FilterProductBar: FC<FilterProductProps> = ({ callBackFunction }: FilterPr
   const [maxPrice, setMaxPrice] = useState<number>(100000);
 
   const handleSubmit = useCallback(
-    async (event) => {
-      event.preventDefault();
+    async (e) => {
+      e.preventDefault();
       return callBackFunction(searchType, name, minPrice, maxPrice);
     },
     [callBackFunction, minPrice, maxPrice, name, searchType]
@@ -21,7 +21,7 @@ const FilterProductBar: FC<FilterProductProps> = ({ callBackFunction }: FilterPr
   return (
     <div className="px-20 py-10">
       <div className="text-2xl">ค้นหาน้ำหอม</div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <select
           name="searchType"
           id="searchType"

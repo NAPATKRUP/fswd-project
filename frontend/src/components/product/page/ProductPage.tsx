@@ -41,7 +41,7 @@ const ProductPage: FC = () => {
   return (
     <ContentWithSidebarLayout>
       <div className="flex flex-col justify-center items-center">
-        <div className="px-20 pt-10 text-3xl">Products</div>
+        <div className="px-20 pt-10 text-3xl">สินค้า</div>
         <FilterProductBar callBackFunction={handleCallBack} />
         <hr className="h-1 w-4/5 color-gold mt-4"></hr>
         <ProductWrapper product={filterProduct} />
