@@ -1,12 +1,26 @@
 import React, { FC } from 'react';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
+import { PromotionQuery } from '../graphql/queryManyProduct';
+import { useQuery } from '@apollo/client';
+import Loading from '../../commons/loading/Loading';
+import PromotionDetail from '../components/PromotionDetail';
 
-const PromotionPage: FC = () => {
+const PromotionPage: any = () => {
+  const { loading, error, data }: any = useQuery(PromotionQuery);
+
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    return 'Error !!';
+  }
+
+  const { promotionByMany } = data;
+
   return (
     <ContentWithSidebarLayout>
-      <div>
-        <h1>PromotionPage</h1>
-      </div>
+      <h1>PromotionPage</h1>
+      <PromotionDetail promotions={promotionByMany} />
     </ContentWithSidebarLayout>
   );
 };

@@ -1,14 +1,15 @@
-import React, { FunctionComponent, Fragment } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { FunctionComponent, Fragment, useContext } from 'react';
+import { BrowserRouter, Route, Redirect, Switch, RouteProps } from 'react-router-dom';
 import LoginPage from './components/login/page/LoginPage';
 import ProductPage from './components/product/page/ProductPage';
 import ProductDetailPage from './components/product/page/ProductDetailPage';
 import HomePage from './components/home/page/HomePage';
 import PromotionPage from './components/promotion/page/PromotionPage';
 import ManageProduct from './components/manageProduct/page/ManageProduct';
-import NotPermissionPage from './components/error/page/NotPermissionPage';
 // import { useSession } from "./context/SessionContext";
+import NotPermissionPage from './components/error/page/NotPermissionPage';
 import CartPage from './components/cart/page/CartPage';
+import AboutProductPage from './components/product/page/AboutProductPage';
 
 const App: FunctionComponent = () => {
   // const { user } = useSession();
@@ -19,6 +20,9 @@ const App: FunctionComponent = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route path="/product">
+            <AboutProductPage />
+          </Route>
           <Route exact path="/products" component={ProductPage} />
           <Route exact path="/products/detail" component={ProductDetailPage} />
           <Route exact path="/promotion" component={PromotionPage} />

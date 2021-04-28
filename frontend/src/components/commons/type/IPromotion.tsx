@@ -1,3 +1,5 @@
+import { IProduct } from './IProduct';
+
 export interface IPromotion {
   _id: string;
   slug: string;
@@ -10,4 +12,6 @@ export interface IPromotion {
   amount?: number;
   startDate: Date;
   endDate: Date;
+  updateAt: Date;
+  products: IProduct[];
 }
