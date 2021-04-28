@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
+import { ADD_ITEM_IN_CART_MUTATION } from '../../commons/graphql/addItemInCartMutation';
 import { PRODUCT_BY_SLUG_QUERY } from '../graphql/productBySlugQuery';
 
 const ContentWithSidebarLayout = React.lazy(
@@ -16,6 +17,19 @@ interface RouteParams {
 
 const ProductDetailPage: FC = () => {
   const { slug } = useParams<RouteParams>();
+
+  const [addItemInCart] = useMutation(ADD_ITEM_IN_CART_MUTATION);
+  const handleAddItemInCart = useCallback(
+    async (e, id) => {
+      e.preventDefault();
+      await addItemInCart({
+        variables: {
+          productId: id,
+        },
+      });
+    },
+    [addItemInCart]
+  );
 
   const { loading, error, data } = useQuery(PRODUCT_BY_SLUG_QUERY, { variables: { slug: slug } });
   if (loading) {
@@ -62,9 +76,19 @@ const ProductDetailPage: FC = () => {
             <p className="text-md text-right bg-gold-300 font-bold py-2 px-4 rounded">
               ราคา: {productBySlug.price}
             </p>
-            <button className="px-4 py-2 bg-dark-400 hover:bg-dark-500 font-bold rounded">
-              เพิ่มไปยังตะกร้าสินค้า
-            </button>
+            {productBySlug.stock > 0 && (
+              <button
+                onClick={(e) => handleAddItemInCart(e, productBySlug._id)}
+                className="px-4 py-2 bg-dark-400 hover:bg-dark-500 font-bold rounded"
+              >
+                เพิ่มไปยังตะกร้าสินค้า
+              </button>
+            )}
+            {productBySlug.stock <= 0 && (
+              <div className="px-4 py-2 bg-dark-400 hover:bg-dark-500 font-bold rounded">
+                สินค้าหมด
+              </div>
+            )}
           </div>
         </div>
       </div>

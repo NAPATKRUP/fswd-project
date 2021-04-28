@@ -1,8 +1,8 @@
 import { FC, useCallback } from 'react';
 import { useMutation } from '@apollo/client';
+import { ADD_ITEM_IN_CART_MUTATION } from '../../commons/graphql/addItemInCartMutation';
+import { REMOVE_ITEM_IN_CART_MUTATION } from '../../commons/graphql/removeItemInCartMutation';
 import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
-import { ADD_ITEM_IN_CART_MUTATION } from '../graphql/addItemInCartMutation';
-import { REMOVE_ITEM_IN_CART_MUTATION } from '../graphql/removeItemInCartMutation';
 
 import { IItem } from '../../commons/type/ICart';
 

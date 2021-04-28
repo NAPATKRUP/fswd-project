@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export const PRODUCT_BY_SLUG_QUERY = gql`
   query($slug: String!) {
     productBySlug(slug: $slug) {
+      _id
       name
       brand
       image
