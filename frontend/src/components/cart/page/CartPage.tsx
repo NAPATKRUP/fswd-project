@@ -1,6 +1,5 @@
 import React, { FC, useCallback } from 'react';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
-// import cart from '../../commons/__mock__/cart';
 import { useQuery, useMutation } from '@apollo/client';
 import Loading from '../../commons/loading/Loading';
 import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
@@ -14,9 +13,7 @@ const CartPage: any = () => {
   const handleCheckoutCart = useCallback(
     async (e) => {
       e.preventDefault();
-      await checkoutCart({
-        refetchQueries: [{ query: WAITING_CART_QUERY }],
-      });
+      await checkoutCart({ refetchQueries: [{ query: WAITING_CART_QUERY }] });
     },
     [checkoutCart]
   );
