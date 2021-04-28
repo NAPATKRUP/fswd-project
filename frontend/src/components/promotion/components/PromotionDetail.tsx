@@ -1,63 +1,45 @@
-import React, { FC, Fragment } from "react";
-import { IPromotion } from "../../commons/type/IPromotion";
-import moment from "moment";
-import "moment/locale/th";
+import React, { FC, Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
+import moment from 'moment';
+import 'moment/locale/th';
+import { IPromotion } from '../../commons/type/IPromotion';
 
-interface PromotionProps {
+interface PromotionProp {
   promotions: IPromotion[];
 }
 
-const PromotionCard: FC<PromotionProps> = ({ promotions }: PromotionProps) => {
-  console.log(promotions);
-
+const PromotionCard: FC<PromotionProp> = ({ promotions }: PromotionProp) => {
   return (
-    <div className="grid grid-cols-3 gap-4 py-1">
-      {promotions?.map((e, index) => {
-        const startDateLabel = moment(new Date(e.startDate)).format("LL");
-        const endDateLabel = moment(e.endDate).format("LL");
-        return (
-          <div
-            key={index}
-            style={{
-              borderWidth: 1,
-              borderColor: "black",
-              borderRadius: 12,
-              boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-              height: "auto",
-              paddingLeft: 20,
-              paddingRight: 20,
-            }}
-          >
-            <span style={{ fontSize: 30, display: "flex", justifyContent: "center" }}>
-              <b>{e.name}</b>
-            </span>
-            <img
-              src={e.image}
-              style={{
-                height: 300,
-                marginTop: 20,
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-            />
+    <div className="grid grid-cols-2 gap-4 mt-4">
+      {promotions?.map((data) => {
+        const startDateLabel = moment(new Date(data.startDate)).format('LL');
+        const endDateLabel = moment(data.endDate).format('LL');
 
-            <span style={{ display: "flex", justifyContent: "center" }}>
-              รายละเอียด : {e.description}
-            </span>
-            <span>
-              เริ่มตั้งแต่วันที่ {startDateLabel} จนถึง {endDateLabel} นี้ ด่วนเลย
-            </span>
-            <span>
-              สินค้าที่ร่วมรายการ :{" "}
-              {e?.products.map((e, index) => {
-                return (
-                  <p>
-                    {e.brand} || {e.name}
+        return (
+          <div className="border-2 border-black rounded p-4" key={data._id}>
+            <p className="text-2xl text-center">{data.name}</p>
+            {data?.image && <img src={data.image} alt={data.name} />}
+            {data?.description && (
+              <div className="my-4">
+                <p className="text-lg">รายละเอียด</p>
+                <p className="text-sm">{data.description}</p>
+                <p className="text-sm my-2">
+                  เริ่มตั้งแต่วันที่ {startDateLabel} จนถึง {endDateLabel} นี้ ด่วนเลย
+                </p>
+              </div>
+            )}
+            {data?.products.length > 0 && (
+              <div>
+                <p className="text-lg">สินค้าที่ร่วมรายการ</p>
+                {data?.products.map((product) => (
+                  <p className="text-sm" key={product._id}>
+                    <NavLink to={`/product/${product.slug}`}>
+                      {product.brand}| {product.name}
+                    </NavLink>
                   </p>
-                );
-              })}
-            </span>
+                ))}
+              </div>
+            )}
           </div>
         );
       })}

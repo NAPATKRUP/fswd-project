@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
-export const PromotionQuery = gql`
+export const AVAILABLE_PROMOTION_QUERY = gql`
   query {
-    promotionByMany {
+    availablePromotion {
       _id
       slug
       name
@@ -12,6 +12,8 @@ export const PromotionQuery = gql`
       image
       updateAt
       products {
+        _id
+        slug
         name
         brand
       }

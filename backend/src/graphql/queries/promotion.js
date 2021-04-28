@@ -2,16 +2,14 @@ import { schemaComposer } from 'graphql-compose';
 
 import { PromotionModel, PromotionTC } from '../../models/promotion';
 
-export const latestPromotionResolver = schemaComposer.createResolver({
-  name: 'latestPromotion',
+export const availablePromotion = schemaComposer.createResolver({
+  name: 'availablePromotion',
   kind: 'query',
   type: [PromotionTC.getType()],
-  args: {
-    show: 'Int!',
-  },
-  resolve: async ({ args }) => {
-    const { show } = args;
-    const promotion = await PromotionModel.find().sort({ updateAt: -1 }).limit(show);
+  resolve: async () => {
+    const promotion = await PromotionModel.find({
+      $or: [{ startDate: { $gte: new Date() } }, { endDate: { $gte: new Date() } }],
+    });
     return promotion;
   },
 });

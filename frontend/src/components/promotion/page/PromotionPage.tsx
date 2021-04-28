@@ -1,13 +1,12 @@
 import React, { FC } from 'react';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
-import { PromotionQuery } from '../graphql/queryManyProduct';
+import { AVAILABLE_PROMOTION_QUERY } from '../graphql/availablePromotionQuery';
 import { useQuery } from '@apollo/client';
 import Loading from '../../commons/loading/Loading';
 import PromotionDetail from '../components/PromotionDetail';
 
 const PromotionPage: any = () => {
-  const { loading, error, data }: any = useQuery(PromotionQuery);
-
+  const { loading, error, data }: any = useQuery(AVAILABLE_PROMOTION_QUERY);
   if (loading) {
     return <Loading />;
   }
@@ -15,12 +14,12 @@ const PromotionPage: any = () => {
     return 'Error !!';
   }
 
-  const { promotionByMany } = data;
+  const { availablePromotion } = data;
 
   return (
     <ContentWithSidebarLayout>
-      <h1>PromotionPage</h1>
-      <PromotionDetail promotions={promotionByMany} />
+      <div className="text-4xl">PromotionPage</div>
+      <PromotionDetail promotions={availablePromotion} />
     </ContentWithSidebarLayout>
   );
 };
