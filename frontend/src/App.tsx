@@ -7,6 +7,7 @@ import HomePage from './components/home/page/HomePage';
 import PromotionPage from './components/promotion/page/PromotionPage';
 import ManageProduct from './components/manageProduct/page/ManageProduct';
 import NotPermissionPage from './components/error/page/NotPermissionPage';
+import PageNotFound from './components/error/page/PageNotFound';
 // import { useSession } from "./context/SessionContext";
 // import CartPage from "./components/cart/page/CartPage";
 
@@ -26,6 +27,7 @@ const App: FunctionComponent = () => {
           <Route exact path="/manage-product" component={ManageProduct} />
           {/* <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} /> */}
           {/* <CustomerRoute role={user.role} exact path="/cart" component={CartPage} /> */}
+          <Route path="*" component={PageNotFound}></Route>
         </Switch>
       </Fragment>
     );
