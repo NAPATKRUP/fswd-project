@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const HOMEPAGE_QUERY = gql`
+export const LATESTPRODUCT_PRODUCT_QUERY = gql`
   query($productShow: Int!) {
     latestProduct(show: $productShow) {
       _id

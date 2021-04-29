@@ -14,5 +14,18 @@ export const availablePromotion = schemaComposer.createResolver({
   },
 });
 
+export const nowPromotion = schemaComposer.createResolver({
+  name: 'nowPromotion',
+  kind: 'query',
+  type: [PromotionTC.getType()],
+  resolve: async () => {
+    const promotion = await PromotionModel.find({
+      startDate: { $lte: new Date() },
+      endDate: { $gte: new Date() },
+    });
+    return promotion;
+  },
+});
+
 export const promotionById = PromotionTC.getResolver('findById');
 export const promotionByMany = PromotionTC.getResolver('findMany');

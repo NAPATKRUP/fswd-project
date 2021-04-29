@@ -11,10 +11,10 @@ interface PromotionProp {
 
 const PromotionCard: FC<PromotionProp> = ({ promotions }: PromotionProp) => {
   return (
-    <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-4 mt-4">
+    <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mt-4">
       {promotions?.map((data) => {
-        const startDateLabel = moment(new Date(data.startDate)).format('LL');
-        const endDateLabel = moment(data.endDate).format('LL');
+        const startDateLabel = moment(new Date(data.startDate)).format('LLL');
+        const endDateLabel = moment(data.endDate).format('LLL');
 
         return (
           <div
@@ -41,9 +41,10 @@ const PromotionCard: FC<PromotionProp> = ({ promotions }: PromotionProp) => {
                 ))}
               </div>
             )}
-            <p className="text-sm my-4">
-              {' >> '} เริ่มตั้งแต่วันที่ {startDateLabel} จนถึง {endDateLabel} นี้ ด่วนเลย
-            </p>
+            <div className="text-left">
+              <p className="text-sm mt-4">เริ่มตั้งแต่วันที่ {startDateLabel}</p>
+              <p className="text-sm">จนถึงวันที่ {endDateLabel}</p>
+            </div>
           </div>
         );
       })}
