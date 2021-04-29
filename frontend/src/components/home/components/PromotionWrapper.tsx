@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import PromotionCarousel from './PromotionCarousel';
+
+const PromotionCarousel = React.lazy(() => import('./PromotionCarousel'));
 
 const PromotionBoxWrapper: FC = () => {
   return (

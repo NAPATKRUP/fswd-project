@@ -1,13 +1,15 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { useQuery } from '@apollo/client';
 import { NOW_PROMOTION_QUERY } from '../graphql/nowPromotionQuery';
-import Loading from '../../commons/loading/Loading';
-import { IPromotion } from '../../commons/type/IPromotion';
 import moment from 'moment';
 import 'moment/locale/th';
+
+import { IPromotion } from '../../commons/type/IPromotion';
+
+const Loading = React.lazy(() => import('../../commons/loading/Loading'));
 
 const PromotionCarousel: FC = () => {
   const { loading, error, data } = useQuery(NOW_PROMOTION_QUERY);
@@ -48,6 +50,7 @@ const PromotionCarousel: FC = () => {
         const endDate = moment(item.endDate);
         const timeLeftLabel = endDate.from(todayDate);
         const endDateLabel = moment(item.endDate).format('LLL');
+
         return (
           <div
             className="item bg-gold-100 text-dark-100 py-4 px-8 mt-4 rounded-xl border-2 border-dashed border-dark-100"

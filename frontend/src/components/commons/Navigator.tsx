@@ -35,6 +35,8 @@ const Navigator: FC<NavigatorProp> = ({ listOfNode }: NavigatorProp) => {
                   โปรโมชั่น
                 </NavLink>
               );
+            } else {
+              return <p key={n}>{n.toUpperCase()}</p>;
             }
           }
         } else {

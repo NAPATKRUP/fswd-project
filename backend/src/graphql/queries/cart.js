@@ -4,6 +4,8 @@ import { CartModel, CartTC } from '../../models/cart';
 import { PromotionModel } from '../../models/promotion';
 import { requiredAuth } from '../middlewares';
 
+export const cartById = CartTC.getResolver('findById');
+
 export const waitingCart = schemaComposer
   .createResolver({
     name: 'waitingCart',

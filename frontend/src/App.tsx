@@ -10,6 +10,7 @@ import PromotionPage from './components/promotion/page/PromotionPage';
 // import ManageProduct from './components/manageProduct/page/ManageProduct';
 // import { useSession } from "./context/SessionContext";
 import CartPage from './components/cart/page/CartPage';
+import CheckoutPage from './components/checkout/page/CheckoutPage';
 import NotPermissionPage from './components/error/page/NotPermissionPage';
 import NotFoundPage from './components/error/page/NotFoundPage';
 
@@ -27,6 +28,8 @@ const App: FC = () => {
           <Route exact path="/promotions" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <Route exact path="/cart" component={CartPage} />
+          <Route exact path="/cart/checkout/:orderId" component={CheckoutPage} />
+          {/* <Route exact path="/cart/:cartId/payment" component={PaymentPage} /> */}
           {/* <Route exact path="/manage-product" component={ManageProduct} /> */}
           {/* <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} /> */}
           <Route path="*">

@@ -9,7 +9,7 @@ export const availablePromotion = schemaComposer.createResolver({
   resolve: async () => {
     const promotion = await PromotionModel.find({
       $or: [{ startDate: { $gte: new Date() } }, { endDate: { $gte: new Date() } }],
-    });
+    }).sort({ startDate: 1 });
     return promotion;
   },
 });
@@ -22,7 +22,7 @@ export const nowPromotion = schemaComposer.createResolver({
     const promotion = await PromotionModel.find({
       startDate: { $lte: new Date() },
       endDate: { $gte: new Date() },
-    });
+    }).sort({ endDate: 1 });
     return promotion;
   },
 });

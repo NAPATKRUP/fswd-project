@@ -8,94 +8,137 @@ import CartModel from '../../models/cart';
 import ProductModel from '../../models/product';
 import { requiredAuth } from '../middlewares';
 
-export const confirmOrder = schemaComposer.createResolver({
-  name: 'confirmOrder',
-  kind: 'mutation',
-  type: OrderTC.getType(),
-  args: {
-    orderId: 'MongoID!',
-    addressId: 'MongoID!',
-    paymentId: 'MongoID!',
-  },
-  resolve: async ({ args, context }) => {
-    const { orderId, addressId, paymentId } = args;
-    // const { _id: userId } = context;
-    const userId = '6086470c1a67f5279c406ab0';
+export const confirmOrder = schemaComposer
+  .createResolver({
+    name: 'confirmOrder',
+    kind: 'mutation',
+    type: OrderTC.getType(),
+    args: {
+      orderId: 'MongoID!',
+      addressId: 'MongoID!',
+    },
+    resolve: async ({ args, context }) => {
+      const { orderId, addressId } = args;
+      const { _id: userId } = context;
 
-    const order = await OrderModel.findOne({ userId, _id: orderId });
-    if (!order) {
-      throw new ValidationError('Invalid Order ID');
-    }
-    if (order.orderStatus === 'SUCCESS') {
-      throw new ValidationError('This Order Has Been Paid.');
-    }
-    if (order.orderStatus === 'CANCEL') {
-      throw new ValidationError('This Order Has Been Cancel.');
-    }
-
-    const address = await AddressModel.findOne({ userId, _id: addressId });
-    if (!address) {
-      throw new ValidationError('Invalid Address ID');
-    }
-
-    const payment = await PaymentModel.findOne({ userId, _id: paymentId });
-    if (!payment) {
-      throw new ValidationError('Invalid Payment ID');
-    }
-    // TODO Check money
-
-    await OrderModel.findOneAndUpdate(
-      { userId, _id: orderId },
-      {
-        orderStatus: 'SUCCESS',
-        addressId: address._id,
-        paymentId: payment._id,
-        checkoutAt: Date.now(),
+      const order = await OrderModel.findOne({ userId, _id: orderId });
+      if (!order) {
+        throw new ValidationError('ไม่พบออร์เดอร์สินค้า');
       }
-    );
+      if (order.orderStatus === 'CONFIRM') {
+        throw new ValidationError('ออร์เดอร์นี้ได้ทำการยืนยันและใส่ที่อยู่ในการจัดส่งแล้ว');
+      }
+      if (order.orderStatus === 'SUCCESS') {
+        throw new ValidationError('ออร์เดอร์นี้ได้ถูกทำการสั่งซื้อแล้ว');
+      }
+      if (order.orderStatus === 'CANCEL') {
+        throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อ');
+      }
 
-    const updateOrder = await OrderModel.findOne({ userId, _id: orderId });
-    return updateOrder;
-  },
-});
-// .wrapResolve(requiredAuth);
+      const address = await AddressModel.findOne({ userId, _id: addressId });
+      if (!address) {
+        throw new ValidationError('ไม่พบที่อยู่ในการจัดส่ง');
+      }
 
-export const cancelOrder = schemaComposer.createResolver({
-  name: 'confirmOrder',
-  kind: 'mutation',
-  type: OrderTC.getType(),
-  args: {
-    orderId: 'MongoID!',
-  },
-  resolve: async ({ args, context }) => {
-    const { orderId } = args;
-    // const { _id: userId } = context;
-    const userId = '6086470c1a67f5279c406ab0';
+      await OrderModel.findOneAndUpdate(
+        { userId, _id: orderId },
+        {
+          orderStatus: 'CONFIRM',
+          addressId: address._id,
+          checkoutAt: Date.now(),
+        }
+      );
 
-    const order = await OrderModel.findOne({ userId, _id: orderId });
-    if (!order) {
-      throw new ValidationError('Invalid Order ID');
-    }
-    if (order.orderStatus === 'CANCEL') {
-      throw new ValidationError('This Order Has Been Cancel.');
-    }
+      const updateOrder = await OrderModel.findOne({ userId, _id: orderId });
+      return updateOrder;
+    },
+  })
+  .wrapResolve(requiredAuth);
 
-    const cart = await CartModel.findOne({ userId, _id: order.cartId });
-    for (const item of cart.items) {
-      const product = await ProductModel.findById(item.product._id);
-      await ProductModel.findByIdAndUpdate(item.product._id, {
-        stock: product.stock + item.amount,
-      });
-      // Refund Money To Customer
-    }
+export const paymentOrder = schemaComposer
+  .createResolver({
+    name: 'paymentOrder',
+    kind: 'mutation',
+    type: OrderTC.getType(),
+    args: {
+      orderId: 'MongoID!',
+      paymentId: 'MongoID!',
+    },
+    resolve: async ({ args, context }) => {
+      const { orderId, paymentId } = args;
+      const { _id: userId } = context;
 
-    await OrderModel.findOneAndUpdate(
-      { userId, _id: orderId },
-      { orderStatus: 'CANCEL', cancelAt: Date.now() }
-    );
+      const order = await OrderModel.findOne({ userId, _id: orderId });
+      if (!order) {
+        throw new ValidationError('ไม่พบออร์เดอร์สินค้า');
+      }
+      if (order.orderStatus === 'WAITING') {
+        throw new ValidationError('โปรดทำการยืนยันสินค้า และใส่ที่อยู่ในการจัดส่งก่อนการชำระเงิน');
+      }
+      if (order.orderStatus === 'SUCCESS') {
+        throw new ValidationError('ออร์เดอร์นี้ได้ถูกทำการสั่งซื้อแล้ว');
+      }
+      if (order.orderStatus === 'CANCEL') {
+        throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อ');
+      }
 
-    const updateOrder = await OrderModel.findOne({ userId, _id: orderId });
-    return updateOrder;
-  },
-});
-// .wrapResolve(requiredAuth);
+      const payment = await PaymentModel.findOne({ userId, _id: paymentId });
+      if (!payment) {
+        throw new ValidationError('ยืนยันการชำระเงินผิดพลาด');
+      }
+      // TODO Check money
+
+      await OrderModel.findOneAndUpdate(
+        { userId, _id: orderId },
+        {
+          orderStatus: 'SUCCESS',
+          paymentId: payment._id,
+          checkoutAt: Date.now(),
+        }
+      );
+
+      const updateOrder = await OrderModel.findOne({ userId, _id: orderId });
+      return updateOrder;
+    },
+  })
+  .wrapResolve(requiredAuth);
+
+export const cancelOrder = schemaComposer
+  .createResolver({
+    name: 'confirmOrder',
+    kind: 'mutation',
+    type: OrderTC.getType(),
+    args: {
+      orderId: 'MongoID!',
+    },
+    resolve: async ({ args, context }) => {
+      const { orderId } = args;
+      const { _id: userId } = context;
+
+      const order = await OrderModel.findOne({ userId, _id: orderId });
+      if (!order) {
+        throw new ValidationError('ไม่พบออร์เดอร์สินค้า');
+      }
+      if (order.orderStatus === 'CANCEL') {
+        throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อแล้ว');
+      }
+
+      const cart = await CartModel.findOne({ userId, _id: order.cartId });
+      for (const item of cart.items) {
+        const product = await ProductModel.findById(item.product._id);
+        await ProductModel.findByIdAndUpdate(item.product._id, {
+          stock: product.stock + item.amount,
+        });
+        // Refund Money To Customer if order has payment
+      }
+
+      await OrderModel.findOneAndUpdate(
+        { userId, _id: orderId },
+        { orderStatus: 'CANCEL', cancelAt: Date.now() }
+      );
+
+      const updateOrder = await OrderModel.findOne({ userId, _id: orderId });
+      return updateOrder;
+    },
+  })
+  .wrapResolve(requiredAuth);
