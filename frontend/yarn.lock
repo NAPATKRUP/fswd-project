@@ -1236,12 +1236,6 @@
     "@ckeditor/ckeditor5-table" "^27.1.0"
     "@ckeditor/ckeditor5-typing" "^27.1.0"
 
-"@ckeditor/ckeditor5-build-classic@ckeditor/ckeditor5-react":
-  version "3.0.2"
-  resolved "https://codeload.github.com/ckeditor/ckeditor5-react/tar.gz/ca2a1ffa55776a6fb8cc4cf83100a7e26f4b2918"
-  dependencies:
-    prop-types "^15.7.2"
-
 "@ckeditor/ckeditor5-ckfinder@^27.1.0":
   version "27.1.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-ckfinder/-/ckeditor5-ckfinder-27.1.0.tgz#ad74bce41924c712fd25a6d96091d6a9eb77b134"

@@ -23,7 +23,7 @@ const App: FunctionComponent = () => {
           <Route exact path="/products/detail" component={ProductDetailPage} />
           <Route exact path="/promotion" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
-          <Route exact path="/admin" component={AdminManagerPage} />
+          <Route path="/admin" component={AdminManagerPage} />
           {/* <AdminRoute role={user.role} path="/admin" component={AdminManagerPage} /> */}
           {/* <CustomerRoute role={user.role} exact path="/cart" component={CartPage} /> */}
         </Switch>

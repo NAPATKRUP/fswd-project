@@ -1,10 +1,33 @@
-import React, { FC } from "react";
-import AdminProductBox from "../components/AdminProductBox";
-import product from "../../../commons/__mock__/product";
+import React, { FC, useState, useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import { PRODUCT_QUERY_ALL } from '../graphql/product';
+import AdminProductBox from '../components/AdminProductBox';
+import Loading from '../../../commons/loading/Loading';
+import { IProduct } from '../../../commons/type/IProduct';
 
 const ViewAllProductPage: FC = () => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const { loading, error, data } = useQuery(PRODUCT_QUERY_ALL, {
+    variables: {
+      limit: 100,
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      const { productByMany } = data;
+      setProducts(productByMany);
+    }
+  }, [data]);
+
+  if (loading) {
+    return <Loading />;
+  } else if (error) {
+    return <div>{error}</div>;
+  }
+
   const renderProductItems: () => JSX.Element[] = () => {
-    return product.map((item) => {
+    return products.map((item) => {
       return <AdminProductBox item={item} key={item._id} />;
     });
   };

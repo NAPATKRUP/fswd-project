@@ -1,8 +1,8 @@
-import React, { FC, useEffect } from "react";
-import { Switch, Route, Link, useRouteMatch, useLocation } from "react-router-dom";
-import ContentWithSidebarLayout from "../../commons/layouts/ContentWithSidebarLayout";
-import ProductManagerPage from "../manageProduct/page/ProductManagerPage";
-import AdminDashboardPage from "./AdminDashboardPage";
+import React, { FC, useEffect } from 'react';
+import { Switch, Route, Link, useRouteMatch, useLocation } from 'react-router-dom';
+import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
+import ProductManagerPage from '../manageProduct/page/ProductManagerPage';
+import AdminDashboardPage from './AdminDashboardPage';
 
 const AdminManagerPage: FC = () => {
   let { path } = useRouteMatch();
@@ -11,12 +11,12 @@ const AdminManagerPage: FC = () => {
   useEffect(() => {}, [location]);
 
   const renderLocationHistory = () => {
-    const splitPath = location.pathname.split("/");
+    const splitPath = location.pathname.split('/');
 
     return splitPath.slice(1).map((path, index) => {
       const toPath = splitPath.reduce((prev, current, currentIndex) => {
         if (currentIndex - 1 <= index) {
-          return prev + "/" + current;
+          return prev + '/' + current;
         } else {
           return prev;
         }
@@ -34,12 +34,13 @@ const AdminManagerPage: FC = () => {
   return (
     <ContentWithSidebarLayout>
       <div className="flex">{renderLocationHistory()}</div>
+
       <Switch>
-        <Route exact path={path}>
-          <AdminDashboardPage />
-        </Route>
         <Route path={`${path}/product`}>
           <ProductManagerPage />
+        </Route>
+        <Route exact path={path}>
+          <AdminDashboardPage />
         </Route>
       </Switch>
     </ContentWithSidebarLayout>
