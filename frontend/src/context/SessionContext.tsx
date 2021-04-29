@@ -5,6 +5,8 @@ import { useHistory, useLocation } from "react-router";
 
 import { ME_QUERY } from "../graphql/meQuery";
 import { LOGIN_MUTATION } from "../graphql/loginMutation";
+import { REGISTER_MUTATION } from "../graphql/registerMutation";
+import { CREATE_CART_MUTATION } from "../graphql/createCartMutation";
 
 interface IUser {
   _id: string;
@@ -12,12 +14,20 @@ interface IUser {
   role: string;
 }
 
+enum EnumCartStatus {
+  WAITING = "WAITING",
+  CHECKOUT = "CHECKOUT",
+}
+
 const SessionContext: React.Context<{
   user?: IUser | null;
   login: (username: string, password: string) => Promise<void>;
+  register: (username: string, password: string, displayName: string) => Promise<void>;
   logout: () => Promise<void>;
 }> = createContext({
   login: (username: string, password: string) => new Promise<void>((resolve, reject) => {}),
+  register: (username: string, password: string, displayName: string) =>
+    new Promise<void>((resolve, reject) => {}),
   logout: () => new Promise<void>((resolve, reject) => {}),
 });
 
@@ -26,11 +36,12 @@ export const SessionProvider: FC = ({ children }) => {
   const [, setCookie, removeCookie] = useCookies(["token"]);
   const history = useHistory();
   const location = useLocation();
-
+  const [login] = useMutation(LOGIN_MUTATION);
+  const [register] = useMutation(REGISTER_MUTATION);
+  const [createCart] = useMutation(CREATE_CART_MUTATION);
   const [queryMe, { loading, data, client }] = useLazyQuery(ME_QUERY, {
     fetchPolicy: "network-only",
   });
-  const [login] = useMutation(LOGIN_MUTATION);
 
   const handleLogin = useCallback(
     async (username, password) => {
@@ -45,6 +56,24 @@ export const SessionProvider: FC = ({ children }) => {
       }
     },
     [history, login, setCookie, user]
+  );
+
+  const handleRegister = useCallback(
+    async (username, password, displayName) => {
+      const result = await register({ variables: { username, password, displayName } });
+
+      if (result.data.register.token) {
+        setCookie("token", result.data.register.token, { maxAge: 86400 });
+        setUser(result?.data?.register?.user);
+
+        await createCart({
+          variables: { userId: result?.data?.register?.user?._id, status: EnumCartStatus.WAITING },
+        });
+
+        return history.push("/");
+      }
+    },
+    [createCart, history, register, setCookie]
   );
 
   const handleLogout = useCallback(async () => {
@@ -79,7 +108,9 @@ export const SessionProvider: FC = ({ children }) => {
   }, [queryMe]);
 
   return (
-    <SessionContext.Provider value={{ user, login: handleLogin, logout: handleLogout }}>
+    <SessionContext.Provider
+      value={{ user, login: handleLogin, logout: handleLogout, register: handleRegister }}
+    >
       {children}
     </SessionContext.Provider>
   );
