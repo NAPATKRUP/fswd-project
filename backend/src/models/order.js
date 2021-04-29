@@ -5,8 +5,11 @@ const { Schema } = mongoose;
 
 const enumOrderType = {
   WAITING: 'Waiting',
+  CONFIRM: 'Confirm',
   SUCCESS: 'Success',
   CANCEL: 'Cancel',
+  SHIPPING: 'Shipping',
+  ARRIVED: 'Arrived',
 };
 
 const OrderSchema = new Schema({
