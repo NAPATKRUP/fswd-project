@@ -1,6 +1,7 @@
 import React, { FunctionComponent, Fragment } from "react";
 import { Route, Switch } from "react-router-dom";
 import LoginPage from "./components/login/page/LoginPage";
+import RegisterPage from "./components/register/page/RegisterPage";
 import ProductPage from "./components/product/page/ProductPage";
 import HomePage from "./components/home/page/HomePage";
 import PromotionPage from "./components/promotion/page/PromotionPage";
@@ -18,6 +19,7 @@ const App: FunctionComponent = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/product" component={ProductPage} />
           <Route exact path="/promotion" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
