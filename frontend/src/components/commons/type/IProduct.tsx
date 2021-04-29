@@ -14,6 +14,7 @@ export interface IProduct {
 }
 
 export interface ICreateProduct {
+  slug?: string;
   name?: string;
   brand?: string;
   price?: number;

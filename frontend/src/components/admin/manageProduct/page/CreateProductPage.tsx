@@ -1,16 +1,24 @@
-import React, { FC, ChangeEvent, ChangeEventHandler, FormEventHandler, useState } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { ICreateProduct } from "../../../commons/type/IProduct";
+import React, { FC, useState, useEffect } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ICreateProduct, IProduct } from '../../../commons/type/IProduct';
+import { useMutation } from '@apollo/client';
+import { PRODUCT_CREATE_MUTATION } from '../graphql/product';
 
 const CreateProductPage: FC = () => {
   const [productDetail, setProductDetail] = useState<ICreateProduct>({
-    name: "",
-    brand: "",
+    name: '',
+    brand: '',
     price: 0,
-    description: "",
-    image: "",
+    description: '',
   });
+  const [createProduct, { error }] = useMutation<{ createProduct: IProduct }, ICreateProduct>(
+    PRODUCT_CREATE_MUTATION
+  );
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
 
   const onUpdateProductDetail = (detail: ICreateProduct) => {
     setProductDetail({
@@ -19,30 +27,22 @@ const CreateProductPage: FC = () => {
     });
   };
 
-  const handleProductNameChange: ChangeEventHandler<HTMLInputElement> = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleProductNameChange = (event) => {
     const name = event.target.value;
     onUpdateProductDetail({ name });
   };
 
-  const handleProductBrandChange: ChangeEventHandler<HTMLInputElement> = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleProductBrandChange = (event) => {
     const brand = event.target.value;
     onUpdateProductDetail({ brand });
   };
 
-  const handleProductPriceChange: ChangeEventHandler<HTMLInputElement> = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleProductPriceChange = (event) => {
     const price: number = parseInt(event.target.value);
     onUpdateProductDetail({ price });
   };
 
-  const handleProductImageChange: ChangeEventHandler<HTMLInputElement> = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleProductImageChange = (event) => {
     const image = event.target.value;
     onUpdateProductDetail({ image });
   };
@@ -52,9 +52,32 @@ const CreateProductPage: FC = () => {
     onUpdateProductDetail({ description });
   };
 
-  const handleSubmitForm: FormEventHandler = (event) => {
+  // convert string to slug
+  // Reference: https://gist.github.com/silkyland/004e9c74ed9ed8b76d613bc2e4e48f52
+  const stringToSlug = (str: string) => {
+    return str
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace('%', 'เปอร์เซนต์') // Translate some charactor
+      .replace(/[^\u0E00-\u0E7F\w-]+/g, '') // Remove all non-word chars
+      .replace(/--+/g, '-') // Replace multiple - with single -
+      .replace(/^-+/, '') // Trim - from start of text
+      .replace(/-+$/, '');
+  };
+
+  const handleSubmitForm = (event) => {
     event.preventDefault();
-    console.log(productDetail);
+    if (productDetail.name && productDetail.brand && productDetail.price) {
+      const slug = stringToSlug(productDetail.name);
+      createProduct({
+        variables: {
+          slug: slug,
+          ...productDetail,
+        },
+      });
+    } else {
+      // should popup error: required field are not fullfill.
+      console.log('required field not meet');
+    }
   };
 
   return (
@@ -128,7 +151,7 @@ const CreateProductPage: FC = () => {
             <div className="my-4">
               <input
                 type="submit"
-                onSubmit={handleSubmitForm}
+                onClick={handleSubmitForm}
                 className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
                 value="Create new product"
               />
