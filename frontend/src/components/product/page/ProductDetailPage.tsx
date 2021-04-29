@@ -107,8 +107,8 @@ const ProductDetailPage: FC = () => {
             )}
           </div>
           <div className="flex justify-end lg:gap-4 md-gap-3 gap-2 mt-4">
-            <p className="text-sm font-semibold bg-gold-300 px-4 py-2 rounded">
-              ราคา {productBySlug.price}
+            <p className="text-sm font-semibold px-4 py-2 rounded">
+              ราคา {productBySlug.price} บาท
             </p>
             {productBySlug.stock > 0 && (
               <button

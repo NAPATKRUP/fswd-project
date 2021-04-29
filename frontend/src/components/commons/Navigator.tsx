@@ -7,7 +7,7 @@ interface NavigatorProp {
 
 const Navigator: FC<NavigatorProp> = ({ listOfNode }: NavigatorProp) => {
   return (
-    <div className="font-semibold ml-8 mt-4 flex">
+    <div className="font-semibold lg:ml-20 md:ml-10 mt-4 flex">
       {listOfNode.map((n, index) => {
         if (index !== listOfNode.length - 1) {
           if (n === '>>') {

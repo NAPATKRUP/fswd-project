@@ -8,6 +8,8 @@ const enumOrderType = {
   CONFIRM: 'Confirm',
   SUCCESS: 'Success',
   CANCEL: 'Cancel',
+  SHIPPING: 'Shipping',
+  ARRIVED: 'Arrived',
 };
 
 const OrderSchema = new Schema({

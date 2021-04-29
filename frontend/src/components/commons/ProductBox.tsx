@@ -94,7 +94,17 @@ const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
           )}
           {product?.promotion && (
             <div className="bg-red-600 rounded-lg absolute top-0 right-0 px-4 py-1 transform rotate-12">
-              <p className="text-center text-white-100">{product.promotion.name}</p>
+              {product?.promotion.type === 'Giveaway' && (
+                <p className="text-center text-white-100">
+                  {product.promotion.condition} แถม {product.promotion.amount}
+                </p>
+              )}
+              {product?.promotion.type === 'SaleFlat' && (
+                <p className="text-center text-white-100">ลด {product.promotion.discount} บาท</p>
+              )}
+              {product?.promotion.type === 'SalePercente' && (
+                <p className="text-center text-white-100">ลด {product.promotion.discount} %</p>
+              )}
             </div>
           )}
         </div>

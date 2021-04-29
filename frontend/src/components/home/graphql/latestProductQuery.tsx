@@ -13,6 +13,19 @@ export const LATESTPRODUCT_PRODUCT_QUERY = gql`
       stock
       promotion {
         name
+        type
+        ... on Giveaway {
+          condition
+          amount
+        }
+        ... on SaleFlat {
+          condition
+          discount
+        }
+        ... on SalePercent {
+          condition
+          discount
+        }
       }
     }
   }

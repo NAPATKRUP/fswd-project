@@ -35,7 +35,6 @@ const PaymentPage: FC = () => {
       <Navigator
         listOfNode={['หน้าหลัก', '>>', 'ตะกร้า', '>>', 'ตรวจสอบสินค้า', '>>', 'ชำระเงิน']}
       />
-      <ConfirmOrderCard data={orderById} />
       <AddressCard address={addressById} />
       <form className="lg:px-20 px-10 py-10 mt-8 text-right">
         <label className="text-xl font-semibold lg:w-5/12 w-full px-4">
@@ -49,12 +48,6 @@ const PaymentPage: FC = () => {
             โปรดเลือกช่องทางในการชำระเงิน
           </option>
         </select>
-        <input
-          type="password"
-          name="cvv"
-          placeholder="CVV"
-          className="w-14 border-2 border-dark-300 rounded-xl lg:w-1/12 w-2/12 p-1"
-        />
         <input
           type="submit"
           value="ชำระเงิน"
