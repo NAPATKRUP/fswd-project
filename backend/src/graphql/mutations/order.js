@@ -25,9 +25,6 @@ export const confirmOrder = schemaComposer
       if (!order) {
         throw new ValidationError('ไม่พบออร์เดอร์สินค้า');
       }
-      if (order.orderStatus === 'CONFIRM') {
-        throw new ValidationError('ออร์เดอร์นี้ได้ทำการยืนยันและใส่ที่อยู่ในการจัดส่งแล้ว');
-      }
       if (order.orderStatus === 'SUCCESS') {
         throw new ValidationError('ออร์เดอร์นี้ได้ถูกทำการสั่งซื้อแล้ว');
       }

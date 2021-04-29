@@ -18,7 +18,7 @@ const PromotionCard: FC<PromotionProp> = ({ promotions }: PromotionProp) => {
 
         return (
           <div
-            className="flex flex-col justify-between border-2 border-dashed border-dark-100 bg-gold-100 rounded-xl p-4"
+            className="flex flex-col justify-between border-2 border-dashed border-dark-100 bg-white-100 rounded-xl p-4"
             key={data._id}
           >
             <p className="text-2xl font-semibold text-center">{data.name}</p>
