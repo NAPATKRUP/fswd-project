@@ -2,13 +2,12 @@ import { UserInputError } from 'apollo-server-express';
 import { schemaComposer } from 'graphql-compose';
 import jsonwebtoken from 'jsonwebtoken';
 
-import { UserModel, UserTC } from '../../models';
+import { CartModel, UserModel, UserTC } from '../../models';
 
-const AuthPayload = schemaComposer.createObjectTC({
-  name: 'AuthPayload',
+const RegisterPayload = schemaComposer.createObjectTC({
+  name: 'RegisterPayload',
   fields: {
-    token: 'String',
-    user: UserTC.getType(),
+    status: 'String!',
   },
 });
 
@@ -19,7 +18,7 @@ export const register = schemaComposer.createResolver({
     username: 'String!',
     password: 'String!',
   },
-  type: AuthPayload,
+  type: RegisterPayload,
   resolve: async ({ args }) => {
     const { displayName, username, password } = args;
     const isUsernameAlreadyUse = await UserModel.findOne({ username });
@@ -38,13 +37,20 @@ export const register = schemaComposer.createResolver({
       password,
     });
 
-    return {
-      token: jsonwebtoken.sign({ _id: user._id }, process.env.SECRET ?? 'default-secret', {
-        expiresIn: '1d',
-        algorithm: 'HS256',
-      }),
-      user,
-    };
+    await CartModel.create({
+      userId: user._id,
+      status: 'WAITING',
+    });
+
+    return { status: 'Success' };
+  },
+});
+
+const LoginPayload = schemaComposer.createObjectTC({
+  name: 'LoginPayload',
+  fields: {
+    token: 'String',
+    user: UserTC.getType(),
   },
 });
 
@@ -54,7 +60,7 @@ export const login = schemaComposer.createResolver({
     username: 'String!',
     password: 'String!',
   },
-  type: AuthPayload,
+  type: LoginPayload,
   resolve: async ({ args }) => {
     const { username, password } = args;
     const user = await UserModel.findOne({ username });
