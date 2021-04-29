@@ -52,7 +52,7 @@ const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
   );
 
   return (
-    <div className="hover:bg-white-200 rounded-2xl">
+    <div className="hover:bg-white-200 mt-8 rounded-2xl">
       <Modal
         isOpen={isShowing}
         isHasAccept={false}

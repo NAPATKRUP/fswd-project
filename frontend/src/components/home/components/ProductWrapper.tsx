@@ -22,7 +22,7 @@ const ProductWrapper: FC = () => {
 
   return (
     <div className="px-20 py-8">
-      <p className="text-2xl mb-8">สินค้ามาใหม่</p>
+      <p className="text-2xl">สินค้ามาใหม่</p>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-col-1">
         {latestProduct?.map((item: IProduct) => (
           <ProductBox product={item} key={item._id} />

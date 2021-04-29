@@ -15,7 +15,7 @@ const Navbar: FC = () => {
   return (
     <div className="text-white-100 w-1/5 h-100 bg-dark-100 flex flex-col items-center">
       <p className="text-xl font-semibold text-gold-100 p-5">PERFUME HOUSE</p>
-      <div className="w-4/5 border-b-4 border-gold-100 mx-auto"></div>
+      <div className="w-4/5 border-b-4 border-gold-100 mx-auto rounded-full"></div>
       <ul className="text-center py-10">
         <li className="p-5">
           <NavLink exact to={`/`} activeClassName="text-gold-200">
