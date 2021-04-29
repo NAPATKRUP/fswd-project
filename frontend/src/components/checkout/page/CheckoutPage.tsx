@@ -2,6 +2,9 @@ import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { ORDER_BY_ID_QUERY } from '../graphql/orderQuery';
+import { ADDRESS_BY_USER_QUERY } from '../graphql/addressByUserQuery';
+
+import { IAddress } from '../../commons/type/IAddress';
 
 const ContentWithSidebarLayout = React.lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
@@ -17,19 +20,28 @@ interface RouteParams {
 const CheckoutPage: FC = () => {
   const { orderId } = useParams<RouteParams>();
 
-  const { loading, error, data } = useQuery(ORDER_BY_ID_QUERY, { variables: { orderId } });
-  if (loading) {
+  const { loading: orderLoading, error: orderError, data: orderData } = useQuery(
+    ORDER_BY_ID_QUERY,
+    { variables: { orderId } }
+  );
+  const { loading: addressLoading, error: addressError, data: addressData } = useQuery(
+    ADDRESS_BY_USER_QUERY
+  );
+
+  if (orderLoading || addressLoading) {
     return <Loading />;
   }
-  if (error) {
+  if (orderError || addressError) {
     alert('error');
   }
-  const { orderById } = data;
+  const { orderById } = orderData;
+  const { addressByUserContext } = addressData;
 
   return (
     <ContentWithSidebarLayout>
       <Navigator listOfNode={['หน้าหลัก', '>>', 'ตะกร้า', '>>', 'ตรวจสอบสินค้า']} />
       <ConfirmOrderCard data={orderById} />
+
       <form className="lg:px-20 px-10 py-10 mt-8 text-right">
         <label className="text-xl font-semibold">โปรดเลือกที่อยู่ในการจัดส่ง</label>
         <select
@@ -39,6 +51,11 @@ const CheckoutPage: FC = () => {
           <option value="" selected>
             โปรดเลือกที่อยู่ที่ใช้ในการจัดส่ง
           </option>
+          {addressByUserContext.map((address: IAddress) => (
+            <option key={address._id} value={address._id}>
+              {address.name}
+            </option>
+          ))}
         </select>
         <input
           type="submit"
