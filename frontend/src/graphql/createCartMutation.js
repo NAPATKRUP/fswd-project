@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const CREATE_CART_MUTATION = gql`
   mutation($userId: String!, $status: EnumCartStatus!) {

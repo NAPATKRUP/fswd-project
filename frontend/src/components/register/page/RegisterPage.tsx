@@ -1,18 +1,18 @@
-import React, { FC, useCallback, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { useSession } from "../../../context/SessionContext";
-import useModal from "../../../hooks/useModal";
-import Modal from "../../commons/Modal";
+import React, { FC, useCallback, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSession } from '../../../context/SessionContext';
+import useModal from '../../../hooks/useModal';
+import Modal from '../../commons/Modal';
 
-import "./RegisterPageStyle.css";
+import './RegisterPageStyle.css';
 
 const Register: FC = () => {
   const { register } = useSession();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [title, setTitle] = useState("");
-  const [bodyMessage, setBodyMessage] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [title, setTitle] = useState('');
+  const [bodyMessage, setBodyMessage] = useState('');
   const { isShowing, toggle } = useModal(false);
 
   const handleModalCallBack = (stats: boolean) => {
@@ -34,27 +34,27 @@ const Register: FC = () => {
 
       if (username.length <= 5)
         return handleErrorMessage(
-          "กรุณาใส่ชื่อผู้ใช้งาน",
-          "ชื่อผู้ใช้งานต้องมีอย่างน้อย 6 ตัวอักษร"
+          'กรุณาใส่ชื่อผู้ใช้งาน',
+          'ชื่อผู้ใช้งานต้องมีอย่างน้อย 6 ตัวอักษร'
         );
 
       if (password.length <= 7)
-        return handleErrorMessage("กรุณาใส่รหัสผ่าน", "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร");
+        return handleErrorMessage('กรุณาใส่รหัสผ่าน', 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร');
 
       if (displayName.length <= 5)
         return handleErrorMessage(
-          "กรุณาใส่ชื่อ - นามสกุล",
-          "ชื่อ - นามสกุลต้องมีอย่างน้อย 6 ตัวอักษร"
+          'กรุณาใส่ชื่อ - นามสกุล',
+          'ชื่อ - นามสกุลต้องมีอย่างน้อย 6 ตัวอักษร'
         );
 
       try {
         await register(username, password, displayName);
       } catch ({ message }) {
-        if (message === "Username already used.")
-          return handleErrorMessage("สร้างบัญชีไม่สำเร็จ", "ชื่อผู้ใช้งานถูกใช้ไปแล้วในระบบ");
+        if (message === 'Username already used.')
+          return handleErrorMessage('สร้างบัญชีไม่สำเร็จ', 'ชื่อผู้ใช้งานถูกใช้ไปแล้วในระบบ');
 
-        if (message === "Password is too weak.")
-          return handleErrorMessage("กรุณาใส่รหัสผ่าน", "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร");
+        if (message === 'Password is too weak.')
+          return handleErrorMessage('กรุณาใส่รหัสผ่าน', 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร');
       }
     },
     [displayName, handleErrorMessage, password, register, username]
@@ -110,7 +110,7 @@ const Register: FC = () => {
               placeholder="ชื่อ - นามสกุล"
             />
             <p className="text-right mt-5 text-sm">
-              มีบัญชีแล้วเหรอ ?{" "}
+              มีบัญชีแล้วเหรอ ?{' '}
               <NavLink to="/register" className="text-blue-link">
                 เข้าสู่ระบบ
               </NavLink>
