@@ -24,7 +24,7 @@ export const register = schemaComposer.createResolver({
     const { displayName, username, password } = args;
     const isUsernameAlreadyUse = await UserModel.findOne({ username });
     if (isUsernameAlreadyUse) {
-      throw new UserInputError(`Username ${username} already used.`);
+      throw new UserInputError('Username already used.');
     }
 
     if (password.length <= 7) {
