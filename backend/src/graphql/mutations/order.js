@@ -19,7 +19,7 @@ export const confirmOrder = schemaComposer
     },
     resolve: async ({ args, context }) => {
       const { orderId, addressId } = args;
-      const { _id: userId } = context;
+      const { _id: userId } = context.user;
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {
@@ -63,7 +63,7 @@ export const paymentOrder = schemaComposer
     },
     resolve: async ({ args, context }) => {
       const { orderId, paymentId } = args;
-      const { _id: userId } = context;
+      const { _id: userId } = context.user;
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {
@@ -110,7 +110,7 @@ export const cancelOrder = schemaComposer
     },
     resolve: async ({ args, context }) => {
       const { orderId } = args;
-      const { _id: userId } = context;
+      const { _id: userId } = context.user;
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {

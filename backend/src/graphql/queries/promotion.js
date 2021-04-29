@@ -8,7 +8,7 @@ export const availablePromotion = schemaComposer.createResolver({
   type: [PromotionTC.getType()],
   resolve: async () => {
     const promotion = await PromotionModel.find({
-      $or: [{ startDate: { $gte: new Date() } }, { endDate: { $gte: new Date() } }],
+      endDate: { $gte: new Date() },
     }).sort({ startDate: 1 });
     return promotion;
   },

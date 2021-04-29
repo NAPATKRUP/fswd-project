@@ -29,8 +29,8 @@ const App: FC = () => {
           <Route exact path="/promotions" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <Route exact path="/cart" component={CartPage} />
-          <Route exact path="/checkout/:orderId" component={CheckoutPage} />
-          <Route exact path="/payment/:orderId" component={PaymentPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
+          <Route exact path="/payment" component={PaymentPage} />
           {/* <Route exact path="/cart/:cartId/payment" component={PaymentPage} /> */}
           {/* <Route exact path="/manage-product" component={ManageProduct} /> */}
           {/* <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} /> */}

@@ -44,8 +44,8 @@ const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
           'เพิ่มจำนวนสินค้าเสร็จสิ้น',
           'ระบบได้ทำการเพิ่มจำนวนรายการสินค้าที่ท่านเลือกในตะกร้าสินค้าแล้ว'
         );
-      } catch (e) {
-        return handleStatusMessage('ทำรายการไม่สำเร็จ', e.toString().replace('Error: ', ''));
+      } catch ({ message }) {
+        return handleStatusMessage('ทำรายการไม่สำเร็จ', message);
       }
     },
     [addItemInCart, handleStatusMessage]

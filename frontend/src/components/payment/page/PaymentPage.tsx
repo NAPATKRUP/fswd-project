@@ -8,7 +8,6 @@ const ContentWithSidebarLayout = React.lazy(
 );
 const Loading = React.lazy(() => import('../../commons/loading/Loading'));
 const Navigator = React.lazy(() => import('../../commons/Navigator'));
-const ConfirmOrderCard = React.lazy(() => import('../../commons/ConfirmOrderCard'));
 const AddressCard = React.lazy(() => import('../../commons/AddressCard'));
 
 interface RouteParams {

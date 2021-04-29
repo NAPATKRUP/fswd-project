@@ -39,7 +39,6 @@ const Login: FC = () => {
       try {
         await login(username, password);
       } catch ({ message }) {
-        console.log(message);
         if (message === 'Username not found')
           return handleErrorMessage('เข้าสู่ระบบไม่สำเร็จ', 'ไม่พบบัญชีในระบบ');
 

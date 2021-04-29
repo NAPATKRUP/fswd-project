@@ -4,7 +4,7 @@ import { schemaComposer } from 'graphql-compose';
 import CartModel, { CartTC } from '../../models/cart';
 import ProductModel from '../../models/product';
 import PromotionModel from '../../models/promotion';
-import OrderModel from '../../models/order';
+import OrderModel, { OrderTC } from '../../models/order';
 import { requiredAuth } from '../middlewares';
 
 const summaryCart = async (userId) => {
@@ -166,7 +166,7 @@ export const checkoutCart = schemaComposer
   .createResolver({
     name: 'checkoutCart',
     kind: 'mutation',
-    type: CartTC.getType(),
+    type: OrderTC.getType(),
     resolve: async ({ context }) => {
       const { _id: userId } = context.user;
 
@@ -259,8 +259,7 @@ export const checkoutCart = schemaComposer
       });
       await newCart.save();
 
-      const updateCart = CartModel.findOne({ userId, status: 'WAITING' });
-      return updateCart;
+      return order;
     },
   })
   .wrapResolve(requiredAuth);
