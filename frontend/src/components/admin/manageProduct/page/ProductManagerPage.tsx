@@ -1,9 +1,9 @@
-import React, { FC } from "react";
-import { Link, Switch, Route, useRouteMatch } from "react-router-dom";
-import CreateProductPage from "./CreateProductPage";
-import EditProductPage from "./EditProductPage";
-import ViewAllProductPage from "./ViewAllProductPage";
-import ViewProductPage from "./ViewProductPage";
+import { FC } from 'react';
+import { Link, Switch, Route, useRouteMatch } from 'react-router-dom';
+import CreateProductPage from './CreateProductPage';
+import EditProductPage from './EditProductPage';
+import ViewAllProductPage from './ViewAllProductPage';
+import ViewProductPage from './ViewProductPage';
 
 const ProductManagerPage: FC = () => {
   let { path, url } = useRouteMatch();
@@ -26,12 +26,14 @@ const ProductManagerPage: FC = () => {
 
       <hr className="my-5" />
 
-      <Switch>
-        <Route exact path={`${path}/create`} component={CreateProductPage} />
-        <Route exact path={`${path}`} component={ViewAllProductPage} />
-        <Route path={`${path}/:slug/edit`} component={EditProductPage} />
-        <Route path={`${path}/:slug`} component={ViewProductPage} />
-      </Switch>
+      <div className="w-100">
+        <Switch>
+          <Route exact path={`${path}/create`} component={CreateProductPage} />
+          <Route exact path={`${path}`} component={ViewAllProductPage} />
+          <Route path={`${path}/:slug/edit`} component={EditProductPage} />
+          <Route path={`${path}/:slug`} component={ViewProductPage} />
+        </Switch>
+      </div>
     </>
   );
 };

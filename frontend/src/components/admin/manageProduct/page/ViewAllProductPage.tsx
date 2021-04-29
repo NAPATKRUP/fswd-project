@@ -1,9 +1,9 @@
-import React, { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { PRODUCT_QUERY_ALL } from '../graphql/product';
 import AdminProductBox from '../components/AdminProductBox';
 import Loading from '../../../commons/loading/Loading';
 import { IProduct } from '../../../commons/type/IProduct';
+import { PRODUCT_QUERY_ALL } from '../graphql/queryProduct';
 
 const ViewAllProductPage: FC = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
