@@ -31,13 +31,13 @@ const Login: FC = () => {
     async (event) => {
       event.preventDefault();
 
-      if (username.length <= 5)
+      if (username.length < 6)
         return handleErrorMessage(
           'กรุณาใส่ชื่อผู้ใช้งาน',
           'ชื่อผู้ใช้งานต้องมีอย่างน้อย 6 ตัวอักษร'
         );
 
-      if (password.length <= 7)
+      if (password.length < 8)
         return handleErrorMessage('กรุณาใส่รหัสผ่าน', 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร');
 
       try {
