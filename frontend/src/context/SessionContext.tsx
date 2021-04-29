@@ -1,6 +1,5 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from 'react';
 import { REGISTER_MUTATION } from '../graphql/registerMutation';
-import { CREATE_CART_MUTATION } from '../graphql/createCartMutation';
 import { useHistory, useLocation } from 'react-router';
 import { useCookies } from 'react-cookie';
 import { useLazyQuery, useMutation } from '@apollo/client';
@@ -11,11 +10,6 @@ interface IUser {
   _id: string;
   displayName: string;
   role: string;
-}
-
-enum EnumCartStatus {
-  WAITING = 'WAITING',
-  CHECKOUT = 'CHECKOUT',
 }
 
 const SessionContext: React.Context<{
@@ -37,8 +31,7 @@ export const SessionProvider: FC = ({ children }) => {
   const location = useLocation();
   const [login] = useMutation(LOGIN_MUTATION);
   const [register] = useMutation(REGISTER_MUTATION);
-  const [createCart] = useMutation(CREATE_CART_MUTATION);
-  const [queryMe, { loading, data, client }] = useLazyQuery(ME_QUERY, {
+  const [queryMe, { data, client }] = useLazyQuery(ME_QUERY, {
     fetchPolicy: 'network-only',
   });
 
@@ -61,18 +54,11 @@ export const SessionProvider: FC = ({ children }) => {
     async (username, password, displayName) => {
       const result = await register({ variables: { username, password, displayName } });
 
-      if (result.data.register.token) {
-        setCookie('token', result.data.register.token, { maxAge: 86400 });
-        setUser(result?.data?.register?.user);
-
-        await createCart({
-          variables: { userId: result?.data?.register?.user?._id, status: EnumCartStatus.WAITING },
-        });
-
-        return history.push('/');
+      if (result.data.register.status === 'Success') {
+        return history.push('/login');
       }
     },
-    [createCart, history, register, setCookie]
+    [history, register]
   );
 
   const handleLogout = useCallback(async () => {
