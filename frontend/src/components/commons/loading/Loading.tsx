@@ -1,5 +1,5 @@
-import "./Loading.css";
-import React, { FunctionComponent } from "react";
+import './Loading.css';
+import React, { FunctionComponent } from 'react';
 
 const Loading: FunctionComponent = () => {
   // useEffect(() => {
