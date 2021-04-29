@@ -58,3 +58,4 @@ export const filterProductResolver = schemaComposer.createResolver({
 
 export const productById = ProductTC.getResolver('findById');
 export const productByMany = ProductTC.getResolver('findMany');
+export const productFindOne = ProductTC.getResolver('findOne');
