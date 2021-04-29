@@ -12,6 +12,34 @@ interface IUser {
   role: string;
 }
 
+interface ILoginInput {
+  username: string;
+  password: string;
+}
+
+interface ILoginPayload {
+  login: {
+    token: string;
+    user: IUser;
+  };
+}
+
+interface IRegisterInput {
+  username: string;
+  password: string;
+  displayName: string;
+}
+
+interface IRegisterPayload {
+  register: {
+    status: string;
+  };
+}
+
+interface IQueryMePayload {
+  me: IUser;
+}
+
 const SessionContext: React.Context<{
   user?: IUser | null;
   login: (username: string, password: string) => Promise<void>;
@@ -29,9 +57,9 @@ export const SessionProvider: FC = ({ children }) => {
   const [, setCookie, removeCookie] = useCookies(['token']);
   const history = useHistory();
   const location = useLocation();
-  const [login] = useMutation(LOGIN_MUTATION);
-  const [register] = useMutation(REGISTER_MUTATION);
-  const [queryMe, { data, client }] = useLazyQuery(ME_QUERY, {
+  const [login] = useMutation<ILoginPayload, ILoginInput>(LOGIN_MUTATION);
+  const [register] = useMutation<IRegisterPayload, IRegisterInput>(REGISTER_MUTATION);
+  const [queryMe, { data, client }] = useLazyQuery<IQueryMePayload>(ME_QUERY, {
     fetchPolicy: 'network-only',
   });
 
@@ -39,22 +67,22 @@ export const SessionProvider: FC = ({ children }) => {
     async (username, password) => {
       const result = await login({ variables: { username, password } });
 
-      if (result.data.login.token) {
-        setCookie('token', result.data.login.token, { maxAge: 86400 });
+      if (result?.data?.login?.token) {
+        setCookie('token', result?.data?.login.token, { maxAge: 86400 });
         setUser(result?.data?.login?.user);
 
-        if (user?.role === 'customer') return history.push('/');
-        if (user?.role === 'admin') return history.push('/admin');
+        if (result?.data?.login?.user?.role === 'customer') return history.push('/');
+        if (result?.data?.login?.user?.role === 'admin') return history.push('/admin');
       }
     },
-    [history, login, setCookie, user]
+    [history, login, setCookie]
   );
 
   const handleRegister = useCallback(
     async (username, password, displayName) => {
       const result = await register({ variables: { username, password, displayName } });
 
-      if (result.data.register.status === 'Success') {
+      if (result?.data?.register.status === 'Success') {
         return history.push('/login');
       }
     },
