@@ -26,8 +26,8 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
     },
     [toggle]
   );
-  const handleCallBack = (stats: boolean) => {
-    if (!stats) toggle();
+  const handleCallBack = (status: boolean) => {
+    if (!status) toggle();
   };
 
   const [addItemInCart] = useMutation(ADD_ITEM_IN_CART_MUTATION);

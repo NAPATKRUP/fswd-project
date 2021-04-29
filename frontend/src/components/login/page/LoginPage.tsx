@@ -14,8 +14,8 @@ const Login: FC = () => {
   const [bodyMessage, setBodyMessage] = useState('');
   const { isShowing, toggle } = useModal(false);
 
-  const handleModalCallBack = (stats: boolean) => {
-    if (!stats) toggle();
+  const handleModalCallBack = (status: boolean) => {
+    if (!status) toggle();
   };
 
   const handleErrorMessage = useCallback(
