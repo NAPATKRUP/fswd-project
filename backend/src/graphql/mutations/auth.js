@@ -26,7 +26,7 @@ export const register = schemaComposer.createResolver({
       throw new UserInputError('Username already used.');
     }
 
-    if (password.length <= 7) {
+    if (password.length < 8) {
       throw new UserInputError('Password is too weak.');
     }
 
