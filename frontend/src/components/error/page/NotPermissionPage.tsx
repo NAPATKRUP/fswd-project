@@ -1,7 +1,5 @@
-import React, { FC } from "react";
+import { FC } from 'react';
 
-const NotPermissionPage: FC = () => {
-  return <div>You not have permission on this page</div>;
-};
+const NotPermissionPage: FC = () => <div>You not have permission on this page</div>;
 
 export default NotPermissionPage;

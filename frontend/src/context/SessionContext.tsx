@@ -1,12 +1,11 @@
-import { useLazyQuery, useMutation } from "@apollo/client";
-import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import { useHistory, useLocation } from "react-router";
-
-import { ME_QUERY } from "../graphql/meQuery";
-import { LOGIN_MUTATION } from "../graphql/loginMutation";
-import { REGISTER_MUTATION } from "../graphql/registerMutation";
-import { CREATE_CART_MUTATION } from "../graphql/createCartMutation";
+import { createContext, FC, useCallback, useContext, useEffect, useState } from 'react';
+import { REGISTER_MUTATION } from '../graphql/registerMutation';
+import { CREATE_CART_MUTATION } from '../graphql/createCartMutation';
+import { useHistory, useLocation } from 'react-router';
+import { useCookies } from 'react-cookie';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { ME_QUERY } from '../graphql/meQuery';
+import { LOGIN_MUTATION } from '../graphql/loginMutation';
 
 interface IUser {
   _id: string;
@@ -15,8 +14,8 @@ interface IUser {
 }
 
 enum EnumCartStatus {
-  WAITING = "WAITING",
-  CHECKOUT = "CHECKOUT",
+  WAITING = 'WAITING',
+  CHECKOUT = 'CHECKOUT',
 }
 
 const SessionContext: React.Context<{
@@ -33,14 +32,14 @@ const SessionContext: React.Context<{
 
 export const SessionProvider: FC = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
-  const [, setCookie, removeCookie] = useCookies(["token"]);
+  const [, setCookie, removeCookie] = useCookies(['token']);
   const history = useHistory();
   const location = useLocation();
   const [login] = useMutation(LOGIN_MUTATION);
   const [register] = useMutation(REGISTER_MUTATION);
   const [createCart] = useMutation(CREATE_CART_MUTATION);
   const [queryMe, { loading, data, client }] = useLazyQuery(ME_QUERY, {
-    fetchPolicy: "network-only",
+    fetchPolicy: 'network-only',
   });
 
   const handleLogin = useCallback(
@@ -48,11 +47,11 @@ export const SessionProvider: FC = ({ children }) => {
       const result = await login({ variables: { username, password } });
 
       if (result.data.login.token) {
-        setCookie("token", result.data.login.token, { maxAge: 86400 });
+        setCookie('token', result.data.login.token, { maxAge: 86400 });
         setUser(result?.data?.login?.user);
 
-        if (user?.role === "customer") return history.push("/");
-        if (user?.role === "admin") return history.push("/admin");
+        if (user?.role === 'customer') return history.push('/');
+        if (user?.role === 'admin') return history.push('/admin');
       }
     },
     [history, login, setCookie, user]
@@ -63,30 +62,30 @@ export const SessionProvider: FC = ({ children }) => {
       const result = await register({ variables: { username, password, displayName } });
 
       if (result.data.register.token) {
-        setCookie("token", result.data.register.token, { maxAge: 86400 });
+        setCookie('token', result.data.register.token, { maxAge: 86400 });
         setUser(result?.data?.register?.user);
 
         await createCart({
           variables: { userId: result?.data?.register?.user?._id, status: EnumCartStatus.WAITING },
         });
 
-        return history.push("/");
+        return history.push('/');
       }
     },
     [createCart, history, register, setCookie]
   );
 
   const handleLogout = useCallback(async () => {
-    removeCookie("token", { maxAge: 86400 });
+    removeCookie('token', { maxAge: 86400 });
     await client?.clearStore();
     await queryMe();
-    history.push("/");
+    history.push('/');
     setUser(null);
   }, [client, history, queryMe, removeCookie]);
 
   useEffect(() => {
-    if (location.pathname.includes("/admin") && user?.role === "customer") {
-      history.push("no-permission");
+    if (location.pathname.includes('/admin') && user?.role === 'customer') {
+      history.push('no-permission');
     }
   }, [history, location, user?.role]);
 

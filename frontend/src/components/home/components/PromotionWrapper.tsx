@@ -1,13 +1,18 @@
-import React, { FunctionComponent } from "react";
+import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 
-const PromotionBoxWrapper: FunctionComponent = () => {
+const PromotionCarousel = React.lazy(() => import('./PromotionCarousel'));
+
+const PromotionBoxWrapper: FC = () => {
   return (
-    <div className="flex flex-col items-center p-20">
-      <div className="text-3xl">Latest Promotions</div>
-      <hr className="h-1 w-64 color-gold mt-4"></hr>
-      <hr className="h-1 w-48 color-gold mt-2"></hr>
-      <div className="h-64 w-2/3 bg-blue-400 mt-4">image</div>
-      <p className="text-right w-full">See more</p>
+    <div className="flex flex-col items-center px-20 py-16">
+      <div className="text-3xl">โปรโมชั่น</div>
+      <div className="w-64 border-2 border-gold-100 bg-gold-100 rounded-full mt-4"></div>
+      <div className="w-48 border-2 border-gold-100 bg-gold-100 rounded-full my-2"></div>
+      <PromotionCarousel />
+      <NavLink to="/promotions" className="text-right hover:text-gold-100 w-full mt-5 block">
+        ดูเพิ่มเติม
+      </NavLink>
     </div>
   );
 };

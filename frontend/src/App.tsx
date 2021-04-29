@@ -1,16 +1,22 @@
-import React, { FunctionComponent, Fragment } from "react";
-import { Route, Switch } from "react-router-dom";
-import LoginPage from "./components/login/page/LoginPage";
-import RegisterPage from "./components/register/page/RegisterPage";
-import ProductPage from "./components/product/page/ProductPage";
-import HomePage from "./components/home/page/HomePage";
-import PromotionPage from "./components/promotion/page/PromotionPage";
-import ManageProduct from "./components/manageProduct/page/ManageProduct";
-import NotPermissionPage from "./components/error/page/NotPermissionPage";
-// import { useSession } from "./context/SessionContext";
-// import CartPage from "./components/cart/page/CartPage";
+import React, { FC, Fragment } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import LoginPage from './components/login/page/LoginPage';
+import RegisterPage from './components/register/page/RegisterPage';
+import ProductPage from './components/product/page/ProductPage';
+import HomePage from './components/home/page/HomePage';
+import PromotionPage from './components/promotion/page/PromotionPage';
+// import ManageProduct from './components/manageProduct/page/ManageProduct';
+import NotPermissionPage from './components/error/page/NotPermissionPage';
+import ProductDetailPage from './components/product/page/ProductDetailPage';
+import CartPage from './components/cart/page/CartPage';
+import CheckoutPage from './components/checkout/page/CheckoutPage';
+import PaymentPage from './components/payment/page/PaymentPage';
+import NotFoundPage from './components/error/page/NotFoundPage';
 
-const App: FunctionComponent = () => {
+// import ManageProduct from './components/manageProduct/page/ManageProduct';
+// import { useSession } from "./context/SessionContext";
+
+const App: FC = () => {
   // const { user } = useSession();
 
   const renderRoute = () => {
@@ -20,12 +26,19 @@ const App: FunctionComponent = () => {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/product" component={ProductPage} />
-          <Route exact path="/promotion" component={PromotionPage} />
+          <Route path="/product/:slug" component={ProductDetailPage} />
+          <Route exact path="/products" component={ProductPage} />
+          <Route exact path="/promotions" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
-          <Route exact path="/manage-product" component={ManageProduct} />
+          <Route exact path="/cart" component={CartPage} />
+          <Route exact path="/checkout/:orderId" component={CheckoutPage} />
+          <Route exact path="/payment/:orderId" component={PaymentPage} />
+          {/* <Route exact path="/cart/:cartId/payment" component={PaymentPage} /> */}
+          {/* <Route exact path="/manage-product" component={ManageProduct} /> */}
           {/* <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} /> */}
-          {/* <CustomerRoute role={user.role} exact path="/cart" component={CartPage} /> */}
+          <Route path="*">
+            <NotFoundPage />
+          </Route>
         </Switch>
       </Fragment>
     );

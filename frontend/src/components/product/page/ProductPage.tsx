@@ -1,11 +1,52 @@
-import React, { FC } from "react";
-import ContentWithSidebarLayout from "../../commons/layouts/ContentWithSidebarLayout";
+import React, { FC, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { FILTER_PRODUCT_QUERY } from '../graphql/filterProductQuery';
+
+const ContentWithSidebarLayout = React.lazy(
+  () => import('../../commons/layouts/ContentWithSidebarLayout')
+);
+const Loading = React.lazy(() => import('../../commons/loading/Loading'));
+const Navigator = React.lazy(() => import('../../commons/Navigator'));
+const FilterProductBar = React.lazy(() => import('../components/FilterProductBar'));
+const ProductWrapper = React.lazy(() => import('../components/ProductWrapper'));
 
 const ProductPage: FC = () => {
+  const [searchType, setSearchType] = useState<string>('PRICE_ASC');
+  const [name, setName] = useState<string>('');
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(100000);
+
+  const { loading, error, data } = useQuery(FILTER_PRODUCT_QUERY, {
+    variables: {
+      typeFilter: searchType,
+      name: name,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+    },
+  });
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    alert('error');
+  }
+  const { filterProduct } = data;
+
+  const handleCallBack = (searchType: string, name: string, minPrice: number, maxPrice: number) => {
+    setSearchType(searchType);
+    setName(name);
+    setMinPrice(minPrice);
+    setMaxPrice(maxPrice);
+  };
+
   return (
     <ContentWithSidebarLayout>
-      <div>
-        <h1>ProductPage</h1>
+      <Navigator listOfNode={['หน้าหลัก', '>>', 'สินค้า']} />
+      <div className="flex flex-col items-center lg:px-20 md:px-10 py-10">
+        <FilterProductBar callBackFunction={handleCallBack} />
+        <div className="w-full border-b-4 border-gold-200 rounded-full my-8"></div>
+        <ProductWrapper product={filterProduct} />
+        <div className="w-full border-b-4 border-gold-200 rounded-full my-8"></div>
       </div>
     </ContentWithSidebarLayout>
   );
