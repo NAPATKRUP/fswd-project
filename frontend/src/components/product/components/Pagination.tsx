@@ -4,9 +4,6 @@ import { ButtonBase } from "@material-ui/core";
 const Pagination = (props: any) => {
   const { productPerPage, totalPage, paginate } = props;
 
-  console.log(productPerPage);
-  console.log(totalPage);
-
   const pageNumber = [];
 
   for (let i = 1; i <= Math.ceil(totalPage / productPerPage); i++) {
