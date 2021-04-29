@@ -13,3 +13,8 @@ export interface IItem {
   product: IProduct;
   amount: number;
 }
+
+export enum EnumCartStatus {
+  WAITING = 'WAITING',
+  CHECKOUT = 'CHECKOUT',
+}

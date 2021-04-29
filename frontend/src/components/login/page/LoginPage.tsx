@@ -14,6 +14,10 @@ const Login: FC = () => {
   const [bodyMessage, setBodyMessage] = useState('');
   const { isShowing, toggle } = useModal(false);
 
+  const handleModalCallBack = (status: boolean) => {
+    if (!status) toggle();
+  };
+
   const handleErrorMessage = useCallback(
     (title: string, bodyMessage: string) => {
       setTitle(title);
@@ -27,19 +31,18 @@ const Login: FC = () => {
     async (event) => {
       event.preventDefault();
 
-      if (username.length <= 5)
+      if (username.length < 6)
         return handleErrorMessage(
           'กรุณาใส่ชื่อผู้ใช้งาน',
           'ชื่อผู้ใช้งานต้องมีอย่างน้อย 6 ตัวอักษร'
         );
 
-      if (password.length <= 7)
+      if (password.length < 8)
         return handleErrorMessage('กรุณาใส่รหัสผ่าน', 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร');
 
       try {
         await login(username, password);
       } catch ({ message }) {
-        console.log(message);
         if (message === 'Username not found')
           return handleErrorMessage('เข้าสู่ระบบไม่สำเร็จ', 'ไม่พบบัญชีในระบบ');
 
@@ -49,10 +52,6 @@ const Login: FC = () => {
     },
     [handleErrorMessage, login, password, username]
   );
-
-  const handleCallBack = (stats: boolean) => {
-    if (!stats) toggle();
-  };
 
   const handleUsernameChange = useCallback(async (event) => {
     setUsername(event.target.value);
@@ -70,10 +69,10 @@ const Login: FC = () => {
         isHasDecline={false}
         title={title}
         bodyMessage={bodyMessage}
-        callBackFunction={handleCallBack}
+        callBackFunction={handleModalCallBack}
       />
-      <div className="login-page bg-dark-100 flex justify-center items-center">
-        <div className="login-box relative p-10">
+      <div className="login-page flex justify-center items-center">
+        <div className="login-box p-10">
           <form onSubmit={handleSubmit}>
             <p className="text-2xl">เข้าสู่ระบบ</p>
             <p className="text-sm mt-1">กรอกชื่อผู้ใช้งานและรหัสผ่านเพื่อเข้าใช้งาน</p>
