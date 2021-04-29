@@ -3,7 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICreateProduct, IProduct } from '../../../commons/type/IProduct';
 import { useMutation } from '@apollo/client';
-import { PRODUCT_CREATE_MUTATION } from '../graphql/product';
+import { PRODUCT_CREATE_MUTATION } from '../graphql/createProduct';
 
 const CreateProductPage: FC = () => {
   const [productDetail, setProductDetail] = useState<ICreateProduct>({
