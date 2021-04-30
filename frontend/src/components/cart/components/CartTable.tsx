@@ -94,7 +94,7 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
         <div className="lg:col-span-1 col-span-1"></div>
       </div>
       {items?.map((item: IItem, index: number) => (
-        <div className="grid grid-cols-12 gap-2">
+        <div key={item._id} className="grid grid-cols-12 gap-2">
           <div className="lg:col-span-1 col-span-1 lg:text-base text-sm text-center">
             {index + 1}
           </div>
