@@ -1,8 +1,8 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import Loading from "../../commons/loading/Loading";
 import { PRODUCTFILTER_QUERY } from "../graphql/filterProduct";
-import Pagination from "../components/Pagination";
+import ReactPagination from "../components/ReactPagination";
 
 const ContentWithSidebarLayout = React.lazy(
   () => import("../../commons/layouts/ContentWithSidebarLayout")
@@ -18,9 +18,9 @@ const ProductPage: any = () => {
   const [maxPrice, setMaxPrice] = useState<number>(100000);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [productPerPage, setProductPerPage] = useState(2);
+  const productPerPage = 1;
 
-  const { loading, error, data } = useQuery(PRODUCTFILTER_QUERY, {
+  const { loading, error, data } = useQuery<any>(PRODUCTFILTER_QUERY, {
     variables: {
       typeFilter: searchType,
       name: name,
@@ -35,6 +35,7 @@ const ProductPage: any = () => {
   if (error) {
     return "Error !!";
   }
+
   const { filterProductResolver } = data;
 
   const indexOfLastProduct = currentPage * productPerPage;
@@ -57,10 +58,13 @@ const ProductPage: any = () => {
         <FilterProductBar callBackFunction={handleCallBack} />
         <hr className="h-1 w-4/5 color-gold mt-4"></hr>
         <ProductWrapper product={currentProduct} />
-        <Pagination
-          productPerPage={productPerPage}
-          totalPage={filterProductResolver.length}
-          paginate={paginate}
+
+        {/* Reference  : https://github.com/isaurssaurav/react-pagination-js */}
+        <ReactPagination
+          currentPage={currentPage}
+          totalSize={filterProductResolver.length}
+          changeCurrentPage={paginate}
+          sizePerPage={productPerPage}
         />
         <hr className="h-1 w-4/5 color-gold mt-4"></hr>
       </div>
