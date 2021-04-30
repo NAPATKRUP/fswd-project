@@ -6,7 +6,7 @@ interface SummaryProps {
   totalFinalPrice: number;
 }
 
-const SummaryWrapper: FC<SummaryProps> = ({
+const SummaryCard: FC<SummaryProps> = ({
   totalPrice,
   promotionDiscount,
   totalFinalPrice,
@@ -32,4 +32,4 @@ const SummaryWrapper: FC<SummaryProps> = ({
   );
 };
 
-export default SummaryWrapper;
+export default SummaryCard;

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { FILTER_PRODUCT_QUERY } from '../graphql/filterProductQuery';
+import { FILTER_PRODUCT_QUERY } from '../../../graphql/filterProductQuery';
 
 const ContentWithSidebarLayout = React.lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')

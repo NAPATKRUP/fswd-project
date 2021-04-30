@@ -2,7 +2,7 @@ import React, { FC, useState, useCallback } from 'react';
 import { useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
 import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
-import { CHECKOUT_MUTATION } from '../graphql/checkoutCartMutation';
+import { CHECKOUT_MUTATION } from '../../../graphql/checkoutCartMutation';
 
 import useModal from '../../../hooks/useModal';
 
@@ -12,7 +12,7 @@ const ContentWithSidebarLayout = React.lazy(
 const Loading = React.lazy(() => import('../../commons/loading/Loading'));
 const Navigator = React.lazy(() => import('../../commons/Navigator'));
 const CartTable = React.lazy(() => import('../components/CartTable'));
-const SummaryWrapper = React.lazy(() => import('../components/SummaryWrapper'));
+const SummaryCard = React.lazy(() => import('../components/SummaryCard'));
 const Modal = React.lazy(() => import('../../commons/Modal'));
 
 const CartPage: FC = () => {
@@ -77,7 +77,7 @@ const CartPage: FC = () => {
       />
       <Navigator listOfNode={['หน้าหลัก', '>>', 'ตะกร้า']} />
       <CartTable items={waitingCart.items} />
-      <SummaryWrapper
+      <SummaryCard
         totalPrice={waitingCart.totalPrice}
         promotionDiscount={waitingCart.promotionDiscount}
         totalFinalPrice={waitingCart.totalFinalPrice}

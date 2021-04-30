@@ -6,7 +6,7 @@ interface ProductProps {
   product: IProduct[];
 }
 
-const ProductBox = React.lazy(() => import('../../commons/ProductBox'));
+const ProductCard = React.lazy(() => import('../../commons/ProductCard'));
 
 const ProductWrapper: FC<ProductProps> = ({ product }: ProductProps) => {
   return (
@@ -16,7 +16,7 @@ const ProductWrapper: FC<ProductProps> = ({ product }: ProductProps) => {
       </p>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-4">
         {product?.map((item: IProduct) => (
-          <ProductBox product={item} key={item._id} />
+          <ProductCard product={item} key={item._id} />
         ))}
       </div>
     </div>

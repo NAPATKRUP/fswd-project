@@ -1,20 +1,20 @@
 import React, { FC, useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { ADD_ITEM_IN_CART_MUTATION } from '../commons/graphql/addItemInCartMutation';
+import { ADD_ITEM_IN_CART_MUTATION } from '../../graphql/addItemInCartMutation';
 import { WAITING_CART_QUERY } from '../../graphql/waitingCartQuery';
 
 import useModal from '../../hooks/useModal';
 
 import { IProduct } from './type/IProduct';
 
-interface ProductBoxProps {
+interface ProductCardProps {
   product: IProduct;
 }
 
-const Modal = React.lazy(() => import('../commons/Modal'));
+const Modal = React.lazy(() => import('./Modal'));
 
-const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
+const ProductCard: FC<ProductCardProps> = ({ product }: ProductCardProps) => {
   const [title, setTitle] = useState('');
   const [bodyMessage, setBodyMessage] = useState('');
   const { isShowing, toggle } = useModal(false);
@@ -115,4 +115,4 @@ const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
   );
 };
 
-export default ProductBox;
+export default ProductCard;

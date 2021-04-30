@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { LATESTPRODUCT_PRODUCT_QUERY } from '../graphql/latestProductQuery';
+import { LATESTPRODUCT_PRODUCT_QUERY } from '../../../graphql/latestProductQuery';
 
 import { IProduct } from '../../commons/type/IProduct';
 
 const Loading = React.lazy(() => import('../../commons/layouts/ContentWithSidebarLayout'));
-const ProductBox = React.lazy(() => import('../../commons/ProductBox'));
+const ProductCard = React.lazy(() => import('../../commons/ProductCard'));
 
-const ProductWrapper: FC = () => {
+const LatestProductWrapper: FC = () => {
   const { loading, error, data } = useQuery(LATESTPRODUCT_PRODUCT_QUERY, {
     variables: { productShow: 4 },
   });
@@ -25,7 +25,7 @@ const ProductWrapper: FC = () => {
       <p className="text-2xl">สินค้ามาใหม่</p>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-col-1">
         {latestProduct?.map((item: IProduct) => (
-          <ProductBox product={item} key={item._id} />
+          <ProductCard product={item} key={item._id} />
         ))}
       </div>
       <NavLink to="/products" className="text-right hover:text-gold-100 w-full mt-5 block">
@@ -35,4 +35,4 @@ const ProductWrapper: FC = () => {
   );
 };
 
-export default ProductWrapper;
+export default LatestProductWrapper;
