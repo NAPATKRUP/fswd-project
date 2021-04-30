@@ -1,8 +1,8 @@
 import React, { FC, useState, useCallback } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
 import { ORDER_BY_ID_QUERY } from '../graphql/orderQuery';
-import { ADDRESS_BY_USER_QUERY } from '../graphql/addressByUserQuery';
+import { ADDRESS_BY_USERCONTEXT_QUERY } from '../graphql/addressByUserContextQuery';
 import { CONFIRM_ORDER_MUTATION } from '../graphql/confirmOrderMutaton';
 
 import useModal from '../../../hooks/useModal';
@@ -30,12 +30,14 @@ const CheckoutPage: FC = () => {
   const [bodyMessage, setBodyMessage] = useState('');
   const { isShowing, toggle } = useModal(false);
 
+  const history = useHistory();
+
   const { loading: orderLoading, error: orderError, data: orderData } = useQuery(
     ORDER_BY_ID_QUERY,
     { variables: { orderId } }
   );
   const { loading: addressLoading, error: addressError, data: addressData } = useQuery(
-    ADDRESS_BY_USER_QUERY
+    ADDRESS_BY_USERCONTEXT_QUERY
   );
   const [confirmOrder] = useMutation(CONFIRM_ORDER_MUTATION);
 
@@ -50,6 +52,7 @@ const CheckoutPage: FC = () => {
   const handleCallBack = (stats: boolean) => {
     if (!stats) {
       toggle();
+      if (addressId !== '') history.push('/payment', { orderId: orderId, addressId: addressId });
     }
   };
 
@@ -73,7 +76,7 @@ const CheckoutPage: FC = () => {
         return handleStatusMessage('ทำรายการไม่สำเร็จ', message);
       }
     },
-    [handleStatusMessage, addressId]
+    [addressId, handleStatusMessage, confirmOrder, orderId]
   );
 
   const handleAddressIdChange = useCallback(async (event) => {

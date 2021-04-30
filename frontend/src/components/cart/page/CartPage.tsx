@@ -21,7 +21,6 @@ const CartPage: FC = () => {
   const { isShowing, toggle } = useModal(false);
 
   const [order, setOrder] = useState('');
-
   const history = useHistory();
 
   const handleStatusMessage = useCallback(
@@ -44,9 +43,7 @@ const CartPage: FC = () => {
     async (e) => {
       e.preventDefault();
       try {
-        const orderResult: any = await checkoutCart({
-          refetchQueries: [{ query: WAITING_CART_QUERY }],
-        });
+        const orderResult: any = await checkoutCart();
         setOrder(orderResult.data.checkoutCart._id);
         return handleStatusMessage(
           'ตรวจสอบเสร็จสิ้น',

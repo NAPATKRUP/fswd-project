@@ -1,10 +1,10 @@
 import { ValidationError } from 'apollo-server-express';
 import { schemaComposer } from 'graphql-compose';
 
-import CartModel, { CartTC } from '../../models/cart';
-import ProductModel from '../../models/product';
-import PromotionModel from '../../models/promotion';
-import OrderModel, { OrderTC } from '../../models/order';
+import { CartModel, CartTC } from '../../models/cart';
+import { ProductModel } from '../../models/product';
+import { PromotionModel } from '../../models/promotion';
+import { OrderModel, OrderTC } from '../../models/order';
 import { requiredAuth } from '../middlewares';
 
 const summaryCart = async (userId) => {
