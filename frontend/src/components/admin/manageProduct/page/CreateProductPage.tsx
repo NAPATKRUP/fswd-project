@@ -82,12 +82,12 @@ const CreateProductPage: FC = () => {
   return (
     <div>
       <h2 className="text-2xl">Create New Product</h2>
-      <form action="#" method="POST">
+      <form onSubmit={handleSubmitForm}>
         <div className="grid grid-cols-6 gap-6 my-3">
           <div className="col-span-6 sm:col-span-3">
             <div className="my-2">
               <label htmlFor="product_slug" className="block text-md font-medium text-dark-200">
-                Product slug
+                Product slug *
               </label>
               <input
                 type="text"
@@ -100,36 +100,39 @@ const CreateProductPage: FC = () => {
             </div>
             <div className="my-2">
               <label htmlFor="product_name" className="block text-md font-medium text-dark-200">
-                Product name
+                Product name *
               </label>
               <input
                 type="text"
                 name="product_name"
                 id="product_name"
+                required
                 onChange={handleProductNameChange}
                 className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
               <label htmlFor="product_brand" className="block text-md font-medium text-dark-200">
-                Product brand
+                Product brand *
               </label>
               <input
                 type="text"
                 name="product_brand"
                 id="product_brand"
+                required
                 onChange={handleProductBrandChange}
                 className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
               <label htmlFor="product_price" className="block text-md font-medium text-dark-200">
-                Product price
+                Product price *
               </label>
               <input
                 type="number"
                 name="product_price"
                 id="product_price"
+                required
                 onChange={handleProductPriceChange}
                 className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
@@ -163,7 +166,6 @@ const CreateProductPage: FC = () => {
             <div className="my-4">
               <input
                 type="submit"
-                onClick={handleSubmitForm}
                 className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
                 value="Create new product"
               />
