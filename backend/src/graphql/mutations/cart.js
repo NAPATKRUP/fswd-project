@@ -201,8 +201,8 @@ export const checkoutCart = schemaComposer
         ) {
           if (product.stock < itemPromotion.amount) {
             usePromotionList.push({
-              product: `${itemProduct.brand} | ${itemProduct.name}`,
-              promotion: `${itemPromotion.type} | ${itemPromotion.name} ( สินค้าหมดไม่สามารถใช้โปรโมชั่นได้ )`,
+              product: `${itemProduct.brand}| ${itemProduct.name}`,
+              promotion: `${itemPromotion.type}| ${itemPromotion.name} ( สินค้าหมดไม่สามารถใช้โปรโมชั่นได้ )`,
             });
             continue;
           }
@@ -218,8 +218,8 @@ export const checkoutCart = schemaComposer
             }
           ).exec();
           usePromotionList.push({
-            product: `${itemProduct.brand} | ${itemProduct.name}`,
-            promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} ชิ้น แถม ${itemPromotion.amount} ชิ้น )`,
+            product: `${itemProduct.brand}| ${itemProduct.name}`,
+            promotion: `${itemPromotion.type}| ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} ชิ้น แถม ${itemPromotion.amount} ชิ้น )`,
           });
         } else if (
           itemPromotion.type === 'Giveaway' &&
@@ -227,18 +227,18 @@ export const checkoutCart = schemaComposer
           isActive
         ) {
           usePromotionList.push({
-            product: `${itemProduct.brand} | ${itemProduct.name}`,
-            promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ไม่ได้รับโปรโมชั่นเนื่องจากซื้อสินค้าไม่ครบตามที่กำหนด )`,
+            product: `${itemProduct.brand}| ${itemProduct.name}`,
+            promotion: `${itemPromotion.type}| ${itemPromotion.name} ( ไม่ได้รับโปรโมชั่นเนื่องจากซื้อสินค้าไม่ครบตามที่กำหนด )`,
           });
         } else if (itemPromotion.type === 'SaleFlat' && isActive) {
           usePromotionList.push({
-            product: `${itemProduct.brand} | ${itemProduct.name}`,
-            promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} บาท ได้รับส่วนลด ${itemPromotion.discount} บาท )`,
+            product: `${itemProduct.brand}| ${itemProduct.name}`,
+            promotion: `${itemPromotion.type}| ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} บาท ได้รับส่วนลด ${itemPromotion.discount} บาท )`,
           });
         } else if (itemPromotion.type === 'SalePercent' && isActive) {
           usePromotionList.push({
-            product: `${itemProduct.brand} | ${itemProduct.name}`,
-            promotion: `${itemPromotion.type} | ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} บาท ได้รับส่วนลด ${itemPromotion.discount} % )`,
+            product: `${itemProduct.brand}| ${itemProduct.name}`,
+            promotion: `${itemPromotion.type}| ${itemPromotion.name} ( ซื้อครบ ${itemPromotion.condition} บาท ได้รับส่วนลด ${itemPromotion.discount} % )`,
           });
         }
       }
