@@ -8,7 +8,7 @@ export interface IProduct {
   description?: string;
   price: number;
   image?: string;
-  stock?: number;
+  stock: number;
   promotion?: IPromotion;
   createAt: string;
   updateAt: string;

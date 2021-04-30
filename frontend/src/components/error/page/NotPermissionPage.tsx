@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
 
 const NotPermissionPage: FC = () => {

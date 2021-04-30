@@ -1,21 +1,36 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { LATESTPRODUCT_PRODUCT_QUERY } from '../graphql/latestProductQuery';
+
 import { IProduct } from '../../commons/type/IProduct';
-import ProductBox from '../../commons/ProductBox';
 
-interface ProductProps {
-  products: IProduct[];
-}
+const Loading = React.lazy(() => import('../../commons/layouts/ContentWithSidebarLayout'));
+const ProductBox = React.lazy(() => import('../../commons/ProductBox'));
 
-const ProductWrapper: FunctionComponent<ProductProps> = ({ products }: ProductProps) => {
+const ProductWrapper: FC = () => {
+  const { loading, error, data } = useQuery(LATESTPRODUCT_PRODUCT_QUERY, {
+    variables: { productShow: 4 },
+  });
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    alert('error');
+  }
+  const { latestProduct } = data;
+
   return (
-    <div className="p-20">
-      <div className="text-2xl">Latest Product</div>
-      <div className="grid grid-cols-4">
-        {products?.map((item: IProduct) => (
+    <div className="px-20 py-8">
+      <p className="text-2xl">สินค้ามาใหม่</p>
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-col-1">
+        {latestProduct?.map((item: IProduct) => (
           <ProductBox product={item} key={item._id} />
         ))}
       </div>
-      <p className="text-right w-full mt-4">See more</p>
+      <NavLink to="/products" className="text-right hover:text-gold-100 w-full mt-5 block">
+        ดูเพิ่มเติม
+      </NavLink>
     </div>
   );
 };

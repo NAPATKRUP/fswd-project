@@ -1,16 +1,22 @@
-import React, { FunctionComponent, Fragment } from 'react';
+import React, { FC, Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import LoginPage from './components/login/page/LoginPage';
+import RegisterPage from './components/register/page/RegisterPage';
 import ProductPage from './components/product/page/ProductPage';
-import ProductDetailPage from './components/product/page/ProductDetailPage';
 import HomePage from './components/home/page/HomePage';
 import PromotionPage from './components/promotion/page/PromotionPage';
 import NotPermissionPage from './components/error/page/NotPermissionPage';
+import ProductDetailPage from './components/product/page/ProductDetailPage';
+import CartPage from './components/cart/page/CartPage';
+import CheckoutPage from './components/checkout/page/CheckoutPage';
+import PaymentPage from './components/payment/page/PaymentPage';
+import NotFoundPage from './components/error/page/NotFoundPage';
 import AdminManagerPage from './components/admin/page/AdminManagerPage';
-// import { useSession } from "./context/SessionContext";
-// import CartPage from "./components/cart/page/CartPage";
 
-const App: FunctionComponent = () => {
+// import ManageProduct from './components/manageProduct/page/ManageProduct';
+// import { useSession } from "./context/SessionContext";
+
+const App: FC = () => {
   // const { user } = useSession();
 
   const renderRoute = () => {
@@ -19,13 +25,21 @@ const App: FunctionComponent = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
+          <Route path="/product/:slug" component={ProductDetailPage} />
           <Route exact path="/products" component={ProductPage} />
-          <Route exact path="/products/detail" component={ProductDetailPage} />
-          <Route exact path="/promotion" component={PromotionPage} />
+          <Route exact path="/promotions" component={PromotionPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
+          <Route exact path="/cart" component={CartPage} />
+          <Route exact path="/checkout/:orderId" component={CheckoutPage} />
+          <Route exact path="/payment/:orderId" component={PaymentPage} />
+          {/* <Route exact path="/cart/:cartId/payment" component={PaymentPage} /> */}
           <Route path="/admin" component={AdminManagerPage} />
           {/* <AdminRoute role={user.role} path="/admin" component={AdminManagerPage} /> */}
           {/* <CustomerRoute role={user.role} exact path="/cart" component={CartPage} /> */}
+          <Route path="*">
+            <NotFoundPage />
+          </Route>
         </Switch>
       </Fragment>
     );

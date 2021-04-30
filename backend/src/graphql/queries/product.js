@@ -2,7 +2,7 @@ import { schemaComposer } from 'graphql-compose';
 
 import { ProductModel, ProductTC } from '../../models/product';
 
-export const latestProductResolver = schemaComposer.createResolver({
+export const latestProduct = schemaComposer.createResolver({
   name: 'latestProduct',
   kind: 'query',
   type: [ProductTC.getType()],
@@ -11,12 +11,12 @@ export const latestProductResolver = schemaComposer.createResolver({
   },
   resolve: async ({ args }) => {
     const { show } = args;
-    const product = await ProductModel.find().sort({ updateAt: -1 }).limit(show);
+    const product = await ProductModel.find().sort({ createAt: -1 }).limit(show);
     return product;
   },
 });
 
-export const filterProductResolver = schemaComposer.createResolver({
+export const filterProduct = schemaComposer.createResolver({
   name: 'filterProduct',
   kind: 'query',
   type: [ProductTC.getType()],
@@ -52,6 +52,20 @@ export const filterProductResolver = schemaComposer.createResolver({
       ],
     }).sort(sort);
 
+    return product;
+  },
+});
+
+export const productBySlug = schemaComposer.createResolver({
+  name: 'productBySlug',
+  kind: 'query',
+  type: ProductTC.getType(),
+  args: {
+    slug: 'String!',
+  },
+  resolve: async ({ args }) => {
+    const { slug } = args;
+    const product = await ProductModel.findOne({ slug });
     return product;
   },
 });
