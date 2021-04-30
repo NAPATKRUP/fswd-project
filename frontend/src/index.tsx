@@ -1,15 +1,15 @@
-import React, { Suspense } from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import "./index.css";
-import reportWebVitals from "./reportWebVitals";
-import { UserProvider } from "./context/UserContext";
-import Loading from "./components/commons/loading/Loading";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { BrowserRouter } from "react-router-dom";
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+import { SessionProvider } from './context/SessionContext';
+import Loading from './components/commons/loading/Loading';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { BrowserRouter } from 'react-router-dom';
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URI || "http://localhost:5001/graphql",
+  uri: process.env.REACT_APP_GRAPHQL_URI || 'http://localhost:3001/graphql',
   cache: new InMemoryCache({
     typePolicies: {
       Project: {
@@ -21,22 +21,22 @@ const client = new ApolloClient({
       },
     },
   }),
-  credentials: "include",
+  credentials: 'include',
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserProvider>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <SessionProvider>
           <Suspense fallback={<Loading />}>
             <App />
           </Suspense>
-        </BrowserRouter>
-      </ApolloProvider>
-    </UserProvider>
+        </SessionProvider>
+      </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
