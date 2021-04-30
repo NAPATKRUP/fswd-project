@@ -23,7 +23,7 @@ const AdminManagerPage: FC = () => {
       });
 
       return (
-        <div className="inline-block mr-1">
+        <div className="inline-block mr-1" key={toPath}>
           <Link to={`${toPath}`}>{`${path}`}</Link>
           {index !== splitPath.slice(1).length - 1 ? <span>{` >>`}</span> : <></>}
         </div>
