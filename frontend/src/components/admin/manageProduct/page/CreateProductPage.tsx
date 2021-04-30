@@ -29,7 +29,8 @@ const CreateProductPage: FC = () => {
 
   const handleProductNameChange = (event) => {
     const name = event.target.value;
-    onUpdateProductDetail({ name });
+    const slug = stringToSlug(name);
+    onUpdateProductDetail({ name, slug });
   };
 
   const handleProductBrandChange = (event) => {
@@ -67,10 +68,8 @@ const CreateProductPage: FC = () => {
   const handleSubmitForm = (event) => {
     event.preventDefault();
     if (productDetail.name && productDetail.brand && productDetail.price) {
-      const slug = stringToSlug(productDetail.name);
       createProduct({
         variables: {
-          slug: slug,
           ...productDetail,
         },
       });
@@ -87,6 +86,19 @@ const CreateProductPage: FC = () => {
         <div className="grid grid-cols-6 gap-6 my-3">
           <div className="col-span-6 sm:col-span-3">
             <div className="my-2">
+              <label htmlFor="product_slug" className="block text-md font-medium text-dark-200">
+                Product slug
+              </label>
+              <input
+                type="text"
+                name="product_slug"
+                id="product_slug"
+                value={productDetail.slug}
+                disabled
+                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
+              />
+            </div>
+            <div className="my-2">
               <label htmlFor="product_name" className="block text-md font-medium text-dark-200">
                 Product name
               </label>
@@ -95,7 +107,7 @@ const CreateProductPage: FC = () => {
                 name="product_name"
                 id="product_name"
                 onChange={handleProductNameChange}
-                className="form-input rounded-md mt-1 px-2 py-1 w-2/3 shadow-sm sm:text-sm"
+                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
@@ -107,7 +119,7 @@ const CreateProductPage: FC = () => {
                 name="product_brand"
                 id="product_brand"
                 onChange={handleProductBrandChange}
-                className="form-input rounded-md mt-1 px-2 py-1 w-2/3 shadow-sm sm:text-sm"
+                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
@@ -119,7 +131,7 @@ const CreateProductPage: FC = () => {
                 name="product_price"
                 id="product_price"
                 onChange={handleProductPriceChange}
-                className="form-input rounded-md mt-1 px-2 py-1 w-2/3 shadow-sm sm:text-sm"
+                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
@@ -131,7 +143,7 @@ const CreateProductPage: FC = () => {
                 name="product_image"
                 id="product_image"
                 onChange={handleProductImageChange}
-                className="form-input rounded-md mt-1 px-2 py-1 w-2/3 shadow-sm sm:text-sm"
+                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
