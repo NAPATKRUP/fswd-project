@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import { FC, lazy, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_ITEM_IN_CART_MUTATION } from '../../../graphql/addItemInCartMutation';
@@ -7,13 +7,13 @@ import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
 
 import useModal from '../../../hooks/useModal';
 
-const ContentWithSidebarLayout = React.lazy(
+const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
-const Loading = React.lazy(() => import('../../commons/loading/Loading'));
-const Navigator = React.lazy(() => import('../../commons/Navigator'));
-const PromotionAvailableCard = React.lazy(() => import('../../commons/PromotionAvailableCard'));
-const Modal = React.lazy(() => import('../../commons/Modal'));
+const Loading = lazy(() => import('../../commons/loading/Loading'));
+const Navigator = lazy(() => import('../../commons/Navigator'));
+const PromotionAvailableCard = lazy(() => import('../../commons/PromotionAvailableCard'));
+const Modal = lazy(() => import('../../commons/Modal'));
 
 interface RouteParams {
   slug: string;

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, lazy } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
@@ -9,7 +9,7 @@ import 'moment/locale/th';
 
 import { IPromotion } from '../../commons/type/IPromotion';
 
-const Loading = React.lazy(() => import('../../commons/loading/Loading'));
+const Loading = lazy(() => import('../../commons/loading/Loading'));
 
 const PromotionCarousel: FC = () => {
   const { loading, error, data } = useQuery(NOW_PROMOTION_QUERY);

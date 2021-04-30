@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import { FC, lazy, useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_ITEM_IN_CART_MUTATION } from '../../graphql/addItemInCartMutation';
@@ -12,7 +12,7 @@ interface ProductCardProps {
   product: IProduct;
 }
 
-const Modal = React.lazy(() => import('./Modal'));
+const Modal = lazy(() => import('./Modal'));
 
 const ProductCard: FC<ProductCardProps> = ({ product }: ProductCardProps) => {
   const [title, setTitle] = useState('');

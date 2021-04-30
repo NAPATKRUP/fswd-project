@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import { FC, lazy, useState, useCallback } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_ITEM_IN_CART_MUTATION } from '../../../graphql/addItemInCartMutation';
 import { REMOVE_ITEM_IN_CART_MUTATION } from '../../../graphql/removeItemInCartMutation';
@@ -12,7 +12,7 @@ interface ItemProps {
   items: IItem[];
 }
 
-const Modal = React.lazy(() => import('../../commons/Modal'));
+const Modal = lazy(() => import('../../commons/Modal'));
 
 const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
   const [title, setTitle] = useState('');

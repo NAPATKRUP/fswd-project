@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import { FC, lazy, useState, useCallback } from 'react';
 import { useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
 import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
@@ -6,14 +6,14 @@ import { CHECKOUT_MUTATION } from '../../../graphql/checkoutCartMutation';
 
 import useModal from '../../../hooks/useModal';
 
-const ContentWithSidebarLayout = React.lazy(
+const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
-const Loading = React.lazy(() => import('../../commons/loading/Loading'));
-const Navigator = React.lazy(() => import('../../commons/Navigator'));
-const CartTable = React.lazy(() => import('../components/CartTable'));
-const SummaryCard = React.lazy(() => import('../components/SummaryCard'));
-const Modal = React.lazy(() => import('../../commons/Modal'));
+const Loading = lazy(() => import('../../commons/loading/Loading'));
+const Navigator = lazy(() => import('../../commons/Navigator'));
+const CartTable = lazy(() => import('../components/CartTable'));
+const SummaryCard = lazy(() => import('../components/SummaryCard'));
+const Modal = lazy(() => import('../../commons/Modal'));
 
 const CartPage: FC = () => {
   const [title, setTitle] = useState('');
