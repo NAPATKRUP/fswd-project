@@ -3,7 +3,7 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { useQuery } from '@apollo/client';
-import { NOW_PROMOTION_QUERY } from '../graphql/nowPromotionQuery';
+import { NOW_PROMOTION_QUERY } from '../../../graphql/nowPromotionQuery';
 import moment from 'moment';
 import 'moment/locale/th';
 

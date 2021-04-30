@@ -1,8 +1,9 @@
 import React, { FC, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { ADD_ITEM_IN_CART_MUTATION } from '../../commons/graphql/addItemInCartMutation';
-import { PRODUCT_BY_SLUG_QUERY } from '../graphql/productBySlugQuery';
+import { ADD_ITEM_IN_CART_MUTATION } from '../../../graphql/addItemInCartMutation';
+import { PRODUCT_BY_SLUG_QUERY } from '../../../graphql/productBySlugQuery';
+import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
 
 import useModal from '../../../hooks/useModal';
 
@@ -45,6 +46,7 @@ const ProductDetailPage: FC = () => {
           variables: {
             productId: id,
           },
+          refetchQueries: [{ query: WAITING_CART_QUERY }],
         });
         return handleStatusMessage(
           'เพิ่มจำนวนสินค้าเสร็จสิ้น',

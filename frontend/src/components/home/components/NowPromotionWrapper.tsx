@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const PromotionCarousel = React.lazy(() => import('./PromotionCarousel'));
 
-const PromotionBoxWrapper: FC = () => {
+const NowPromotionWrapper: FC = () => {
   return (
     <div className="flex flex-col items-center px-20 py-16">
       <div className="text-3xl">โปรโมชั่น</div>
@@ -17,4 +17,4 @@ const PromotionBoxWrapper: FC = () => {
   );
 };
 
-export default PromotionBoxWrapper;
+export default NowPromotionWrapper;

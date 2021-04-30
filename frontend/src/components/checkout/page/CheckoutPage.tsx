@@ -1,9 +1,9 @@
 import React, { FC, useState, useCallback } from 'react';
 import { useLocation, useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
-import { ORDER_BY_ID_QUERY } from '../graphql/orderQuery';
-import { ADDRESS_BY_USERCONTEXT_QUERY } from '../graphql/addressByUserContextQuery';
-import { CONFIRM_ORDER_MUTATION } from '../graphql/confirmOrderMutaton';
+import { ORDER_BY_ID_QUERY } from '../../../graphql/orderQuery';
+import { ADDRESS_BY_USERCONTEXT_QUERY } from '../../../graphql/addressByUserContextQuery';
+import { CONFIRM_ORDER_MUTATION } from '../../../graphql/confirmOrderMutaton';
 
 import useModal from '../../../hooks/useModal';
 

@@ -1,9 +1,9 @@
 import React, { FC, useState, useCallback } from 'react';
 import { useLocation } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
-import { ADDRESS_BY_ID_QUERY } from '../graphql/addressQuery';
-import { PAYMENT_BY_USERCONTEXT_QUERY } from '../graphql/paymentByUserContextQuery';
-import { PAYMENT_ORDER_MUTATION } from '../graphql/paymentOrderMutation';
+import { ADDRESS_BY_ID_QUERY } from '../../../graphql/addressQuery';
+import { PAYMENT_BY_USERCONTEXT_QUERY } from '../../../graphql/paymentByUserContextQuery';
+import { PAYMENT_ORDER_MUTATION } from '../../../graphql/paymentOrderMutation';
 
 import useModal from '../../../hooks/useModal';
 
