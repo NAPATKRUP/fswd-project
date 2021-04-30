@@ -82,10 +82,10 @@ const CartPage: FC = () => {
         promotionDiscount={waitingCart.promotionDiscount}
         totalFinalPrice={waitingCart.totalFinalPrice}
       />
-      <div className="flex px-20 pt-10 justify-end">
+      <div className="flex lg:px-20 md:px-10 px-4 pt-12 justify-end">
         <button
           onClick={(e) => handleCheckoutCart(e)}
-          className="bg-gold-100 hover:bg-dark-100 hover:text-gold-100 px-4 py-2 rounded"
+          className="lg:text-base text-sm bg-gold-100 hover:bg-dark-100 hover:text-gold-100 px-4 py-2 rounded"
         >
           ตรวจสอบตะกร้าสินค้า
         </button>
