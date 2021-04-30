@@ -1,19 +1,20 @@
-import { FC, Fragment } from 'react';
-// import React, { FC, Fragment, useContext } from 'react';
+import React, { FC, Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-// import { BrowserRouter, Route, Redirect, Switch, RouteProps } from 'react-router-dom';
 import LoginPage from './components/login/page/LoginPage';
+import RegisterPage from './components/register/page/RegisterPage';
 import ProductPage from './components/product/page/ProductPage';
-import ProductDetailPage from './components/product/page/ProductDetailPage';
 import HomePage from './components/home/page/HomePage';
 import PromotionPage from './components/promotion/page/PromotionPage';
 // import ManageProduct from './components/manageProduct/page/ManageProduct';
-// import { useSession } from "./context/SessionContext";
+import NotPermissionPage from './components/error/page/NotPermissionPage';
+import ProductDetailPage from './components/product/page/ProductDetailPage';
 import CartPage from './components/cart/page/CartPage';
 import CheckoutPage from './components/checkout/page/CheckoutPage';
 import PaymentPage from './components/payment/page/PaymentPage';
-import NotPermissionPage from './components/error/page/NotPermissionPage';
 import NotFoundPage from './components/error/page/NotFoundPage';
+
+// import ManageProduct from './components/manageProduct/page/ManageProduct';
+// import { useSession } from "./context/SessionContext";
 
 const App: FC = () => {
   // const { user } = useSession();
@@ -24,6 +25,7 @@ const App: FC = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
           <Route path="/product/:slug" component={ProductDetailPage} />
           <Route exact path="/products" component={ProductPage} />
           <Route exact path="/promotions" component={PromotionPage} />

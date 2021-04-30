@@ -32,8 +32,8 @@ const CartPage: FC = () => {
     },
     [toggle]
   );
-  const handleCallBack = (stats: boolean) => {
-    if (!stats) {
+  const handleCallBack = (status: boolean) => {
+    if (!status) {
       toggle();
       history.push('/checkout', { orderId: order });
     }
