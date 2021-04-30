@@ -1,12 +1,14 @@
-import React, { FC, useEffect } from 'react';
-import { Switch, Route, Link, useRouteMatch, useLocation } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { Switch, Route, Link, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
+import { useSession } from '../../../context/SessionContext';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
 import ProductManagerPage from '../manageProduct/page/ProductManagerPage';
 import AdminDashboardPage from './AdminDashboardPage';
 
 const AdminManagerPage: FC = () => {
-  let { path } = useRouteMatch();
-  let location = useLocation();
+  const { user } = useSession();
+  const { path } = useRouteMatch();
+  const location = useLocation();
 
   useEffect(() => {}, [location]);
 
@@ -31,7 +33,7 @@ const AdminManagerPage: FC = () => {
     });
   };
 
-  return (
+  return user?.role === 'admin' ? (
     <ContentWithSidebarLayout>
       <div className="flex">{renderLocationHistory()}</div>
 
@@ -44,6 +46,13 @@ const AdminManagerPage: FC = () => {
         </Route>
       </Switch>
     </ContentWithSidebarLayout>
+  ) : (
+    <Redirect
+      to={{
+        pathname: '/no-permission',
+        state: { from: location.pathname },
+      }}
+    />
   );
 };
 
