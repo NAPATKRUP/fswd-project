@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import { FC, lazy } from 'react';
 
-const ContentWithSidebarLayout = React.lazy(
+const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
-const BannerWrapper = React.lazy(() => import('../components/BannerWrapper'));
-const NowPromotionWrapper = React.lazy(() => import('../components/NowPromotionWrapper'));
-const LatestProductWrapper = React.lazy(() => import('../components/LatestProductWrapper'));
+const BannerWrapper = lazy(() => import('../components/BannerWrapper'));
+const NowPromotionWrapper = lazy(() => import('../components/NowPromotionWrapper'));
+const LatestProductWrapper = lazy(() => import('../components/LatestProductWrapper'));
 
 const HomePage: FC = () => {
   return (

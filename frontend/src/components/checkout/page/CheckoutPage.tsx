@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import { FC, lazy, useState, useCallback } from 'react';
 import { useLocation, useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
 import { ORDER_BY_ID_QUERY } from '../../../graphql/orderQuery';
@@ -9,13 +9,13 @@ import useModal from '../../../hooks/useModal';
 
 import { IAddress } from '../../commons/type/IAddress';
 
-const ContentWithSidebarLayout = React.lazy(
+const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
-const Loading = React.lazy(() => import('../../commons/loading/Loading'));
-const Navigator = React.lazy(() => import('../../commons/Navigator'));
-const ConfirmOrderCard = React.lazy(() => import('../../commons/ConfirmOrderCard'));
-const Modal = React.lazy(() => import('../../commons/Modal'));
+const Loading = lazy(() => import('../../commons/loading/Loading'));
+const Navigator = lazy(() => import('../../commons/Navigator'));
+const ConfirmOrderCard = lazy(() => import('../../commons/ConfirmOrderCard'));
+const Modal = lazy(() => import('../../commons/Modal'));
 
 interface LocationState {
   orderId: string;

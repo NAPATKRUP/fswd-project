@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
+import { FC, lazy } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { LATESTPRODUCT_PRODUCT_QUERY } from '../../../graphql/latestProductQuery';
 
 import { IProduct } from '../../commons/type/IProduct';
 
-const Loading = React.lazy(() => import('../../commons/layouts/ContentWithSidebarLayout'));
-const ProductCard = React.lazy(() => import('../../commons/ProductCard'));
+const Loading = lazy(() => import('../../commons/layouts/ContentWithSidebarLayout'));
+const ProductCard = lazy(() => import('../../commons/ProductCard'));
 
 const LatestProductWrapper: FC = () => {
   const { loading, error, data } = useQuery(LATESTPRODUCT_PRODUCT_QUERY, {
