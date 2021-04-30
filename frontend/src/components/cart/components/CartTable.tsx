@@ -2,7 +2,7 @@ import React, { FC, useState, useCallback } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_ITEM_IN_CART_MUTATION } from '../../commons/graphql/addItemInCartMutation';
 import { REMOVE_ITEM_IN_CART_MUTATION } from '../../commons/graphql/removeItemInCartMutation';
-import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
+import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
 
 import useModal from '../../../hooks/useModal';
 

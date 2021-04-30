@@ -1,7 +1,7 @@
 import React, { FC, useState, useCallback } from 'react';
 import { useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
-import { WAITING_CART_QUERY } from '../graphql/waitingCartQuery';
+import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
 import { CHECKOUT_MUTATION } from '../graphql/checkoutCartMutation';
 
 import useModal from '../../../hooks/useModal';

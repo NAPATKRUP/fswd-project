@@ -2,6 +2,7 @@ import React, { FC, useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_ITEM_IN_CART_MUTATION } from '../commons/graphql/addItemInCartMutation';
+import { WAITING_CART_QUERY } from '../../graphql/waitingCartQuery';
 
 import useModal from '../../hooks/useModal';
 
@@ -39,6 +40,7 @@ const ProductBox: FC<ProductBoxProps> = ({ product }: ProductBoxProps) => {
           variables: {
             productId: id,
           },
+          refetchQueries: [{ query: WAITING_CART_QUERY }],
         });
         return handleStatusMessage(
           'เพิ่มจำนวนสินค้าเสร็จสิ้น',
