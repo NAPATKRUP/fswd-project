@@ -5,10 +5,10 @@ export interface IOrder {
   cartId: string;
   cart: ICart;
   orderStatus: string;
-  usePromotion: IUsePro[];
+  usePromotion: IUsePromotion[];
 }
 
-export interface IUsePro {
+export interface IUsePromotion {
   product: string;
   promotion: string;
 }

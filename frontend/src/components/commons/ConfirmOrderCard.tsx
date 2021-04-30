@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { IOrder, IUsePro } from '../commons/type/IOrder';
+import { IOrder, IUsePromotion } from '../commons/type/IOrder';
 import { IItem } from '../commons/type/ICart';
 
 interface OrderProps {
@@ -54,7 +54,7 @@ const ConfirmOrderCard: FC<OrderProps> = ({ data }: OrderProps) => {
 
       <p className="lg:text-xl md:text-lg font-semibold mt-8 mb-4">โปรโมชั่นที่ได้รับ</p>
       <div className="w-full border-2 border-gold-100 bg-gold-100 rounded-full mt-2 mb-6"></div>
-      {data.usePromotion?.map((usePro: IUsePro, index: number) => (
+      {data.usePromotion?.map((usePro: IUsePromotion, index: number) => (
         <div key={data._id + 'pro' + index} className="grid lg:grid-cols-2 mt-2">
           <p className="md:text-sm lg:text-base">{usePro.promotion}</p>
           <p className="md:text-sm lg:text-base">สินค้าที่ร่วมรายการ: {usePro.product}</p>
