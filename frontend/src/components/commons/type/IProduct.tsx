@@ -10,6 +10,7 @@ export interface IProduct {
   image?: string;
   stock?: number;
   promotion?: IPromotion;
+  createAt: string;
   updateAt: string;
 }
 
@@ -18,6 +19,16 @@ export interface ICreateProduct {
   name?: string;
   brand?: string;
   price?: number;
+  description?: string;
+  image?: string;
+}
+
+export interface IUpdateProduct {
+  slug?: string;
+  name?: string;
+  brand?: string;
+  price?: number;
+  stock?: number;
   description?: string;
   image?: string;
 }

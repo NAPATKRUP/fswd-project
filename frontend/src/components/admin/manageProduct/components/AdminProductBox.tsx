@@ -18,10 +18,10 @@ const AdminProductBox: FC<AdminProductBoxProps> = ({ item }: AdminProductBoxProp
             <p className="mt-4 text-right -bottom-0">{item?.price} บาท</p>
 
             <div className="flex justify-start gap-3">
-              <Link to={`/admin/product/${item.slug}`}>
+              {/* <Link to={`/admin/product/${item._id}`}>
                 <span className="text-blue-100 block">View</span>
-              </Link>
-              <Link to={`/admin/product/${item.slug}/edit`}>
+              </Link> */}
+              <Link to={`/admin/product/${item._id}`}>
                 <span className="text-blue-100 hover:text-underline block">Edit</span>
               </Link>
             </div>

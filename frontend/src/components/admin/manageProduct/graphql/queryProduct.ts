@@ -21,7 +21,7 @@ export const PRODUCT_QUERY_ALL: DocumentNode = gql`
 `;
 
 export const PRODUCT_QUERY_BY_ID: DocumentNode = gql`
-  query($id: String!) {
+  query($id: MongoID!) {
     productById(_id: $id) {
       _id
       slug

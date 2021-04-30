@@ -30,8 +30,8 @@ const ProductManagerPage: FC = () => {
         <Switch>
           <Route exact path={`${path}/create`} component={CreateProductPage} />
           <Route exact path={`${path}`} component={ViewAllProductPage} />
-          <Route path={`${path}/:slug/edit`} component={EditProductPage} />
-          <Route path={`${path}/:slug`} component={ViewProductPage} />
+          <Route path={`${path}/:productId`} component={EditProductPage} />
+          {/* <Route path={`${path}/:slug`} component={ViewProductPage} /> */}
         </Switch>
       </div>
     </>
