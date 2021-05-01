@@ -11,6 +11,7 @@ import ProductDetailPage from './components/product/page/ProductDetailPage';
 import CartPage from './components/cart/page/CartPage';
 import CheckoutPage from './components/checkout/page/CheckoutPage';
 import PaymentPage from './components/payment/page/PaymentPage';
+import CusomterPage from './components/customer/page/CustomerPage';
 import NotFoundPage from './components/error/page/NotFoundPage';
 
 // import ManageProduct from './components/manageProduct/page/ManageProduct';
@@ -33,6 +34,7 @@ const App: FC = () => {
           <Route exact path="/cart" component={CartPage} />
           <Route exact path="/checkout" component={CheckoutPage} />
           <Route exact path="/payment" component={PaymentPage} />
+          <Route path="/customer" component={CusomterPage} />
           {/* <Route exact path="/cart/:cartId/payment" component={PaymentPage} /> */}
           {/* <Route exact path="/manage-product" component={ManageProduct} /> */}
           {/* <AdminRoute role={user.role} exact path="/manage-product" component={ManageProduct} /> */}
