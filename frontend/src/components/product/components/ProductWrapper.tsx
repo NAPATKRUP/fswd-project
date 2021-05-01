@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, lazy } from 'react';
 
 import { IProduct } from '../../commons/type/IProduct';
 
@@ -6,7 +6,7 @@ interface ProductProps {
   product: IProduct[];
 }
 
-const ProductCard = React.lazy(() => import('../../commons/ProductCard'));
+const ProductCard = lazy(() => import('../../commons/ProductCard'));
 
 const ProductWrapper: FC<ProductProps> = ({ product }: ProductProps) => {
   return (

@@ -18,11 +18,11 @@ const PromotionCard: FC<PromotionProp> = ({ promotions }: PromotionProp) => {
 
         return (
           <div
-            className="flex flex-col justify-between border-2 border-dashed border-dark-100 bg-white-100 rounded-xl p-4"
+            className="flex flex-col justify-start border-2 border-dashed border-dark-100 bg-white-100 rounded-xl p-4"
             key={data._id}
           >
             <p className="text-2xl font-semibold text-center">{data.name}</p>
-            {data?.image && <img src={data.image} alt={data.name} />}
+            {data?.image && <img src={data.image} className="my-2" alt={data.name} />}
             {data?.description && (
               <div className="my-4">
                 <p className="text-lg">รายละเอียด</p>
@@ -30,7 +30,7 @@ const PromotionCard: FC<PromotionProp> = ({ promotions }: PromotionProp) => {
               </div>
             )}
             {data?.products.length > 0 && (
-              <div>
+              <>
                 <p className="text-lg">สินค้าที่ร่วมรายการ</p>
                 {data?.products.map((product, index) => (
                   <p className="text-sm" key={product._id}>
@@ -39,7 +39,7 @@ const PromotionCard: FC<PromotionProp> = ({ promotions }: PromotionProp) => {
                     </NavLink>
                   </p>
                 ))}
-              </div>
+              </>
             )}
             <div className="text-left">
               <p className="text-sm mt-4">เริ่มตั้งแต่วันที่ {startDateLabel}</p>

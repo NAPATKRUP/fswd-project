@@ -1,5 +1,6 @@
 import { FC, lazy, useState, useCallback, useEffect } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
+import { useLazyQuery } from '@apollo/client';
 import { FILTER_PRODUCT_QUERY } from '../../../graphql/filterProductQuery';
 import ReactPagination from '../components/ReactPagination';
 
@@ -11,7 +12,9 @@ const Navigator = lazy(() => import('../../commons/Navigator'));
 const FilterProductBar = lazy(() => import('../components/FilterProductBar'));
 const ProductWrapper = lazy(() => import('../components/ProductWrapper'));
 
-const ProductPage: any = () => {
+const ProductPage: FC = () => {
+  const history = useHistory();
+
   const [searchType, setSearchType] = useState<any>(undefined);
   const [nameInput, setNameInput] = useState<any>(undefined);
   const [minPrice, setMinPrice] = useState<any>(undefined);
@@ -109,7 +112,8 @@ const ProductPage: any = () => {
   }
 
   if (error) {
-    return alert(error);
+    history.push({ pathname: '/error' });
+    return <></>;
   }
 
   return (
