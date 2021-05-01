@@ -1,20 +1,23 @@
-import React, { FC, useState } from 'react';
+import { FC, lazy, useState } from 'react';
+import { useHistory } from 'react-router';
 import { useQuery } from '@apollo/client';
 import { FILTER_PRODUCT_QUERY } from '../../../graphql/filterProductQuery';
 
-const ContentWithSidebarLayout = React.lazy(
+const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
-const Loading = React.lazy(() => import('../../commons/loading/Loading'));
-const Navigator = React.lazy(() => import('../../commons/Navigator'));
-const FilterProductBar = React.lazy(() => import('../components/FilterProductBar'));
-const ProductWrapper = React.lazy(() => import('../components/ProductWrapper'));
+const Loading = lazy(() => import('../../commons/loading/Loading'));
+const Navigator = lazy(() => import('../../commons/Navigator'));
+const FilterProductBar = lazy(() => import('../components/FilterProductBar'));
+const ProductWrapper = lazy(() => import('../components/ProductWrapper'));
 
 const ProductPage: FC = () => {
   const [searchType, setSearchType] = useState<string>('PRICE_ASC');
   const [name, setName] = useState<string>('');
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(100000);
+
+  const history = useHistory();
 
   const { loading, error, data } = useQuery(FILTER_PRODUCT_QUERY, {
     variables: {
@@ -28,7 +31,8 @@ const ProductPage: FC = () => {
     return <Loading />;
   }
   if (error) {
-    alert('error');
+    history.push({ pathname: '/error' });
+    return <></>;
   }
   const { filterProduct } = data;
 

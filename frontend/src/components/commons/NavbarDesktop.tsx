@@ -2,6 +2,8 @@ import { FC, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSession } from '../../context/SessionContext';
 
+import { UserIcon } from '@heroicons/react/solid';
+
 const Navbar: FC = () => {
   const { user, logout } = useSession();
 
