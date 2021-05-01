@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Switch, Route, Link, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
 import { useSession } from '../../../context/SessionContext';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
@@ -9,8 +9,6 @@ const AdminManagerPage: FC = () => {
   const { user } = useSession();
   const { path } = useRouteMatch();
   const location = useLocation();
-
-  useEffect(() => {}, [location]);
 
   const renderLocationHistory = () => {
     const splitPath = location.pathname.split('/');

@@ -7,11 +7,14 @@ import Loading from '../../../commons/loading/Loading';
 import { ApolloError, useMutation, useQuery } from '@apollo/client';
 import { UPDATE_PRODUCT_BY_ID_MUTATION } from '../../../../graphql/updateProductMutation';
 import { PRODUCT_BY_ID_QUERY } from '../../../../graphql/productByIdQuery';
+import useModal from '../../../../hooks/useModalv2';
 
 const EditProductPage: FC = () => {
   const { productId } = useParams<{ productId: string }>();
   const [productDetail, setProductDetail] = useState<IProduct>();
+  const [defaultProductDetail, setDefaultProductDetail] = useState<IProduct>();
   const [isFetching, setIsFetching] = useState<boolean>(true);
+  const { updateModalAndToggle, ModalElement } = useModal({});
   const { loading: queryLoading, error: queryError } = useQuery<
     { productById: IProduct },
     { id: string }
@@ -23,6 +26,7 @@ const EditProductPage: FC = () => {
       const { productById } = data;
       if (productById) {
         setProductDetail(productById);
+        setDefaultProductDetail(productById);
       }
       setIsFetching(false);
     },
@@ -46,7 +50,8 @@ const EditProductPage: FC = () => {
   const handleProductNameChange = (event) => {
     const name: string = event.target.value;
     const slug: string = stringToSlug(name);
-    onUpdateProductDetail({ name, slug });
+    const product: any = { ...productDetail, name, slug };
+    setProductDetail(product);
   };
 
   const handleProductBrandChange = (event) => {
@@ -92,22 +97,55 @@ const EditProductPage: FC = () => {
     if (productDetail && productDetail.name && productDetail.brand && productDetail.price) {
       const { promotion, createAt, updateAt, ...product } = productDetail;
 
-      updateProduct({
-        variables: {
-          ...product,
+      updateModalAndToggle({
+        isHasAccept: true,
+        isHasDecline: true,
+        title: 'แก้ไขข้อมูลสินค้า',
+        bodyMessage: 'คุณยืนยันการแก้ไขข้อมูลสินค้าหรือไม่',
+        callBackFunction: (status: boolean) => {
+          console.log('--------------------------------');
+          console.log(status);
+
+          if (status) {
+            updateProduct({
+              variables: {
+                ...product,
+              },
+            });
+
+            setDefaultProductDetail(productDetail);
+
+            setTimeout(() => {
+              updateModalAndToggle({
+                isHasAccept: true,
+                isHasDecline: false,
+                title: 'แก้ไขข้อมูลสินค้าสำเร็จ',
+                bodyMessage: 'การแก้ไขข้อมูลสินค้านี้เสร็จสิ้น',
+                callBackFunction: (status: boolean) => {},
+              });
+            }, 1000);
+          }
         },
       });
     } else {
-      // should show popup error: required field are not fullfill.
-      console.log('required field not meet');
+      updateModalAndToggle({
+        isHasAccept: true,
+        isHasDecline: false,
+        title: 'ตรวจสอบข้อมูลอีกครั้ง',
+        bodyMessage: 'ดูเหมือนคุณกรอกข้อมูลบางส่วนหายไป! <b>กรุณาตรวจสอบข้อมูลอีกครั้ง</b>',
+      });
     }
+  };
+
+  const resetForm = () => {
+    setProductDetail(defaultProductDetail);
   };
 
   const renderFormContent = () => {
     if (queryLoading || isFetching) return <Loading isFullscreen={false} />;
     else if (queryError) return <h1>เกิดข้อผิดพลาด กรุณาติดต่อกับผู้พัฒนา</h1>;
     else if (!productDetail) {
-      return <h1>ขออภัย, ดูเหมือนเราจะหาสินค้าทีคุณต้องการไม่พบ</h1>;
+      return <h1>ขออภัย, ดูเหมือนเราจะไม่พบสินค้าทีคุณต้องการ</h1>;
     }
 
     return (
@@ -124,8 +162,7 @@ const EditProductPage: FC = () => {
                   type="text"
                   name="product_name"
                   id="product_name"
-                  defaultValue={productDetail.name}
-                  required
+                  value={productDetail.name}
                   onChange={handleProductNameChange}
                   className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
                 />
@@ -138,7 +175,7 @@ const EditProductPage: FC = () => {
                   type="text"
                   name="product_slug"
                   id="product_slug"
-                  defaultValue={productDetail.slug}
+                  value={productDetail.slug}
                   disabled
                   className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
                 />
@@ -152,7 +189,7 @@ const EditProductPage: FC = () => {
                   name="product_brand"
                   id="product_brand"
                   required
-                  defaultValue={productDetail.brand}
+                  value={productDetail.brand}
                   onChange={handleProductBrandChange}
                   className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
                 />
@@ -167,7 +204,7 @@ const EditProductPage: FC = () => {
                   id="product_price"
                   min={0}
                   required
-                  defaultValue={productDetail.price}
+                  value={productDetail.price}
                   onChange={handleProductPriceChange}
                   className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
                 />
@@ -180,7 +217,7 @@ const EditProductPage: FC = () => {
                   type="text"
                   name="product_image"
                   id="product_image"
-                  defaultValue={productDetail.image}
+                  value={productDetail.image}
                   onChange={handleProductImageChange}
                   className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
                 />
@@ -194,7 +231,7 @@ const EditProductPage: FC = () => {
                   name="product_stock"
                   id="product_stock"
                   min={0}
-                  defaultValue={productDetail.stock}
+                  value={productDetail.stock}
                   onChange={handleProductStockChange}
                   className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
                 />
@@ -216,13 +253,13 @@ const EditProductPage: FC = () => {
               <div className="flex gap-3 my-4">
                 <input
                   type="submit"
-                  onClick={handleSubmitForm}
-                  className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
+                  className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75 cursor-pointer"
                   value="ยืนยันการแก้ไขข้อมูลสินค้า"
                 />
                 <input
                   type="reset"
-                  className="py-2 px-4 bg-dark-300 text-white font-semibold rounded-lg shadow-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-dark-100 focus:ring-opacity-75"
+                  onClick={resetForm}
+                  className="py-2 px-4 bg-dark-300 text-white font-semibold rounded-lg shadow-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-dark-100 focus:ring-opacity-75 cursor-pointer"
                   value="คืนค่าเดิมของสินค้า"
                 />
               </div>
@@ -233,7 +270,12 @@ const EditProductPage: FC = () => {
     );
   };
 
-  return <div>{renderFormContent()}</div>;
+  return (
+    <div>
+      <ModalElement />
+      {renderFormContent()}
+    </div>
+  );
 };
 
 export default EditProductPage;

@@ -4,6 +4,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICreateProduct, IProduct } from '../../../commons/type/IProduct';
 import { useMutation } from '@apollo/client';
 import { CREATE_PRODUCT_MUTATION } from '../../../../graphql/createProductMutation';
+import useModal from '../../../../hooks/useModalv2';
+import { useHistory } from 'react-router-dom';
 
 const CreateProductPage: FC = () => {
   const [productDetail, setProductDetail] = useState<ICreateProduct>({
@@ -15,6 +17,8 @@ const CreateProductPage: FC = () => {
   const [createProduct, { error }] = useMutation<{ createProduct: IProduct }, ICreateProduct>(
     CREATE_PRODUCT_MUTATION
   );
+  const { updateModalAndToggle, ModalElement } = useModal({});
+  const history = useHistory();
 
   useEffect(() => {
     console.log(error);
@@ -68,19 +72,48 @@ const CreateProductPage: FC = () => {
   const handleSubmitForm = (event) => {
     event.preventDefault();
     if (productDetail.name && productDetail.brand && productDetail.price) {
-      createProduct({
-        variables: {
-          ...productDetail,
+      updateModalAndToggle({
+        isHasAccept: true,
+        isHasDecline: true,
+        title: 'สร้างข้อมูลสินค้า',
+        bodyMessage: 'คุณยืนยันการสร้างข้อมูลสินค้าหรือไม่',
+        callBackFunction: (status: boolean) => {
+          console.log('--------------------------------');
+          console.log(status);
+          if (status) {
+            createProduct({
+              variables: {
+                ...productDetail,
+              },
+            });
+
+            setTimeout(() => {
+              updateModalAndToggle({
+                isHasAccept: true,
+                isHasDecline: false,
+                title: 'สร้างสินค้าสำเร็จ',
+                bodyMessage: 'การสร้างสินค้านี้เสร็จสิ้น',
+                callBackFunction: (status: boolean) => {
+                  history.goBack();
+                },
+              });
+            }, 1000);
+          }
         },
       });
     } else {
-      // should popup error: required field are not fullfill.
-      console.log('required field not meet');
+      updateModalAndToggle({
+        isHasAccept: true,
+        isHasDecline: false,
+        title: 'ตรวจสอบข้อมูลอีกครั้ง',
+        bodyMessage: 'ดูเหมือนคุณกรอกข้อมูลบางส่วนหายไป! <b>กรุณาตรวจสอบข้อมูลอีกครั้ง</b>',
+      });
     }
   };
 
   return (
     <div>
+      <ModalElement />
       <h2 className="text-2xl">สร้างสินค้าใหม่</h2>
       <form onSubmit={handleSubmitForm}>
         <div className="grid grid-cols-6 gap-6 my-3">

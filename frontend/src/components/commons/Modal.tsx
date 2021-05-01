@@ -25,9 +25,11 @@ const Modal: FC<IModal> = ({
         className={`${
           isOpen ? '' : 'hidden'
         } absolute inset-0 bg-dark-100 bg-opacity-70 h-screen w-full flex justify-center items-center pt-10 md:pt-0 z-10`}
-        onClick={() => handleOnClick(false)}
+        onClick={() => {
+          if (!isHasAccept && !isHasDecline) handleOnClick(false);
+        }}
       >
-        <div className="bg-white-100 rounded-lg">
+        <div className="bg-white-100 rounded-lg z-20">
           <div className="w-96 border-t-8 border-gold-100 rounded-lg flex">
             <div className="w-full pt-9 p-4">
               <p className="font-semibold text-dark-100">{title}</p>

@@ -8,11 +8,15 @@ import { IProduct } from '../../../commons/type/IProduct';
 const ViewAllProductPage: FC = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
 
-  const { loading, error, data } = useQuery(PRODUCT_ALL_QUERY, {
+  const { loading, error, data, refetch } = useQuery(PRODUCT_ALL_QUERY, {
     variables: {
       limit: 100,
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   useEffect(() => {
     if (data) {

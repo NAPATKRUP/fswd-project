@@ -1,42 +1,37 @@
 import { useMutation } from '@apollo/client';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import useModal from '../../../../hooks/useModal';
-import Modal from '../../../commons/Modal';
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
 import { IProduct } from '../../../commons/type/IProduct';
 import { REMOVE_PRODUCT_BY_ID_MUTATION } from '../../../../graphql/removeProductMutation';
+import useModal from '../../../../hooks/useModalv2';
 
 interface AdminProductBoxProps {
   item?: IProduct;
 }
 
 const AdminProductBox: FC<AdminProductBoxProps> = ({ item }: AdminProductBoxProps) => {
-  const { isShowing, toggle } = useModal(false);
+  const { toggle, ModalElement } = useModal({
+    isHasAccept: true,
+    isHasDecline: true,
+    title: `ต้องการลบหรือไม่?`,
+    bodyMessage: `คุณต้องการลบสินค้า ${item?.name} ชิ้นนี้ ใช่หรือไม่ (หากลบไปแล้วจะไม่สามารถกู้คืนสินค้ากลับมาได้อีก)`,
+    callBackFunction: (status: boolean) => {
+      if (status === true && item) {
+        removeProduct({
+          variables: {
+            _id: item._id,
+          },
+        });
+      }
+    },
+  });
   const [removeProduct] = useMutation(REMOVE_PRODUCT_BY_ID_MUTATION);
-
-  const handleCallBack = (status: boolean) => {
-    if (status === true && item) {
-      removeProduct({
-        variables: {
-          _id: item._id,
-        },
-      });
-    }
-    toggle();
-  };
 
   if (item) {
     return (
       <div className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 hover:bg-gray-100">
-        <Modal
-          isOpen={isShowing}
-          isHasAccept={true}
-          isHasDecline={true}
-          title={`ต้องการลบหรือไม่?`}
-          bodyMessage={`คุณต้องการลบสินค้า ${item?.name} ชิ้นนี้ ใช่หรือไม่ (หากลบไปแล้วจะไม่สามารถกู้คืนสินค้ากลับมาได้อีก)`}
-          callBackFunction={handleCallBack}
-        />
+        <ModalElement />
         <div className="flex flex-col h-full justify-items-stretch">
           <img src={item?.image} className="w-full object-cover bg-center" alt={item?.name} />
           <div className="p-4 h-full flex flex-col items-stretch">
