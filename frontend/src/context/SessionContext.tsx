@@ -42,6 +42,7 @@ interface IQueryMePayload {
 
 const SessionContext: React.Context<{
   user?: IUser | null;
+  loading?: boolean | null;
   login: (username: string, password: string) => Promise<void>;
   register: (username: string, password: string, displayName: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -59,7 +60,7 @@ export const SessionProvider: FC = ({ children }) => {
   const location = useLocation();
   const [login] = useMutation<ILoginPayload, ILoginInput>(LOGIN_MUTATION);
   const [register] = useMutation<IRegisterPayload, IRegisterInput>(REGISTER_MUTATION);
-  const [queryMe, { data, client }] = useLazyQuery<IQueryMePayload>(ME_QUERY, {
+  const [queryMe, { loading, data, client }] = useLazyQuery<IQueryMePayload>(ME_QUERY, {
     fetchPolicy: 'network-only',
   });
 
@@ -122,7 +123,7 @@ export const SessionProvider: FC = ({ children }) => {
 
   return (
     <SessionContext.Provider
-      value={{ user, login: handleLogin, logout: handleLogout, register: handleRegister }}
+      value={{ loading, user, login: handleLogin, logout: handleLogout, register: handleRegister }}
     >
       {children}
     </SessionContext.Provider>
