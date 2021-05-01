@@ -1,20 +1,12 @@
 import { FC, Fragment, useCallback } from 'react';
-
-interface IModal {
-  isOpen: boolean;
-  title: string;
-  bodyMessage: String;
-  isHasDecline?: boolean;
-  isHasAccept?: boolean;
-  callBackFunction?: (status: boolean) => void;
-}
+import { IModal } from './type/IModal';
 
 const Modal: FC<IModal> = ({
-  isOpen,
-  title,
-  bodyMessage,
-  isHasDecline,
-  isHasAccept,
+  isOpen = false,
+  title = '',
+  bodyMessage = '',
+  isHasDecline = false,
+  isHasAccept = false,
   callBackFunction,
 }) => {
   const handleOnClick = useCallback(
@@ -33,13 +25,18 @@ const Modal: FC<IModal> = ({
         className={`${
           isOpen ? '' : 'hidden'
         } absolute inset-0 bg-dark-100 bg-opacity-70 h-screen w-full flex justify-center items-center pt-10 md:pt-0 z-10`}
-        onClick={() => handleOnClick(false)}
+        onClick={() => {
+          if (!isHasAccept && !isHasDecline) handleOnClick(false);
+        }}
       >
-        <div className="bg-white-100 rounded-lg">
+        <div className="bg-white-100 rounded-lg z-20">
           <div className="w-96 border-t-8 border-gold-100 rounded-lg flex">
             <div className="w-full pt-9 p-4">
               <p className="font-semibold text-dark-100">{title}</p>
-              <p className="py-4 text-sm text-gray-400">{bodyMessage}</p>
+              <div
+                className="py-4 text-sm text-gray-400"
+                dangerouslySetInnerHTML={{ __html: bodyMessage }}
+              />
             </div>
           </div>
 

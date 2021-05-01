@@ -9,9 +9,10 @@ import PromotionPage from './components/promotion/page/PromotionPage';
 import CartPage from './components/cart/page/CartPage';
 import CheckoutPage from './components/checkout/page/CheckoutPage';
 import PaymentPage from './components/payment/page/PaymentPage';
-import NotPermissionPage from './components/error/page/NotPermissionPage';
 import ErrorPage from './components/error/page/ErrorPage';
 import NotFoundPage from './components/error/page/NotFoundPage';
+import NotPermissionPage from './components/error/page/NotPermissionPage';
+import AdminManagerPage from './components/admin/page/AdminManagerPage';
 
 const App: FC = () => {
   const renderRoute = () => {
@@ -29,6 +30,7 @@ const App: FC = () => {
           <Route exact path="/payment" component={PaymentPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <Route exact path="/error" component={ErrorPage} />
+          <Route path="/admin" component={AdminManagerPage} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </Fragment>

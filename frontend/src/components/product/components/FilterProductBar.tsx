@@ -15,7 +15,7 @@ const FilterProductBar: any = (prop: any) => {
   return (
     <div className="w-full">
       <p className="text-xl">ค้นหาน้ำหอม</p>
-      <form className="mt-2">
+      <form className="mt-2 flex gap-2 justify-items-center	items-center">
         <select
           name="searchType"
           id="searchType"
