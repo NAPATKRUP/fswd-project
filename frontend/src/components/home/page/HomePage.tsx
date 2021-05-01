@@ -28,7 +28,7 @@ const HomePage: FC = () => {
     return <Loading />;
   }
   if (promotionError || productError) {
-    history.replace({ pathname: 'error' });
+    history.push({ pathname: '/error' });
     return <></>;
   }
   const { nowPromotion } = promotionData;

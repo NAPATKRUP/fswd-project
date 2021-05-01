@@ -61,7 +61,7 @@ const CartPage: FC = () => {
     return <Loading />;
   }
   if (error) {
-    history.replace({ pathname: 'error' });
+    history.push({ pathname: '/error' });
     return <></>;
   }
   const { waitingCart } = data;

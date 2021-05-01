@@ -85,7 +85,7 @@ const PaymentPage: FC = () => {
         setIsPayment(true);
         return handleStatusMessage(
           'ยืนยันการชำระเงินเสร็จสิ้น',
-          'คุณได้ทำการชำระเงินสินค้าแล้ว โดยท่านสามารถติดตามสถานะได้ที่ออร์เดอร์ของฉัน'
+          'คุณได้ทำการชำระเงินสินค้าแล้ว โดยท่านสามารถติดตามสถานะได้ที่ออเดอร์ของฉัน'
         );
       } catch ({ message }) {
         return handleStatusMessage('ทำรายการไม่สำเร็จ', message);
@@ -116,7 +116,7 @@ const PaymentPage: FC = () => {
     return <Loading />;
   }
   if (orderError || addressError || paymentError) {
-    history.replace({ pathname: 'error' });
+    history.push({ pathname: '/error' });
     return <></>;
   }
   const { orderById } = orderData;

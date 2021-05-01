@@ -23,19 +23,19 @@ export const confirmOrder = schemaComposer
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {
-        throw new ValidationError('ไม่พบออร์เดอร์สินค้า');
+        throw new ValidationError('ไม่พบออเดอร์สินค้า');
       }
       if (order.orderStatus === 'SUCCESS') {
-        throw new ValidationError('ออร์เดอร์นี้ได้ถูกทำการสั่งซื้อแล้ว');
+        throw new ValidationError('ออเดอร์นี้ได้ถูกทำการสั่งซื้อแล้ว');
       }
       if (order.orderStatus === 'CANCEL') {
-        throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อ');
+        throw new ValidationError('ออเดอร์นี้ถูกยกเลิกการสั่งซื้อ');
       }
       if (order.orderStatus === 'SHIPPING') {
-        throw new ValidationError('ออร์เดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
+        throw new ValidationError('ออเดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
       }
       if (order.orderStatus === 'ARRIVED') {
-        throw new ValidationError('ออร์เดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
+        throw new ValidationError('ออเดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
       }
 
       const address = await AddressModel.findOne({ userId, _id: addressId });
@@ -73,22 +73,22 @@ export const paymentOrder = schemaComposer
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {
-        throw new ValidationError('ไม่พบออร์เดอร์สินค้า');
+        throw new ValidationError('ไม่พบออเดอร์สินค้า');
       }
       if (order.orderStatus === 'WAITING') {
         throw new ValidationError('โปรดทำการยืนยันสินค้า และใส่ที่อยู่ในการจัดส่งก่อนการชำระเงิน');
       }
       if (order.orderStatus === 'SUCCESS') {
-        throw new ValidationError('ออร์เดอร์นี้ได้ถูกทำการสั่งซื้อแล้ว');
+        throw new ValidationError('ออเดอร์นี้ได้ถูกทำการสั่งซื้อแล้ว');
       }
       if (order.orderStatus === 'CANCEL') {
-        throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อ');
+        throw new ValidationError('ออเดอร์นี้ถูกยกเลิกการสั่งซื้อ');
       }
       if (order.orderStatus === 'SHIPPING') {
-        throw new ValidationError('ออร์เดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
+        throw new ValidationError('ออเดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
       }
       if (order.orderStatus === 'ARRIVED') {
-        throw new ValidationError('ออร์เดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
+        throw new ValidationError('ออเดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
       }
 
       const payment = await PaymentModel.findOne({ userId, _id: paymentId });
@@ -126,16 +126,16 @@ export const cancelOrder = schemaComposer
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {
-        throw new ValidationError('ไม่พบออร์เดอร์สินค้า');
+        throw new ValidationError('ไม่พบออเดอร์สินค้า');
       }
       if (order.orderStatus === 'CANCEL') {
-        throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อแล้ว');
+        throw new ValidationError('ออเดอร์นี้ถูกยกเลิกการสั่งซื้อแล้ว');
       }
       if (order.orderStatus === 'SHIPPING') {
-        throw new ValidationError('ออร์เดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
+        throw new ValidationError('ออเดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
       }
       if (order.orderStatus === 'ARRIVED') {
-        throw new ValidationError('ออร์เดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
+        throw new ValidationError('ออเดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
       }
 
       const cart = await CartModel.findOne({ userId, _id: order.cartId });
