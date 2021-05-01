@@ -167,7 +167,7 @@ const CreateProductPage: FC = () => {
               <input
                 type="submit"
                 className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
-                value="Create new product"
+                value="ยืนยันการสร้างสินค้าใหม่"
               />
             </div>
           </div>
