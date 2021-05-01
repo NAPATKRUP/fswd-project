@@ -68,7 +68,7 @@ const ProductDetailPage: FC = () => {
     return <Loading />;
   }
   if (error) {
-    history.replace({ pathname: 'error' });
+    history.push({ pathname: '/error' });
     return <></>;
   }
   const { productBySlug } = data;

@@ -31,7 +31,7 @@ const ProductPage: FC = () => {
     return <Loading />;
   }
   if (error) {
-    history.replace({ pathname: 'error' });
+    history.push({ pathname: '/error' });
     return <></>;
   }
   const { filterProduct } = data;
