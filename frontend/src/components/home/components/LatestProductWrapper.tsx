@@ -1,31 +1,19 @@
 import { FC, lazy } from 'react';
-import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { LATESTPRODUCT_PRODUCT_QUERY } from '../../../graphql/latestProductQuery';
 
 import { CollectionIcon } from '@heroicons/react/outline';
 
 import { IProduct } from '../../commons/type/IProduct';
 
-const Loading = lazy(() => import('../../commons/layouts/ContentWithSidebarLayout'));
 const ProductCard = lazy(() => import('../../commons/ProductCard'));
 
-const LatestProductWrapper: FC = () => {
-  const history = useHistory();
+interface LatestProductWrapperProps {
+  latestProduct: IProduct[];
+}
 
-  const { loading, error, data } = useQuery(LATESTPRODUCT_PRODUCT_QUERY, {
-    variables: { productShow: 4 },
-  });
-  if (loading) {
-    return <Loading />;
-  }
-  if (error) {
-    history.replace({ pathname: 'error' });
-    return <></>;
-  }
-  const { latestProduct } = data;
-
+const LatestProductWrapper: FC<LatestProductWrapperProps> = ({
+  latestProduct,
+}: LatestProductWrapperProps) => {
   return (
     <div className="px-20 py-8">
       <p className="lg:text-2xl text-xl">

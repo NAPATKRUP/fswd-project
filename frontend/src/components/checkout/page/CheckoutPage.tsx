@@ -24,7 +24,7 @@ interface LocationState {
 
 const CheckoutPage: FC = () => {
   const location = useLocation<LocationState>();
-  const { orderId } = location.state;
+  const { orderId } = location.state || '';
 
   const [addressId, setAddressId] = useState('');
   const [title, setTitle] = useState('');
