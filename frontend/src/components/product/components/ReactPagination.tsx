@@ -66,8 +66,8 @@ const Pagination = (props: any) => {
     delta = numberOfPagesNextToActivePage,
     left = current - delta,
     right = current + delta + 1,
-    range = [],
-    rangeWithEllipsis = [],
+    range = [] as any,
+    rangeWithEllipsis = [] as any,
     l = undefined,
     isEllipsisIncludes = false;
 
