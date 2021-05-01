@@ -1,4 +1,5 @@
 import { FC, lazy, useState, useCallback } from 'react';
+import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_ITEM_IN_CART_MUTATION } from '../../../graphql/addItemInCartMutation';
@@ -25,6 +26,9 @@ const ProductDetailPage: FC = () => {
   const [title, setTitle] = useState('');
   const [bodyMessage, setBodyMessage] = useState('');
   const { isShowing, toggle } = useModal(false);
+
+  const history = useHistory();
+
   const handleStatusMessage = useCallback(
     (title: string, bodyMessage: string) => {
       setTitle(title);
@@ -64,7 +68,8 @@ const ProductDetailPage: FC = () => {
     return <Loading />;
   }
   if (error) {
-    alert('error');
+    history.replace({ pathname: 'error' });
+    return <></>;
   }
   const { productBySlug } = data;
 

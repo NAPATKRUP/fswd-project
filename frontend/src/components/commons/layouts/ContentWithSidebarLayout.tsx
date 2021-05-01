@@ -1,6 +1,6 @@
 import { FC, lazy, ReactNode } from 'react';
 
-const Navbar = lazy(() => import('../Navbar'));
+const NavbarDesktop = lazy(() => import('../NavbarDesktop'));
 const PageContent = lazy(() => import('../PageContent'));
 
 interface ContentWithSidebarLayoutProp {
@@ -12,7 +12,7 @@ const ContentWithSidebarLayout: FC<ContentWithSidebarLayoutProp> = ({
 }: ContentWithSidebarLayoutProp) => {
   return (
     <div className="h-screen flex">
-      <Navbar />
+      <NavbarDesktop />
       <PageContent>{children}</PageContent>
     </div>
   );

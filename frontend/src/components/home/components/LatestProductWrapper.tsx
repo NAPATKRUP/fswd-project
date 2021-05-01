@@ -1,7 +1,10 @@
 import { FC, lazy } from 'react';
+import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { LATESTPRODUCT_PRODUCT_QUERY } from '../../../graphql/latestProductQuery';
+
+import { CollectionIcon } from '@heroicons/react/outline';
 
 import { IProduct } from '../../commons/type/IProduct';
 
@@ -9,6 +12,8 @@ const Loading = lazy(() => import('../../commons/layouts/ContentWithSidebarLayou
 const ProductCard = lazy(() => import('../../commons/ProductCard'));
 
 const LatestProductWrapper: FC = () => {
+  const history = useHistory();
+
   const { loading, error, data } = useQuery(LATESTPRODUCT_PRODUCT_QUERY, {
     variables: { productShow: 4 },
   });
@@ -16,13 +21,16 @@ const LatestProductWrapper: FC = () => {
     return <Loading />;
   }
   if (error) {
-    alert('error');
+    history.replace({ pathname: 'error' });
+    return <></>;
   }
   const { latestProduct } = data;
 
   return (
     <div className="px-20 py-8">
-      <p className="text-2xl">สินค้ามาใหม่</p>
+      <p className="lg:text-2xl text-xl">
+        <CollectionIcon className="h-6 w-6 inline-flex" /> สินค้ามาใหม่
+      </p>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-col-1">
         {latestProduct?.map((item: IProduct) => (
           <ProductCard product={item} key={item._id} />

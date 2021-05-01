@@ -34,6 +34,12 @@ module.exports = {
       'red-800': '#991B1B',
       'red-900': '#7F1D1D',
     },
+    minHeight: {
+      '1/4': '25%',
+      '1/2': '50%',
+      '3/4': '75%',
+      full: '100%',
+    },
   },
   variants: {
     extend: {},
