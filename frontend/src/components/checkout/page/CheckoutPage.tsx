@@ -57,8 +57,9 @@ const CheckoutPage: FC = () => {
   const handleCallBack = (stats: boolean) => {
     if (!stats) {
       toggle();
-      if (isConfirm) history.push('/payment', { orderId: orderId, addressId: addressId });
-      if (isCancel) history.replace({ pathname: '/' });
+      if (isConfirm)
+        history.push({ pathname: '/payment', state: { orderId: orderId, addressId: addressId } });
+      if (isCancel) history.push({ pathname: '/' });
     }
   };
 
@@ -134,9 +135,7 @@ const CheckoutPage: FC = () => {
           className="border-2 rounded-full bg-dark-100 text-white-100 hover:bg-dark-200 mx-2 p-1"
           onChange={handleAddressIdChange}
         >
-          <option value="" selected>
-            โปรดเลือกที่อยู่ที่ใช้ในการจัดส่ง
-          </option>
+          <option value="">โปรดเลือกที่อยู่ที่ใช้ในการจัดส่ง</option>
           {addressByUserContext.map((address: IAddress) => (
             <option key={address._id} value={address._id}>
               {address.name}

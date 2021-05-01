@@ -30,7 +30,7 @@ const CustomerOrderPage: FC = () => {
         orderStatus === 'SHIPPING' ||
         orderStatus === 'ARRIVED'
       )
-        history.push('/');
+        history.push({ pathname: '/' });
     },
     [history]
   );
@@ -59,10 +59,9 @@ const CustomerOrderPage: FC = () => {
             <div className="lg:col-span-2 col-span-2 lg:text-base text-sm">ชำระเงินผ่านทาง</div>
             <div className="lg:col-span-2 col-span-2 lg:text-base text-sm">สถานะ</div>
           </div>
-          {orderByUserContext?.map((order: IOrder) => (
-            <div className="my-2">
+          {orderByUserContext?.map((order: IOrder, index: number) => (
+            <div key={order._id} className="my-2">
               <div
-                key={order._id}
                 role="button"
                 onClick={(e) => {
                   handleChangeToDetailPage(e, order._id, order.orderStatus);

@@ -58,8 +58,8 @@ const PaymentPage: FC = () => {
   const handleCallBack = (stats: boolean) => {
     if (!stats) {
       toggle();
-      if (isPayment) history.replace({ pathname: '/' });
-      if (isCancel) history.replace({ pathname: '/' });
+      if (isPayment) history.push({ pathname: '/' });
+      if (isCancel) history.push({ pathname: '/' });
     }
   };
 
@@ -139,9 +139,7 @@ const PaymentPage: FC = () => {
           className="border-2 rounded-full lg:w-3/12 w-8/12 bg-dark-100 text-white-100 hover:bg-dark-200 p-1"
           onChange={handlePaymentIdChange}
         >
-          <option value="" selected>
-            โปรดเลือกช่องทางในการชำระเงิน
-          </option>
+          <option value="">โปรดเลือกช่องทางในการชำระเงิน</option>
           {paymentByUserContext.map((payment: IPayment) => (
             <option key={payment._id} value={payment._id}>
               {payment.name}
@@ -158,7 +156,7 @@ const PaymentPage: FC = () => {
         <div className="flex justify-end lg:mr-20 mr-10">
           <button
             onClick={() => {
-              history.push('/checkout', { orderId: orderId });
+              history.push({ pathname: '/checkout', state: { orderId: orderId } });
             }}
             className="font-semibold border-2 rounded-xl bg-dark-100 text-white-100 hover:bg-dark-200 ml-2 px-2 py-1"
           >

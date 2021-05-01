@@ -34,7 +34,7 @@ const CartPage: FC = () => {
   const handleCallBack = (status: boolean) => {
     if (!status) {
       toggle();
-      history.push('/checkout', { orderId: order });
+      history.push({ pathname: '/checkout', state: { orderId: order } });
     }
   };
 
