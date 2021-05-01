@@ -1,10 +1,12 @@
 import { FC, lazy, useState, useCallback } from 'react';
 import { useLocation, useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
-import { ORDER_BY_ID_QUERY } from '../../../graphql/orderByIdQuery';
+import { ADDRESS_BY_ORDERID_QUERY } from '../../../graphql/addressByOrderIdQuery';
 import { PAYMENT_BY_USERCONTEXT_QUERY } from '../../../graphql/paymentByUserContextQuery';
 import { PAYMENT_ORDER_MUTATION } from '../../../graphql/paymentOrderMutation';
 import { CANCEL_ORDER_MUTATION } from '../../../graphql/cancelOrderMutation';
+
+import { RefreshIcon } from '@heroicons/react/outline';
 
 import useModal from '../../../hooks/useModal';
 
@@ -37,10 +39,12 @@ const PaymentPage: FC = () => {
 
   const history = useHistory();
 
-  const { loading: orderLoading, error: orderError, data: orderData } = useQuery(
-    ORDER_BY_ID_QUERY,
-    { variables: { orderId } }
-  );
+  const {
+    loading: orderLoading,
+    error: orderError,
+    data: orderData,
+    refetch: addressRefetch,
+  } = useQuery(ADDRESS_BY_ORDERID_QUERY, { variables: { orderId } });
   const { loading: paymentLoading, error: paymentError, data: paymentData } = useQuery(
     PAYMENT_BY_USERCONTEXT_QUERY
   );
@@ -125,11 +129,15 @@ const PaymentPage: FC = () => {
         bodyMessage={bodyMessage}
         callBackFunction={handleCallBack}
       />
-      <Navigator
-        listOfNode={['หน้าหลัก', '>>', 'ตะกร้า', '>>', 'ตรวจสอบสินค้า', '>>', 'ชำระเงิน']}
-      />
+      <div className="flex">
+        <Navigator
+          listOfNode={['หน้าหลัก', '>>', 'ตะกร้า', '>>', 'ตรวจสอบสินค้า', '>>', 'ชำระเงิน']}
+        />
+        <button className="mx-3 my-5" onClick={() => addressRefetch()}>
+          <RefreshIcon className="h-5 w-5" />
+        </button>
+      </div>
       <AddressCard address={orderById.address} />
-
       <form onSubmit={handleSubmitPayment} className="lg:px-20 px-10 pt-10 pb-4 mt-8 text-right">
         <label className="text-xl font-semibold lg:w-5/12 w-full px-4">
           โปรดเลือกช่องทางในการชำระเงิน
