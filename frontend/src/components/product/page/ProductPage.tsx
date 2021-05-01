@@ -48,6 +48,16 @@ const ProductPage: FC = () => {
 
   // Update filter when have event with search
   useEffect(() => {
+    //Check NaN with delete minPrice
+    if (isNaN(minPrice)) {
+      setMinPrice(0);
+    }
+
+    //Check NaN with delete maxPrice
+    if (isNaN(maxPrice)) {
+      setMaxPrice(100000);
+    }
+
     if (!nameInput && !maxPrice && !minPrice && !searchType) {
       setSearchType('PRICE_ASC');
       queryProduct();
@@ -101,13 +111,7 @@ const ProductPage: FC = () => {
 
   const paginate = useCallback((pageNumber: any) => setCurrentPage(pageNumber), []);
 
-  if (
-    loading &&
-    nameInput === undefined &&
-    minPrice === undefined &&
-    maxPrice === undefined &&
-    searchType === undefined
-  ) {
+  if (loading && !nameInput && !minPrice && !maxPrice && !searchType) {
     return <Loading />;
   }
 

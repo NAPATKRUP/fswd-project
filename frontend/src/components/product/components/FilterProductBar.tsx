@@ -47,7 +47,6 @@ const FilterProductBar: any = (prop: any) => {
           placeholder="ราคาขั้นต่ำ"
           min="1"
           onChange={handleMinPrice}
-          value={minPrice}
         />
         <label className="lg:w-1/12 w-1/4">ถึง</label>
         <input
@@ -57,7 +56,6 @@ const FilterProductBar: any = (prop: any) => {
           placeholder="ราคาขั้นสูง"
           min="1"
           onChange={handleMaxPrice}
-          value={maxPrice}
         />
       </form>
     </div>
