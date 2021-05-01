@@ -81,26 +81,13 @@ const CreateProductPage: FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl">Create New Product</h2>
+      <h2 className="text-2xl">สร้างสินค้าใหม่</h2>
       <form onSubmit={handleSubmitForm}>
         <div className="grid grid-cols-6 gap-6 my-3">
           <div className="col-span-6 sm:col-span-3">
             <div className="my-2">
-              <label htmlFor="product_slug" className="block text-md font-medium text-dark-200">
-                Product slug *
-              </label>
-              <input
-                type="text"
-                name="product_slug"
-                id="product_slug"
-                value={productDetail.slug}
-                disabled
-                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
-              />
-            </div>
-            <div className="my-2">
               <label htmlFor="product_name" className="block text-md font-medium text-dark-200">
-                Product name *
+                ชื่อสินค้า *
               </label>
               <input
                 type="text"
@@ -112,8 +99,21 @@ const CreateProductPage: FC = () => {
               />
             </div>
             <div className="my-2">
+              <label htmlFor="product_slug" className="block text-md font-medium text-dark-200">
+                ชื่อ Slug สินค้า *
+              </label>
+              <input
+                type="text"
+                name="product_slug"
+                id="product_slug"
+                value={productDetail.slug}
+                disabled
+                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
+              />
+            </div>
+            <div className="my-2">
               <label htmlFor="product_brand" className="block text-md font-medium text-dark-200">
-                Product brand *
+                แบรนด์สินค้า *
               </label>
               <input
                 type="text"
@@ -126,7 +126,7 @@ const CreateProductPage: FC = () => {
             </div>
             <div className="my-2">
               <label htmlFor="product_price" className="block text-md font-medium text-dark-200">
-                Product price *
+                ราคาสินค้า *
               </label>
               <input
                 type="number"
@@ -139,7 +139,7 @@ const CreateProductPage: FC = () => {
             </div>
             <div className="my-2">
               <label htmlFor="product_image" className="block text-md font-medium text-dark-200">
-                Product image
+                รูปสินค้า
               </label>
               <input
                 type="text"
@@ -154,7 +154,7 @@ const CreateProductPage: FC = () => {
                 htmlFor="product_description"
                 className="block text-md font-medium text-dark-200"
               >
-                Product description
+                รายละเอียดสินค้า
               </label>
               <CKEditor
                 editor={ClassicEditor}
