@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import CustomerInfo from './CustomerInfoPage';
 // import { useSession } from '../../../context/SessionContext';
 
 const CustomerDashboardPage: FC = () => {
@@ -21,6 +22,10 @@ const CustomerDashboardPage: FC = () => {
           </button>
         </Link>
       </div>
+
+      <hr className="my-5" />
+
+      <CustomerInfo />
     </div>
   );
 };
