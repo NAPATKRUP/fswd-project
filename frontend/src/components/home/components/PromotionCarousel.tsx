@@ -1,26 +1,19 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import { useQuery } from '@apollo/client';
-import { NOW_PROMOTION_QUERY } from '../graphql/nowPromotionQuery';
 import moment from 'moment';
 import 'moment/locale/th';
 
 import { IPromotion } from '../../commons/type/IPromotion';
 
-const Loading = React.lazy(() => import('../../commons/loading/Loading'));
+interface PromotionCarouselProps {
+  nowPromotion: IPromotion[];
+}
 
-const PromotionCarousel: FC = () => {
-  const { loading, error, data } = useQuery(NOW_PROMOTION_QUERY);
-  if (loading) {
-    return <Loading />;
-  }
-  if (error) {
-    alert('error');
-  }
-  const { nowPromotion } = data;
-
+const PromotionCarousel: FC<PromotionCarouselProps> = ({
+  nowPromotion,
+}: PromotionCarouselProps) => {
   const caroulselResponvie = {
     480: {
       items: 1,

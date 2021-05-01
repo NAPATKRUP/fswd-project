@@ -1,18 +1,20 @@
-import React, { FC, useState, useCallback } from 'react';
+import { FC, lazy, useState, useCallback } from 'react';
+import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { ADD_ITEM_IN_CART_MUTATION } from '../../commons/graphql/addItemInCartMutation';
-import { PRODUCT_BY_SLUG_QUERY } from '../graphql/productBySlugQuery';
+import { ADD_ITEM_IN_CART_MUTATION } from '../../../graphql/addItemInCartMutation';
+import { PRODUCT_BY_SLUG_QUERY } from '../../../graphql/productBySlugQuery';
+import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
 
 import useModal from '../../../hooks/useModal';
 
-const ContentWithSidebarLayout = React.lazy(
+const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
-const Loading = React.lazy(() => import('../../commons/loading/Loading'));
-const Navigator = React.lazy(() => import('../../commons/Navigator'));
-const PromotionAvailableCard = React.lazy(() => import('../../commons/PromotionAvailableCard'));
-const Modal = React.lazy(() => import('../../commons/Modal'));
+const Loading = lazy(() => import('../../commons/loading/Loading'));
+const Navigator = lazy(() => import('../../commons/Navigator'));
+const PromotionAvailableCard = lazy(() => import('../../commons/PromotionAvailableCard'));
+const Modal = lazy(() => import('../../commons/Modal'));
 
 interface RouteParams {
   slug: string;
@@ -24,6 +26,9 @@ const ProductDetailPage: FC = () => {
   const [title, setTitle] = useState('');
   const [bodyMessage, setBodyMessage] = useState('');
   const { isShowing, toggle } = useModal(false);
+
+  const history = useHistory();
+
   const handleStatusMessage = useCallback(
     (title: string, bodyMessage: string) => {
       setTitle(title);
@@ -45,13 +50,14 @@ const ProductDetailPage: FC = () => {
           variables: {
             productId: id,
           },
+          refetchQueries: [{ query: WAITING_CART_QUERY }],
         });
         return handleStatusMessage(
           'เพิ่มจำนวนสินค้าเสร็จสิ้น',
           'ระบบได้ทำการเพิ่มจำนวนรายการสินค้าที่ท่านเลือกในตะกร้าสินค้าแล้ว สามารถตรวงสอบได้ที่ตะกร้าสินค้า'
         );
-      } catch (e) {
-        return handleStatusMessage('ทำรายการไม่สำเร็จ', e.toString().replace('Error: ', ''));
+      } catch ({ message }) {
+        return handleStatusMessage('ทำรายการไม่สำเร็จ', message);
       }
     },
     [addItemInCart, handleStatusMessage]
@@ -62,7 +68,8 @@ const ProductDetailPage: FC = () => {
     return <Loading />;
   }
   if (error) {
-    alert('error');
+    history.replace({ pathname: 'error' });
+    return <></>;
   }
   const { productBySlug } = data;
 

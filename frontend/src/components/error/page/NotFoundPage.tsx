@@ -1,5 +1,7 @@
-import { FC } from 'react';
+import { FC, lazy } from 'react';
 
-const NotFoundPage: FC = () => <div className="text-4xl">404 - Not found</div>;
+const ErrorStatusCard = lazy(() => import('../components/ErrorStatusCard'));
+
+const NotFoundPage: FC = () => <ErrorStatusCard title="ไม่พบเนื้อหา" />;
 
 export default NotFoundPage;

@@ -1,12 +1,7 @@
-import { FC } from 'react';
-import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
+import { FC, lazy } from 'react';
 
-const NotPermissionPage: FC = () => {
-  return (
-    <ContentWithSidebarLayout>
-      <h1>You not have permission on this page</h1>
-    </ContentWithSidebarLayout>
-  );
-};
+const ErrorStatusCard = lazy(() => import('../components/ErrorStatusCard'));
+
+const NotPermissionPage: FC = () => <ErrorStatusCard title="คุณไม่มีสิทธ์ในการเข้าใช้งานส่วนนี้" />;
 
 export default NotPermissionPage;

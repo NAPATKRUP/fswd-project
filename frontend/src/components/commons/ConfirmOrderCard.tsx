@@ -1,6 +1,8 @@
 import { FC } from 'react';
 
-import { IOrder, IUsePro } from '../commons/type/IOrder';
+import { DocumentReportIcon, TagIcon } from '@heroicons/react/outline';
+
+import { IOrder, IUsePromotion } from '../commons/type/IOrder';
 import { IItem } from '../commons/type/ICart';
 
 interface OrderProps {
@@ -10,7 +12,9 @@ interface OrderProps {
 const ConfirmOrderCard: FC<OrderProps> = ({ data }: OrderProps) => {
   return (
     <div className="lg:px-20 px-10 pt-12">
-      <div className="lg:text-2xl md:text-xl font-semibold">ยืนยันคำสั่งซื้อ ID: #{data._id}</div>
+      <div className="lg:text-2xl md:text-xl font-semibold">
+        <DocumentReportIcon className="h-8 w-8 inline-flex" /> ยืนยันคำสั่งซื้อ ID: #{data._id}
+      </div>
       <div className="w-full border-2 border-dark-100 bg-dark-100 rounded-full mt-4 mb-8"></div>
       {data.cart.items?.map((item: IItem, index: number) => (
         <div key={item._id} className="grid lg:grid-cols-3 md:gridcols-2 gap-4 mt-4">
@@ -52,9 +56,11 @@ const ConfirmOrderCard: FC<OrderProps> = ({ data }: OrderProps) => {
         <span className="font-semibold">โปรโมชั่นที่ได้รับด้านล่าง</span>
       </p>
 
-      <p className="lg:text-xl md:text-lg font-semibold mt-8 mb-4">โปรโมชั่นที่ได้รับ</p>
+      <p className="lg:text-xl md:text-lg font-semibold mt-8 mb-4">
+        โปรโมชั่นที่ได้รับ <TagIcon className="h-5 w-5 inline-flex" />
+      </p>
       <div className="w-full border-2 border-gold-100 bg-gold-100 rounded-full mt-2 mb-6"></div>
-      {data.usePromotion?.map((usePro: IUsePro, index: number) => (
+      {data.usePromotion?.map((usePro: IUsePromotion, index: number) => (
         <div key={data._id + 'pro' + index} className="grid lg:grid-cols-2 mt-2">
           <p className="md:text-sm lg:text-base">{usePro.promotion}</p>
           <p className="md:text-sm lg:text-base">สินค้าที่ร่วมรายการ: {usePro.product}</p>

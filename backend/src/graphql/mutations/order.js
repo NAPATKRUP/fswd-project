@@ -1,11 +1,11 @@
 import { ValidationError } from 'apollo-server-express';
 import { schemaComposer } from 'graphql-compose';
 
-import OrderModel, { OrderTC } from '../../models/order';
-import AddressModel from '../../models/address';
-import PaymentModel from '../../models/payment';
-import CartModel from '../../models/cart';
-import ProductModel from '../../models/product';
+import { OrderModel, OrderTC } from '../../models/order';
+import { AddressModel } from '../../models/address';
+import { PaymentModel } from '../../models/payment';
+import { CartModel } from '../../models/cart';
+import { ProductModel } from '../../models/product';
 import { requiredAuth } from '../middlewares';
 
 export const confirmOrder = schemaComposer
@@ -19,7 +19,7 @@ export const confirmOrder = schemaComposer
     },
     resolve: async ({ args, context }) => {
       const { orderId, addressId } = args;
-      const { _id: userId } = context;
+      const { _id: userId } = context.user;
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {
@@ -30,6 +30,12 @@ export const confirmOrder = schemaComposer
       }
       if (order.orderStatus === 'CANCEL') {
         throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อ');
+      }
+      if (order.orderStatus === 'SHIPPING') {
+        throw new ValidationError('ออร์เดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
+      }
+      if (order.orderStatus === 'ARRIVED') {
+        throw new ValidationError('ออร์เดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
       }
 
       const address = await AddressModel.findOne({ userId, _id: addressId });
@@ -63,7 +69,7 @@ export const paymentOrder = schemaComposer
     },
     resolve: async ({ args, context }) => {
       const { orderId, paymentId } = args;
-      const { _id: userId } = context;
+      const { _id: userId } = context.user;
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {
@@ -77,6 +83,12 @@ export const paymentOrder = schemaComposer
       }
       if (order.orderStatus === 'CANCEL') {
         throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อ');
+      }
+      if (order.orderStatus === 'SHIPPING') {
+        throw new ValidationError('ออร์เดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
+      }
+      if (order.orderStatus === 'ARRIVED') {
+        throw new ValidationError('ออร์เดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
       }
 
       const payment = await PaymentModel.findOne({ userId, _id: paymentId });
@@ -102,7 +114,7 @@ export const paymentOrder = schemaComposer
 
 export const cancelOrder = schemaComposer
   .createResolver({
-    name: 'confirmOrder',
+    name: 'cancelOrder',
     kind: 'mutation',
     type: OrderTC.getType(),
     args: {
@@ -110,7 +122,7 @@ export const cancelOrder = schemaComposer
     },
     resolve: async ({ args, context }) => {
       const { orderId } = args;
-      const { _id: userId } = context;
+      const { _id: userId } = context.user;
 
       const order = await OrderModel.findOne({ userId, _id: orderId });
       if (!order) {
@@ -119,6 +131,12 @@ export const cancelOrder = schemaComposer
       if (order.orderStatus === 'CANCEL') {
         throw new ValidationError('ออร์เดอร์นี้ถูกยกเลิกการสั่งซื้อแล้ว');
       }
+      if (order.orderStatus === 'SHIPPING') {
+        throw new ValidationError('ออร์เดอร์นี้อยู่ในขั้นตอนระหว่างการจัดส่ง');
+      }
+      if (order.orderStatus === 'ARRIVED') {
+        throw new ValidationError('ออร์เดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
+      }
 
       const cart = await CartModel.findOne({ userId, _id: order.cartId });
       for (const item of cart.items) {
@@ -126,7 +144,6 @@ export const cancelOrder = schemaComposer
         await ProductModel.findByIdAndUpdate(item.product._id, {
           stock: product.stock + item.amount,
         });
-        // Refund Money To Customer if order has payment
       }
 
       await OrderModel.findOneAndUpdate(

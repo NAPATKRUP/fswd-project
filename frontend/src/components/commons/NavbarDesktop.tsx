@@ -2,6 +2,8 @@ import { FC, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSession } from '../../context/SessionContext';
 
+import { UserIcon } from '@heroicons/react/solid';
+
 const Navbar: FC = () => {
   const { user, logout } = useSession();
 
@@ -13,7 +15,7 @@ const Navbar: FC = () => {
   }, [logout]);
 
   return (
-    <div className="text-white-100 w-1/5 h-100 bg-dark-100 flex flex-col items-center">
+    <div className="text-white-100 w-1/5 h-100 bg-dark-100 hidden md:flex md:flex-col md:items-center">
       <p className="text-xl font-semibold text-gold-100 p-5">PERFUME HOUSE</p>
       <div className="w-4/5 border-b-4 border-gold-100 mx-auto rounded-full"></div>
       <ul className="text-center py-10">
@@ -48,15 +50,15 @@ const Navbar: FC = () => {
         )}
       </ul>
 
-      <ul className="font-semibold text-center w-100 flex flex-row justify-between mt-auto py-10">
+      <ul className="font-semibold text-center w-100 flex lg:flex-row md:flex-col justify-between mt-auto lg:py-10 py-5">
         {!user && (
           <>
-            <li className="p-5">
+            <li className="lg:p-5 p-2">
               <NavLink exact to={`/login`} activeClassName="text-gold-200">
                 Login
               </NavLink>
             </li>
-            <li className="p-5">
+            <li className="lg:p-5 p-2">
               <NavLink exact to={`/register`} activeClassName="text-gold-200">
                 Register
               </NavLink>
@@ -66,12 +68,12 @@ const Navbar: FC = () => {
 
         {user && (
           <>
-            <li className="p-5">
+            <li className="lg:p-5 p-2">
               <NavLink to={`/account`} activeClassName="text-gold-200">
-                {user.displayName}
+                <UserIcon className="h-5 w-5 inline-flex mb-1" /> {user.displayName}
               </NavLink>
             </li>
-            <li className="p-5">
+            <li className="lg:p-5 p-2">
               <div role="button" className="text-gold-200" onClick={handleOnClick}>
                 <p>ออกจากระบบ</p>
               </div>

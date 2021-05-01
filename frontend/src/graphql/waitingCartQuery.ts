@@ -5,6 +5,7 @@ export const WAITING_CART_QUERY = gql`
     waitingCart {
       status
       items {
+        _id
         product {
           _id
           name
