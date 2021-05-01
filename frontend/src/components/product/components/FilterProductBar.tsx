@@ -21,7 +21,10 @@ const FilterProductBar: FC<FilterProductProps> = ({ callBackFunction }: FilterPr
   return (
     <div className="w-full">
       <p className="text-xl">ค้นหาน้ำหอม</p>
-      <form onSubmit={(e) => handleSubmit(e)} className="mt-2">
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="mt-2 flex gap-2 justify-items-center	items-center"
+      >
         <select
           name="searchType"
           id="searchType"

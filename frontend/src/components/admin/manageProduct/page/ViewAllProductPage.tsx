@@ -27,7 +27,7 @@ const ViewAllProductPage: FC = () => {
 
   const renderContent = () => {
     if (loading) {
-      return <Loading />;
+      return <Loading isFullscreen={false} />;
     } else if (error) {
       return <div>{error}</div>;
     }
