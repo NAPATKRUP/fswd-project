@@ -103,9 +103,6 @@ const EditProductPage: FC = () => {
         title: 'แก้ไขข้อมูลสินค้า',
         bodyMessage: 'คุณยืนยันการแก้ไขข้อมูลสินค้าหรือไม่',
         callBackFunction: (status: boolean) => {
-          console.log('--------------------------------');
-          console.log(status);
-
           if (status) {
             updateProduct({
               variables: {
