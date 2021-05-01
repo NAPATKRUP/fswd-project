@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import useModal from '../../../../hooks/useModal';
 import Modal from '../../../commons/Modal';
 import { IProduct } from '../../../commons/type/IProduct';
-import { PRODUCT_REMOVE_BY_ID_MUTATION } from '../graphql/removeProduct';
+import { REMOVE_PRODUCT_BY_ID_MUTATION } from '../../../../graphql/removeProductMutation';
 
 interface AdminProductBoxProps {
   item?: IProduct;
@@ -12,17 +12,17 @@ interface AdminProductBoxProps {
 
 const AdminProductBox: FC<AdminProductBoxProps> = ({ item }: AdminProductBoxProps) => {
   const { isShowing, toggle } = useModal(false);
-  const [removeProduct] = useMutation(PRODUCT_REMOVE_BY_ID_MUTATION);
+  const [removeProduct] = useMutation(REMOVE_PRODUCT_BY_ID_MUTATION);
 
   const handleCallBack = (status: boolean) => {
     if (status === true && item) {
-      toggle();
       removeProduct({
         variables: {
           _id: item._id,
         },
       });
     }
+    toggle();
   };
 
   if (item) {
@@ -36,18 +36,19 @@ const AdminProductBox: FC<AdminProductBoxProps> = ({ item }: AdminProductBoxProp
           bodyMessage={`คุณต้องการลบสินค้า ${item?.name} ชิ้นนี้ ใช่หรือไม่ (หากลบไปแล้วจะไม่สามารถกู้คืนสินค้ากลับมาได้อีก)`}
           callBackFunction={handleCallBack}
         />
-        <div>
+        <div className="flex flex-col h-full justify-items-stretch">
           <img src={item?.image} className="w-full object-cover bg-center" alt={item?.name} />
-          <div className="p-4">
+          <div className="p-4 h-full flex flex-col items-stretch">
             <h5 className="text-md font-bold mb-2 uppercase">{item?.brand}</h5>
             <p>{item?.name}</p>
             <p className="mt-4 text-right -bottom-0">{item?.price} บาท</p>
 
-            <div className="flex justify-between mt-3 gap-3">
-              <Link to={`/admin/product/${item._id}`}>
-                <button className="text-blue-100 border-blue-100 hover:bg-blue-300 hover:border-blue-200 hover:text-blue-500 focus:border-blue-300 px-3 py-2">
-                  <span>Edit</span>
-                </button>
+            <div className="grid grid-cols-2 gap-3 self-end">
+              <Link
+                to={`/admin/product/${item._id}`}
+                className="text-blue-100 border-blue-100 hover:bg-blue-300 hover:border-blue-200 hover:text-blue-500 focus:border-blue-300 px-3 py-2 text-center"
+              >
+                <span>Edit</span>
               </Link>
               <button
                 onClick={() => toggle()}

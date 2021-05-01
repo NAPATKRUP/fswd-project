@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom';
 import { IProduct, IUpdateProduct } from '../../../commons/type/IProduct';
 import Loading from '../../../commons/loading/Loading';
 import { ApolloError, useMutation, useQuery } from '@apollo/client';
-import { PRODUCT_QUERY_BY_ID } from '../graphql/queryProduct';
-import { PRODUCT_UPDATE_BY_ID_MUTATION } from '../graphql/updateProduct';
+import { UPDATE_PRODUCT_BY_ID_MUTATION } from '../../../../graphql/updateProductMutation';
+import { PRODUCT_BY_ID_QUERY } from '../../../../graphql/productByIdQuery';
 
 const EditProductPage: FC = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -15,13 +15,15 @@ const EditProductPage: FC = () => {
   const { loading: queryLoading, error: queryError } = useQuery<
     { productById: IProduct },
     { id: string }
-  >(PRODUCT_QUERY_BY_ID, {
+  >(PRODUCT_BY_ID_QUERY, {
     variables: {
       id: productId,
     },
     onCompleted: (data: { productById: IProduct }) => {
       const { productById } = data;
-      if (productById) setProductDetail(productById);
+      if (productById) {
+        setProductDetail(productById);
+      }
       setIsFetching(false);
     },
     onError: (error: ApolloError) => {
@@ -30,7 +32,7 @@ const EditProductPage: FC = () => {
     },
   });
   const [updateProduct] = useMutation<{ updateProductById: IProduct }, IUpdateProduct>(
-    PRODUCT_UPDATE_BY_ID_MUTATION
+    UPDATE_PRODUCT_BY_ID_MUTATION
   );
 
   const onUpdateProductDetail = useCallback(
@@ -114,79 +116,81 @@ const EditProductPage: FC = () => {
         <div className="grid grid-cols-6 gap-6 my-3">
           <div className="col-span-6 lg:col-span-3">
             <div className="my-2">
-              <label htmlFor="product_slug" className="block text-md font-medium text-dark-200">
-                Product slug
-              </label>
-              <input
-                type="text"
-                name="product_slug"
-                id="product_slug"
-                value={productDetail.slug}
-                disabled
-                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
-              />
-            </div>
-            <div className="my-2">
               <label htmlFor="product_name" className="block text-md font-medium text-dark-200">
-                Product name
+                ชื่อสินค้า
               </label>
               <input
                 type="text"
                 name="product_name"
                 id="product_name"
-                value={productDetail.name}
+                defaultValue={productDetail.name}
                 onChange={handleProductNameChange}
                 className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
+              <label htmlFor="product_slug" className="block text-md font-medium text-dark-200">
+                ชื่อ slug สินค้า
+              </label>
+              <input
+                type="text"
+                name="product_slug"
+                id="product_slug"
+                defaultValue={productDetail.slug}
+                disabled
+                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
+              />
+            </div>
+            <div className="my-2">
               <label htmlFor="product_brand" className="block text-md font-medium text-dark-200">
-                Product brand
+                แบรนด์สินค้า
               </label>
               <input
                 type="text"
                 name="product_brand"
                 id="product_brand"
-                value={productDetail.brand}
+                defaultValue={productDetail.brand}
                 onChange={handleProductBrandChange}
                 className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
               <label htmlFor="product_price" className="block text-md font-medium text-dark-200">
-                Product price
+                ราคาสินค้า
               </label>
               <input
                 type="number"
                 name="product_price"
                 id="product_price"
-                value={productDetail.price}
+                min={0}
+                defaultValue={productDetail.price}
                 onChange={handleProductPriceChange}
                 className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
               <label htmlFor="product_image" className="block text-md font-medium text-dark-200">
-                Product image
+                รูปสินค้า
               </label>
               <input
                 type="text"
                 name="product_image"
                 id="product_image"
-                value={productDetail.image}
+                defaultValue={productDetail.image}
                 onChange={handleProductImageChange}
                 className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
             </div>
             <div className="my-2">
               <label htmlFor="product_stock" className="block text-md font-medium text-dark-200">
-                Product stock
+                จำนวนสินค้า
               </label>
               <input
                 type="number"
                 name="product_stock"
                 id="product_stock"
-                value={productDetail.stock}
+                min={0}
+                defaultValue={productDetail.stock}
                 onChange={handleProductStockChange}
                 className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
               />
@@ -196,7 +200,7 @@ const EditProductPage: FC = () => {
                 htmlFor="product_description"
                 className="block text-md font-medium text-dark-200"
               >
-                Product description
+                รายละเอียดสินค้า
               </label>
               <CKEditor
                 editor={ClassicEditor}
@@ -210,7 +214,14 @@ const EditProductPage: FC = () => {
                 type="submit"
                 onClick={handleSubmitForm}
                 className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
-                value="Edit product detail"
+                value="ยืนยันการแก้ไขข้อมูลสินค้า"
+              />
+            </div>
+            <div className="my-4">
+              <input
+                type="reset"
+                className="py-2 px-4 bg-dark-400 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
+                value="คืนค่าเดิมของสินค้า"
               />
             </div>
           </div>

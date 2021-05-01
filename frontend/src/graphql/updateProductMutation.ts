@@ -1,15 +1,18 @@
 import { DocumentNode, gql } from '@apollo/client';
 
-export const PRODUCT_CREATE_MUTATION: DocumentNode = gql`
+export const UPDATE_PRODUCT_BY_ID_MUTATION: DocumentNode = gql`
   mutation(
+    $_id: MongoID!
     $slug: String!
     $name: String!
     $brand: String!
     $image: String
     $price: Float!
+    $stock: Float!
     $description: String!
   ) {
-    createProduct(
+    updateProductById(
+      _id: $_id
       record: {
         slug: $slug
         name: $name
@@ -17,7 +20,7 @@ export const PRODUCT_CREATE_MUTATION: DocumentNode = gql`
         image: $image
         price: $price
         description: $description
-        stock: 0
+        stock: $stock
       }
     ) {
       record {
