@@ -108,7 +108,7 @@ const CheckoutPage: FC = () => {
     return <Loading />;
   }
   if (orderError || addressError) {
-    history.replace({ pathname: 'error' });
+    history.push({ pathname: '/error' });
     return <></>;
   }
   const { orderById } = orderData;
