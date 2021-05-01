@@ -1,4 +1,5 @@
 import { FC, lazy } from 'react';
+import { useHistory } from 'react-router';
 import { AVAILABLE_PROMOTION_QUERY } from '../../../graphql/availablePromotionQuery';
 import { useQuery } from '@apollo/client';
 
@@ -12,12 +13,15 @@ const Navigator = lazy(() => import('../../commons/Navigator'));
 const PromotionCard = lazy(() => import('../components/PromotionCard'));
 
 const PromotionPage: FC = () => {
+  const history = useHistory();
+
   const { loading, error, data }: any = useQuery(AVAILABLE_PROMOTION_QUERY);
   if (loading) {
     return <Loading />;
   }
   if (error) {
-    alert('error');
+    history.replace({ pathname: 'error' });
+    return <></>;
   }
 
   const { availablePromotion } = data;

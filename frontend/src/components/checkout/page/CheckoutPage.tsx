@@ -108,7 +108,8 @@ const CheckoutPage: FC = () => {
     return <Loading />;
   }
   if (orderError || addressError) {
-    alert('error');
+    history.replace({ pathname: 'error' });
+    return <></>;
   }
   const { orderById } = orderData;
   const { addressByUserContext } = addressData;

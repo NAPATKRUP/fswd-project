@@ -1,4 +1,5 @@
 import { FC, lazy, useState } from 'react';
+import { useHistory } from 'react-router';
 import { useQuery } from '@apollo/client';
 import { FILTER_PRODUCT_QUERY } from '../../../graphql/filterProductQuery';
 
@@ -16,6 +17,8 @@ const ProductPage: FC = () => {
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(100000);
 
+  const history = useHistory();
+
   const { loading, error, data } = useQuery(FILTER_PRODUCT_QUERY, {
     variables: {
       typeFilter: searchType,
@@ -28,7 +31,8 @@ const ProductPage: FC = () => {
     return <Loading />;
   }
   if (error) {
-    alert('error');
+    history.replace({ pathname: 'error' });
+    return <></>;
   }
   const { filterProduct } = data;
 

@@ -116,12 +116,12 @@ const PaymentPage: FC = () => {
     return <Loading />;
   }
   if (orderError || addressError || paymentError) {
-    alert('error');
+    history.replace({ pathname: 'error' });
+    return <></>;
   }
   const { orderById } = orderData;
   const { addressById } = addressData;
   const { paymentByUserContext } = paymentData;
-  console.log(orderById);
 
   return (
     <ContentWithSidebarLayout>

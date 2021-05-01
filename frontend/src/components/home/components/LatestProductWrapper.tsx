@@ -1,4 +1,5 @@
 import { FC, lazy } from 'react';
+import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { LATESTPRODUCT_PRODUCT_QUERY } from '../../../graphql/latestProductQuery';
@@ -11,6 +12,8 @@ const Loading = lazy(() => import('../../commons/layouts/ContentWithSidebarLayou
 const ProductCard = lazy(() => import('../../commons/ProductCard'));
 
 const LatestProductWrapper: FC = () => {
+  const history = useHistory();
+
   const { loading, error, data } = useQuery(LATESTPRODUCT_PRODUCT_QUERY, {
     variables: { productShow: 4 },
   });
@@ -18,7 +21,8 @@ const LatestProductWrapper: FC = () => {
     return <Loading />;
   }
   if (error) {
-    alert('error');
+    history.replace({ pathname: 'error' });
+    return <></>;
   }
   const { latestProduct } = data;
 
