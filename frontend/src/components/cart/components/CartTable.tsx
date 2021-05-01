@@ -5,6 +5,7 @@ import { REMOVE_ITEM_IN_CART_MUTATION } from '../../../graphql/removeItemInCartM
 import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
 
 import { PlusIcon, MinusIcon } from '@heroicons/react/solid';
+import { ShoppingCartIcon } from '@heroicons/react/outline';
 
 import useModal from '../../../hooks/useModal';
 
@@ -78,7 +79,7 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
   );
 
   return (
-    <div className="lg:px-20 md:px-10 px-4 pt-12">
+    <div className="lg:px-20 md:px-10 px-4 pt-12 min-h-1/2">
       <Modal
         isOpen={isShowing}
         isHasAccept={false}
@@ -87,7 +88,9 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
         bodyMessage={bodyMessage}
         callBackFunction={handleCallBack}
       />
-      <div className="lg:text-2xl text-xl">ตะกร้าสินค้า</div>
+      <div className="lg:text-2xl text-xl">
+        <ShoppingCartIcon className="h-6 w-6 inline-flex" /> ตะกร้าสินค้า
+      </div>
       <div className="grid grid-cols-12 gap-2 text-center mt-6">
         <div className="lg:col-span-1 col-span-1 lg:text-base text-sm">รายการ</div>
         <div className="lg:col-span-8 col-span-6 lg:text-base text-sm">ชื่อสินค้า</div>
