@@ -4,8 +4,6 @@ export const ORDER_BY_ID_QUERY = gql`
   query($orderId: MongoID!) {
     orderById(_id: $orderId) {
       _id
-      userId
-      cartId
       cart {
         items {
           _id
@@ -19,6 +17,10 @@ export const ORDER_BY_ID_QUERY = gql`
         totalPrice
         promotionDiscount
         totalFinalPrice
+      }
+      address {
+        name
+        addressDetail
       }
       orderStatus
       usePromotion

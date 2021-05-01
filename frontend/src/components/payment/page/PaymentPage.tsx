@@ -2,7 +2,6 @@ import { FC, lazy, useState, useCallback } from 'react';
 import { useLocation, useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
 import { ORDER_BY_ID_QUERY } from '../../../graphql/orderByIdQuery';
-import { ADDRESS_BY_ID_QUERY } from '../../../graphql/addressByIdQuery';
 import { PAYMENT_BY_USERCONTEXT_QUERY } from '../../../graphql/paymentByUserContextQuery';
 import { PAYMENT_ORDER_MUTATION } from '../../../graphql/paymentOrderMutation';
 import { CANCEL_ORDER_MUTATION } from '../../../graphql/cancelOrderMutation';
@@ -26,7 +25,7 @@ interface LocationState {
 
 const PaymentPage: FC = () => {
   const location = useLocation<LocationState>();
-  const { orderId, addressId } = location.state || '';
+  const { orderId } = location.state || '';
 
   const [paymentId, setPaymentId] = useState('');
   const [title, setTitle] = useState('');
@@ -41,12 +40,6 @@ const PaymentPage: FC = () => {
   const { loading: orderLoading, error: orderError, data: orderData } = useQuery(
     ORDER_BY_ID_QUERY,
     { variables: { orderId } }
-  );
-  const { loading: addressLoading, error: addressError, data: addressData } = useQuery(
-    ADDRESS_BY_ID_QUERY,
-    {
-      variables: { addressId: addressId },
-    }
   );
   const { loading: paymentLoading, error: paymentError, data: paymentData } = useQuery(
     PAYMENT_BY_USERCONTEXT_QUERY
@@ -112,15 +105,14 @@ const PaymentPage: FC = () => {
     setPaymentId(event.target.value);
   }, []);
 
-  if (orderLoading || addressLoading || paymentLoading) {
+  if (orderLoading || paymentLoading) {
     return <Loading />;
   }
-  if (orderError || addressError || paymentError) {
+  if (orderError || paymentError) {
     history.push({ pathname: '/error' });
     return <></>;
   }
   const { orderById } = orderData;
-  const { addressById } = addressData;
   const { paymentByUserContext } = paymentData;
 
   return (
@@ -136,7 +128,7 @@ const PaymentPage: FC = () => {
       <Navigator
         listOfNode={['หน้าหลัก', '>>', 'ตะกร้า', '>>', 'ตรวจสอบสินค้า', '>>', 'ชำระเงิน']}
       />
-      <AddressCard address={addressById} />
+      <AddressCard address={orderById.address} />
 
       <form onSubmit={handleSubmitPayment} className="lg:px-20 px-10 pt-10 pb-4 mt-8 text-right">
         <label className="text-xl font-semibold lg:w-5/12 w-full px-4">

@@ -2,26 +2,18 @@ import { gql } from '@apollo/client';
 
 export const CUSTOMER_ORDERS_QUERY = gql`
   query {
-    customerOrders {
+    orderByUserContext {
       _id
-      userId
-      cartId
-      cart {
-        items {
-          _id
-          product {
-            name
-            brand
-            price
-          }
-          amount
-        }
-        totalPrice
-        promotionDiscount
-        totalFinalPrice
-      }
       orderStatus
-      usePromotion
+      address {
+        name
+        addressDetail
+      }
+      payment {
+        name
+      }
+      checkoutAt
+      cancelAt
     }
   }
 `;

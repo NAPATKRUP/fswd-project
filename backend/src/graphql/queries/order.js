@@ -6,17 +6,6 @@ import { requiredAuth } from '../middlewares';
 export const orderById = OrderTC.getResolver('findById');
 export const orderByMany = OrderTC.getResolver('findMany');
 
-export const customerOrders = schemaComposer.createResolver({
-  name: 'customerOrders',
-  type: [OrderTC.getType()],
-  resolve: async ({ context }) => {
-    // const { _id } = context.user;
-    const _id = '6086470c1a67f5279c406ab0';
-    const result = await OrderModel.find({ userId: _id });
-    return result;
-  },
-});
-
 export const orderByUserContext = schemaComposer
   .createResolver({
     name: 'orderByUserContext',
