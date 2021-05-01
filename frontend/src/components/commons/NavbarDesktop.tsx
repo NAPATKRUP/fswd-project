@@ -2,6 +2,8 @@ import { FC, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSession } from '../../context/SessionContext';
 
+import { UserIcon } from '@heroicons/react/solid';
+
 const Navbar: FC = () => {
   const { user, logout } = useSession();
 
@@ -68,7 +70,7 @@ const Navbar: FC = () => {
           <>
             <li className="lg:p-5 p-2">
               <NavLink to={`/account`} activeClassName="text-gold-200">
-                {user.displayName}
+                <UserIcon className="h-5 w-5 inline-flex mb-1" /> {user.displayName}
               </NavLink>
             </li>
             <li className="lg:p-5 p-2">

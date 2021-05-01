@@ -4,6 +4,8 @@ import { ADD_ITEM_IN_CART_MUTATION } from '../../../graphql/addItemInCartMutatio
 import { REMOVE_ITEM_IN_CART_MUTATION } from '../../../graphql/removeItemInCartMutation';
 import { WAITING_CART_QUERY } from '../../../graphql/waitingCartQuery';
 
+import { PlusIcon, MinusIcon } from '@heroicons/react/solid';
+
 import useModal from '../../../hooks/useModal';
 
 import { IItem } from '../../commons/type/ICart';
@@ -94,7 +96,7 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
         <div className="lg:col-span-1 col-span-1"></div>
       </div>
       {items?.map((item: IItem, index: number) => (
-        <div key={item._id} className="grid grid-cols-12 gap-2">
+        <div key={item._id} className="grid grid-cols-12 gap-2 my-1">
           <div className="lg:col-span-1 col-span-1 lg:text-base text-sm text-center">
             {index + 1}
           </div>
@@ -132,18 +134,18 @@ const CartTable: FC<ItemProps> = ({ items }: ItemProps) => {
           <div className="lg:col-span-1 col-span-2 lg:text-base text-sm text-right">
             {item.amount * item.product.price}
           </div>
-          <div className="lg:col-span-1 col-span-1 lg:text-base text-sm flex grid grid-cols-2 gap-1">
+          <div className="lg:col-span-1 col-span-1 lg:text-base text-sm grid grid-cols-2 gap-2">
             <button
               onClick={(e) => handleAddItemInCart(e, item.product._id)}
-              className="border-2 border-black bg-dark-100 text-white-100 hover:bg-dark-300 w-4/5 h-8 rounded-full font-semibold w-full"
+              className="flex justify-center items-start bg-dark-100 text-white-100 hover:bg-dark-300 h-6 w-full rounded-full"
             >
-              +
+              <PlusIcon className="h-6 w-4" />
             </button>
             <button
               onClick={(e) => handleRemoveItemInCart(e, item.product._id)}
-              className="border-2 border-black bg-dark-100 text-white-100 hover:bg-dark-300 w-4/5 h-8 rounded-full font-semibold w-full"
+              className="flex justify-center items-start bg-dark-100 text-white-100 hover:bg-dark-300 h-6 w-full rounded-full"
             >
-              -
+              <MinusIcon className="h-6 w-4" />
             </button>
           </div>
         </div>
