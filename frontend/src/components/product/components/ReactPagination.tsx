@@ -1,17 +1,18 @@
-import React from "react";
-import "./Pagination.css";
+import React from 'react';
+import './Pagination.css';
 
 const ReactPagination = (props: any) => {
   const {
-    theme,
-    totalSize,
-    sizePerPage,
-    currentPage,
-    showFirstLastPages,
-    firstPageText,
-    lastPageText,
-    previousPageText,
-    nextPageText,
+    theme = 'default',
+    totalSize = 10,
+    sizePerPage = 10,
+    currentPage = 1,
+    showFirstLastPages = false,
+    firstPageText = '«',
+    lastPageText = '»',
+    previousPageText = '⟨',
+    nextPageText = '⟩',
+    numberOfPagesNextToActivePage = 1,
   } = props;
   let pageNum = Math.ceil(totalSize / sizePerPage);
 
@@ -21,28 +22,32 @@ const ReactPagination = (props: any) => {
         {showFirstLastPages ? (
           <Page
             {...props}
-            className={currentPage === 1 ? "page disabled" : "page"}
+            className={currentPage === 1 ? 'page disabled' : 'page'}
             label={firstPageText}
             pageNum={1}
           />
         ) : null}
         <Page
           {...props}
-          className={currentPage === 1 ? "page disabled" : "page"}
+          className={currentPage === 1 ? 'page disabled' : 'page'}
           label={previousPageText}
           pageNum={currentPage - 1}
         />
-        <Pagination {...props} pageNum={pageNum} />
+        <Pagination
+          {...props}
+          pageNum={pageNum}
+          numberOfPagesNextToActivePage={numberOfPagesNextToActivePage}
+        />
         <Page
           {...props}
-          className={currentPage === pageNum ? "page disabled" : "page"}
+          className={currentPage === pageNum ? 'page disabled' : 'page'}
           label={nextPageText}
           pageNum={currentPage + 1}
         />
         {showFirstLastPages ? (
           <Page
             {...props}
-            className={currentPage === pageNum ? "page disabled" : "page"}
+            className={currentPage === pageNum ? 'page disabled' : 'page'}
             label={lastPageText}
             pageNum={pageNum}
           />
@@ -84,7 +89,7 @@ const Pagination = (props: any) => {
     rangeWithEllipsis.push(
       <li
         key={i}
-        className={currentPage === i ? "is-active" : "page"}
+        className={currentPage === i ? 'is-active' : 'page'}
         onClick={(e) => {
           e.preventDefault();
           props.changeCurrentPage(i);
@@ -105,17 +110,4 @@ const Page = (props: any) => {
       <a>{label}</a>
     </li>
   );
-};
-
-ReactPagination.defaultProps = {
-  theme: "default",
-  currentPage: 1,
-  totalSize: 10,
-  sizePerPage: 10,
-  numberOfPagesNextToActivePage: 1,
-  showFirstLastPages: false,
-  lastPageText: "»",
-  firstPageText: "«",
-  nextPageText: "⟩",
-  previousPageText: "⟨",
 };
