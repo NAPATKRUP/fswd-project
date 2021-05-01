@@ -26,7 +26,7 @@ interface LocationState {
 
 const PaymentPage: FC = () => {
   const location = useLocation<LocationState>();
-  const { orderId, addressId } = location.state;
+  const { orderId, addressId } = location.state || '';
 
   const [paymentId, setPaymentId] = useState('');
   const [title, setTitle] = useState('');

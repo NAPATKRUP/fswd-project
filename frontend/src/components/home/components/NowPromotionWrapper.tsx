@@ -1,27 +1,19 @@
 import { FC, lazy } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { useHistory } from 'react-router';
-import { NOW_PROMOTION_QUERY } from '../../../graphql/nowPromotionQuery';
 
 import { TagIcon } from '@heroicons/react/outline';
 
-const Loading = lazy(() => import('../../commons/loading/Loading'));
+import { IPromotion } from '../../commons/type/IPromotion';
+
 const PromotionCarousel = lazy(() => import('./PromotionCarousel'));
 
-const NowPromotionWrapper: FC = () => {
-  const history = useHistory();
+interface NowPromotionWrapperProps {
+  nowPromotion: IPromotion[];
+}
 
-  const { loading, error, data } = useQuery(NOW_PROMOTION_QUERY);
-  if (loading) {
-    return <Loading />;
-  }
-  if (error) {
-    history.replace({ pathname: 'error' });
-    return <></>;
-  }
-  const { nowPromotion } = data;
-
+const NowPromotionWrapper: FC<NowPromotionWrapperProps> = ({
+  nowPromotion,
+}: NowPromotionWrapperProps) => {
   return (
     <div className="flex flex-col items-center px-20 py-16">
       <div className="lg:text-2xl text-xl">
