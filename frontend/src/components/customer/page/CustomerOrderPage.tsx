@@ -30,7 +30,7 @@ const CustomerOrderPage: FC = () => {
         orderStatus === 'SHIPPING' ||
         orderStatus === 'ARRIVED'
       )
-        history.push({ pathname: '/' });
+        history.push({ pathname: '/customer/order/' + orderId });
     },
     [history]
   );
@@ -49,7 +49,7 @@ const CustomerOrderPage: FC = () => {
       <div className="lg:text-2xl text-xl">
         <DocumentReportIcon className="h-8 w-8 inline-flex" /> รายการคำสั่งซื้อของฉัน
       </div>
-      {orderByUserContext.length === 0 && <p>คุณไม่มีคำสั่งซื้อ</p>}
+      {orderByUserContext.length === 0 && <p className="mt-6 ml-2">คุณไม่มีคำสั่งซื้อ</p>}
       {orderByUserContext.length !== 0 && (
         <div className="my-4">
           <div className="grid grid-cols-12 gap-1 mt-6 mb-4">

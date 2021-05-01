@@ -62,7 +62,7 @@ const NavbarMobile: FC = () => {
         )}
         {user && (
           <>
-            <NavLink to={`/account`} activeClassName="text-gold-200">
+            <NavLink to={`/customer`} activeClassName="text-gold-200">
               <UserIcon className="h-5 w-5" />
             </NavLink>
             <div role="button" className="text-gold-200" onClick={handleOnClick}>

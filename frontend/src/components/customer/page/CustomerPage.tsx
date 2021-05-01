@@ -5,7 +5,8 @@ import { useSession } from '../../../context/SessionContext';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
 import Loading from '../../commons/loading/Loading';
 import CustomerDashboardPage from './CustomerDashboardPage';
-import CustomerOrders from './CustomerOrderPage';
+import CustomerOrderPage from './CustomerOrderPage';
+import CustomerOrderDetailPage from './CustomerOrderDetailPage';
 
 const Customer: FC = () => {
   const { loading, user } = useSession();
@@ -42,7 +43,10 @@ const Customer: FC = () => {
 
       <Switch>
         <Route path={`${path}/orders`}>
-          <CustomerOrders />
+          <CustomerOrderPage />
+        </Route>
+        <Route path={`${path}/order/:orderId`}>
+          <CustomerOrderDetailPage />
         </Route>
         <Route exact path={path}>
           <CustomerDashboardPage />

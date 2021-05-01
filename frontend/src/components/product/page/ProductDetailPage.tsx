@@ -103,7 +103,12 @@ const ProductDetailPage: FC = () => {
             <div className="mx-1 mt-4">
               <p className="lg:text-lg">รายละเอียดสินค้า</p>
               <div className="mt-1 mb-3 border-b-2"></div>
-              {productBySlug?.description && <p className="text-sm">{productBySlug.description}</p>}
+              {productBySlug?.description && (
+                <p
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{ __html: productBySlug.description }}
+                ></p>
+              )}
               {productBySlug?.description === null && (
                 <p className="text-sm">ไม่พบรายละเอียดของสินค้า</p>
               )}
