@@ -67,7 +67,7 @@ const Navbar: FC = () => {
         {user && (
           <>
             <li className="lg:p-5 p-2">
-              <NavLink to={`/account`} activeClassName="text-gold-200">
+              <NavLink to={`/customer`} activeClassName="text-gold-200">
                 {user.displayName}
               </NavLink>
             </li>
