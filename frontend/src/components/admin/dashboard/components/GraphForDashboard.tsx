@@ -11,7 +11,7 @@ const GraphforDashboard: FC<GraphforDashboardProps> = ({ data }: GraphforDashboa
       data={[
         {
           id: 'ยอดขายน้ำหอม',
-          color: 'hsl(53, 44%, 56%)',
+          color: 'hsl(68, 70%, 50%)',
           data: data,
         },
       ]}
@@ -22,6 +22,9 @@ const GraphforDashboard: FC<GraphforDashboardProps> = ({ data }: GraphforDashboa
       axisTop={null}
       axisRight={null}
       pointSize={10}
+      colors={{ scheme: 'dark2' }}
+      enableGridX={false}
+      enableGridY={false}
       pointColor={{ theme: 'background' }}
       pointBorderWidth={2}
       pointBorderColor={{ from: 'serieColor' }}
