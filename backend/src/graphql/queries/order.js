@@ -52,13 +52,13 @@ export const orderSummary = schemaComposer
     kind: 'query',
     type: [orderSummaryPayload],
     resolve: async ({ context }) => {
-      // const { role } = context.user;
-      // if (role !== 'admin') {
-      //   throw new ValidationError('โปรดใช้บัญชีแอดมินในการเข้าใช้งาน');
-      // }
+      const { role } = context.user;
+      if (role !== 'admin') {
+        throw new ValidationError('โปรดใช้บัญชีแอดมินในการเข้าใช้งาน');
+      }
       const orders = await OrderModel.find({
         $or: [{ orderStatus: 'SUCCESS' }, { orderStatus: 'SHIPPING' }, { orderStatus: 'ARRIVED' }],
-      }).sort({ checkoutAt: -1 });
+      }).sort({ checkoutAt: 1 });
       const listOfDate = [];
       for (const order of orders) {
         const newDate = moment(order.checkoutAt).format('L');
@@ -88,10 +88,10 @@ export const orderStatusSummary = schemaComposer
     kind: 'query',
     type: statusOrderPayload,
     resolve: async ({ context }) => {
-      // const { role } = context.user;
-      // if (role !== 'admin') {
-      //   throw new ValidationError('โปรดใช้บัญชีแอดมินในการเข้าใช้งาน');
-      // }
+      const { role } = context.user;
+      if (role !== 'admin') {
+        throw new ValidationError('โปรดใช้บัญชีแอดมินในการเข้าใช้งาน');
+      }
       const ordersSuccess = await OrderModel.find({ orderStatus: 'SUCCESS' });
       const ordersShipping = await OrderModel.find({ orderStatus: 'SHIPPING' });
 
