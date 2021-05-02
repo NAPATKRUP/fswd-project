@@ -59,15 +59,6 @@ aws.config.update({
 });
 const s3 = new aws.S3();
 
-const imageFilter = function (req, file, cb) {
-  // Accept images only
-  if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
-    req.fileValidationError = 'Only image files are allowed!';
-    return cb(new Error('Only image files are allowed!'), false);
-  }
-  cb(null, true);
-};
-
 var upload = multer({
   storage: multerS3({
     s3: s3,
@@ -78,12 +69,20 @@ var upload = multer({
       cb(null, `${Date.now()}-${Math.floor(Math.random() * 1000000)}-${file.originalname}`);
     },
   }),
-  fileFilter: imageFilter,
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+      req.fileValidationError = 'Only image files are allowed!';
+      return cb(null, false);
+    }
+    cb(null, true);
+  },
 });
 
 //use by upload form
 app.post('/upload', upload.single('image'), function (req, res, next) {
-  res.send({ name: req.file.key, location: req.file.location });
+  console.log({ error: req.fileValidationError, file: req.file });
+  if (req.fileValidationError) res.status(404).send({ error: req.fileValidationError });
+  else res.send({ name: req.file.key, location: req.file.location });
 });
 
 server.applyMiddleware({
