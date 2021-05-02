@@ -109,7 +109,7 @@ const CustomerInfo: FC = () => {
         callBackFunction={handleModalCallBack}
       />
       <div className="mt-5">
-        <p>ข้อมูลของฉัน</p>
+        <p className="text-xl">ข้อมูลของฉัน</p>
         <p className="text-gold-200">จัดการข้อมูลส่วนตัวคุณเพื่อความปลอดภัยของบัญชีผู้ใช้นี้</p>
 
         <form onSubmit={handleSubmitForm}>
