@@ -80,7 +80,6 @@ var upload = multer({
 
 //use by upload form
 app.post('/upload', upload.single('image'), function (req, res, next) {
-  console.log({ error: req.fileValidationError, file: req.file });
   if (req.fileValidationError) res.status(404).send({ error: req.fileValidationError });
   else res.send({ name: req.file.key, location: req.file.location });
 });
