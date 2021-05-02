@@ -33,7 +33,7 @@ const AdminDashboardPage: FC = () => {
               แดชบอร์ด
             </button>
           </Link>
-          <Link to={`${url}/product`}>
+          <Link to={`${url}/products`}>
             <button className="lg:text-base text-sm py-2 px-4 bg-gold-100 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75">
               จัดการสินค้า
             </button>
