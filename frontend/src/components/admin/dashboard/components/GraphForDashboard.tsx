@@ -37,7 +37,7 @@ const GraphforDashboard: FC<GraphforDashboardProps> = ({ data }: GraphforDashboa
           itemsSpacing: 0,
           itemDirection: 'left-to-right',
           itemWidth: 80,
-          itemHeight: 20,
+          itemHeight: 10,
           itemOpacity: 0.75,
           symbolSize: 12,
           symbolShape: 'circle',
