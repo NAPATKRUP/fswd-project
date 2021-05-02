@@ -35,6 +35,42 @@ const Navigator: FC<NavigatorProp> = ({ listOfNode }: NavigatorProp) => {
                   โปรโมชั่น
                 </NavLink>
               );
+            } else if (n === 'บัญชีของฉัน') {
+              return (
+                <NavLink to="/customer" key={n} className="hover:text-gold-200">
+                  บัญชีของฉัน
+                </NavLink>
+              );
+            } else if (n === 'คำสั่งซื้อ') {
+              return (
+                <NavLink to="/customer/orders" key={n} className="hover:text-gold-200">
+                  คำสั่งซื้อ
+                </NavLink>
+              );
+            } else if (n === 'จัดการ') {
+              return (
+                <NavLink to="/admin" key={n} className="hover:text-gold-200">
+                  จัดการ
+                </NavLink>
+              );
+            } else if (n === 'จัดการสินค้า') {
+              return (
+                <NavLink to="/admin/product" key={n} className="hover:text-gold-200">
+                  จัดการสินค้า
+                </NavLink>
+              );
+            } else if (n === 'จัดการโปรโมชั่น') {
+              return (
+                <NavLink to="/admin/promotions" key={n} className="hover:text-gold-200">
+                  จัดการโปรโมชั่น
+                </NavLink>
+              );
+            } else if (n === 'จัดการออเดอร์') {
+              return (
+                <NavLink to="/admin/orders" key={n} className="hover:text-gold-200">
+                  จัดการออเดอร์
+                </NavLink>
+              );
             } else {
               return <p key={n}>{n.toUpperCase()}</p>;
             }

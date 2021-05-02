@@ -30,7 +30,7 @@ const AdminProductBox: FC<AdminProductBoxProps> = ({ item }: AdminProductBoxProp
 
   if (item) {
     return (
-      <div className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 hover:bg-gray-100">
+      <div className="hover:bg-white-100">
         <ModalElement />
         <div className="flex flex-col h-full justify-items-stretch">
           <img src={item?.image} className="w-full object-cover bg-center" alt={item?.name} />
