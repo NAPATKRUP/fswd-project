@@ -97,14 +97,13 @@ const UpdateOrderStatusPage: FC = () => {
           onChange={handleChangeStatusOrder}
           name="orderStatus"
           className="border-2 border-dark-100 rounded-xl p-1"
+          defaultValue={orderById.orderStatus}
         >
           {['SUCCESS', 'SHIPPING', 'ARRIVED', 'CANCEL'].map((status) => {
-            return status === orderById.orderStatus ? (
-              <option value={status} selected>
+            return (
+              <option key={status} value={status}>
                 {status}
               </option>
-            ) : (
-              <option value={status}>{status}</option>
             );
           })}
         </select>
