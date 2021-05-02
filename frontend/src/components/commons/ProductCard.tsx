@@ -133,7 +133,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }: ProductCardProps) => {
             </div>
           )}
           {product?.promotion && (
-            <div className="bg-red-600 rounded-lg absolute top-0 right-0 px-4 py-1 transform rotate-12">
+            <div className="bg-red-500 rounded-lg absolute top-0 right-0 px-4 py-1 transform rotate-12">
               {product?.promotion.type === 'Giveaway' && (
                 <p className="text-center text-white-100">
                   {product.promotion.condition} แถม {product.promotion.amount}
