@@ -10,8 +10,8 @@ export interface IProduct {
   image?: string;
   stock: number;
   promotion?: IPromotion;
-  createAt: string;
-  updateAt: string;
+  createAt?: string;
+  updateAt?: string;
 }
 
 export interface ICreateProduct {

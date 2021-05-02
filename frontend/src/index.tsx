@@ -9,7 +9,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URI || 'http://localhost:3001/graphql',
+  uri: process.env.GRAPHQL_URI || 'http://localhost:3001/graphql',
   cache: new InMemoryCache({
     typePolicies: {
       Project: {
