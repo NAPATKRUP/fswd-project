@@ -135,7 +135,9 @@ const CheckoutPage: FC = () => {
           className="border-2 rounded-full bg-dark-100 text-white-100 hover:bg-dark-200 mx-2 p-1"
           onChange={handleAddressIdChange}
         >
-          <option value="">โปรดเลือกที่อยู่ที่ใช้ในการจัดส่ง</option>
+          <option value="" disabled>
+            โปรดเลือกที่อยู่ที่ใช้ในการจัดส่ง
+          </option>
           {addressByUserContext.map((address: IAddress) => (
             <option key={address._id} value={address._id}>
               {address.name}

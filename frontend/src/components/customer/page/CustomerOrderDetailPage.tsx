@@ -7,6 +7,8 @@ import ConfirmOrderCard from '../../commons/ConfirmOrderCard';
 import AddressCard from '../../commons/AddressCard';
 import PaymentCard from '../../commons/PaymentCard';
 
+import { RefreshIcon } from '@heroicons/react/outline';
+
 interface RouteParams {
   orderId: string;
 }
@@ -21,6 +23,7 @@ const CustomerOrderDetailPage: FC = () => {
     loading: orderLoading,
     error: orderError,
     data: orderData,
+    refetch: orderRefetch,
   } = useQuery(ORDER_BY_ID_OF_USER_CONTEXT_QUERY, { variables: { orderId: orderId } });
 
   if (orderLoading) {
@@ -31,11 +34,13 @@ const CustomerOrderDetailPage: FC = () => {
     return <></>;
   }
   const { orderById } = orderData;
-  console.log(orderById);
 
   return (
     <>
       <div className="lg:text-4xl text-3xl text-right text-dark-100 lg:mx-20 mx-10 mt-8">
+        <button onClick={() => orderRefetch()}>
+          <RefreshIcon className="h-5 w-5" />
+        </button>{' '}
         #{orderById.orderStatus}
       </div>
       <ConfirmOrderCard data={orderById} />

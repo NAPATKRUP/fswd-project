@@ -62,7 +62,7 @@ const PaymentPage: FC = () => {
   const handleCallBack = (stats: boolean) => {
     if (!stats) {
       toggle();
-      if (isPayment) history.push({ pathname: '/' });
+      if (isPayment) history.push({ pathname: '/customer/order/' + orderId });
       if (isCancel) history.push({ pathname: '/' });
     }
   };
@@ -147,7 +147,9 @@ const PaymentPage: FC = () => {
           className="border-2 rounded-full lg:w-3/12 w-8/12 bg-dark-100 text-white-100 hover:bg-dark-200 p-1"
           onChange={handlePaymentIdChange}
         >
-          <option value="">โปรดเลือกช่องทางในการชำระเงิน</option>
+          <option value="" disabled>
+            โปรดเลือกช่องทางในการชำระเงิน
+          </option>
           {paymentByUserContext.map((payment: IPayment) => (
             <option key={payment._id} value={payment._id}>
               {payment.name}
