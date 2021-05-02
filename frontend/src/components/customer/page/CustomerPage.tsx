@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { Route, Switch, useLocation, useRouteMatch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { useSession } from '../../../context/SessionContext';
@@ -7,6 +7,9 @@ import CustomerDashboardPage from './CustomerDashboardPage';
 import CustomerOrderPage from './CustomerOrderPage';
 import CustomerOrderDetailPage from './CustomerOrderDetailPage';
 import CustomerInfo from './CustomerInfoPage';
+import CustomerCreateAddressPage from './CustomerCreateAddressPage';
+import CustomerAddress from './CustomerAddressPage';
+import CustomerEditAddressPage from './CustomerEditAddressPage';
 
 const Customer: FC = () => {
   const { user } = useSession();
@@ -22,19 +25,29 @@ const Customer: FC = () => {
         <Route path={`${path}/order/:orderId`}>
           <CustomerOrderDetailPage />
         </Route>
+        <Route path={`${path}/address/:addressId`}>
+          <CustomerEditAddressPage />
+        </Route>
+        <Route path={`${path}/address`}>
+          <CustomerCreateAddressPage />
+        </Route>
         <Route exact path={path}>
-          <CustomerDashboardPage />
-          <CustomerInfo />
+          <div className="lg:px-20 md:px-10 px-4">
+            <CustomerDashboardPage />
+            <CustomerInfo />
+            <CustomerAddress />
+          </div>
         </Route>
       </Switch>
     </ContentWithSidebarLayout>
   ) : (
-    <Redirect
-      to={{
-        pathname: '/login',
-        state: { from: location.pathname },
-      }}
-    />
+    <div></div>
+    // <Redirect
+    //   to={{
+    //     pathname: '/login',
+    //     state: { from: location.pathname },
+    //   }}
+    // />
   );
 };
 
