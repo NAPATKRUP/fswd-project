@@ -6,6 +6,8 @@ import useModal from '../../../hooks/useModal';
 import Modal from '../../commons/Modal';
 import Navigator from '../../commons/Navigator';
 
+import { HomeIcon } from '@heroicons/react/outline';
+
 interface createAddressInput {
   name: string;
   addressDetail: string;
@@ -86,7 +88,9 @@ const CreateAddressPage = () => {
           bodyMessage={bodyMessage}
           callBackFunction={handleModalCallBack}
         />
-        <p className="text-lg">เพิ่มที่อยู่ใหม่</p>
+        <h2 className="text-2xl mb-2">
+          <HomeIcon className="h-6 w-6 inline-flex" /> เพิ่มที่อยู่ใหม่
+        </h2>
 
         <form onSubmit={handleSubmitForm}>
           <div className="grid grid-cols-6 gap-6 my-3">
@@ -119,8 +123,8 @@ const CreateAddressPage = () => {
               <div className="flex gap-3 my-4">
                 <input
                   type="submit"
-                  className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
-                  value="เพิ่มที่อยู่ใหม่"
+                  className="lg:text-base text-sm py-2 px-4 bg-dark-100 text-white-100 font-semibold rounded-lg shadow-md hover:bg-dark-200 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
+                  value="เพิ่มที่อยู่"
                 />
               </div>
             </div>

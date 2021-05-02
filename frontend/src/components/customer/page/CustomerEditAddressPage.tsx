@@ -9,6 +9,8 @@ import Loading from '../../commons/loading/Loading';
 import Modal from '../../commons/Modal';
 import Navigator from '../../commons/Navigator';
 
+import { HomeIcon } from '@heroicons/react/outline';
+
 interface RouteParams {
   addressId: string;
 }
@@ -119,7 +121,9 @@ const CustomerEditAddressPage = () => {
           bodyMessage={bodyMessage}
           callBackFunction={handleModalCallBack}
         />
-        <p className="text-lg">เพิ่มที่อยู่ใหม่</p>
+        <h2 className="text-2xl mb-2">
+          <HomeIcon className="h-6 w-6 inline-flex" /> แก้ไขที่อยู่
+        </h2>
 
         <form onSubmit={handleSubmitForm}>
           <div className="grid grid-cols-6 gap-6 my-3">
@@ -154,8 +158,8 @@ const CustomerEditAddressPage = () => {
               <div className="flex gap-3 my-4">
                 <input
                   type="submit"
-                  className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
-                  value="ยืนยันแก้ไขที่อยู่"
+                  className="lg:text-base text-sm py-2 px-4 bg-dark-500 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-white-200 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
+                  value="แก้ไข"
                 />
               </div>
             </div>

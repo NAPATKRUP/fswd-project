@@ -3,10 +3,11 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ADDRESS_BY_USERCONTEXT_QUERY } from '../../../graphql/addressByUserContextQuery';
 import Loading from '../../commons/loading/Loading';
 import { Link, useRouteMatch } from 'react-router-dom';
-import { HomeIcon } from '@heroicons/react/outline';
 import { REMOVE_ADDRESS_BY_ID_MUTATION } from '../../../graphql/removeAddressByIdMutation';
 import useModal from '../../../hooks/useModal';
 import Modal from '../../commons/Modal';
+
+import { HomeIcon } from '@heroicons/react/outline';
 
 interface IAddress {
   _id: string;
@@ -75,20 +76,18 @@ const CustomerAddress: FC = () => {
           callBackFunction={handleModalCallBack}
         />
         <div>
-          <p className="lg:text-sm text-xs">
-            <HomeIcon className="h-4 w-4 inline-flex" /> {address?.name}
-          </p>
+          <p className="lg:text-sm text-xs">{address?.name}</p>
           <p className="lg:text-sm text-xs">{address?.addressDetail}</p>
         </div>
         <div>
           <Link to={`${url}/address/${address?._id}`}>
-            <button className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-opacity-75">
+            <button className="py-2 px-4 bg-dark-500 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-opacity-75">
               แก้ไข
             </button>
           </Link>
           <button
             onClick={() => handleRemoveAddress(address._id)}
-            className="ml-2 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-opacity-75"
+            className="ml-2 py-2 px-4 bg-red-500 text-white-100 font-semibold rounded-lg shadow-md hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-opacity-75"
           >
             ลบ
           </button>
@@ -100,9 +99,11 @@ const CustomerAddress: FC = () => {
   return (
     <div className="mt-5">
       <div className="flex justify-between">
-        <p className="text-xl">ที่อยู่ของฉัน</p>
+        <h2 className="text-2xl mb-2">
+          <HomeIcon className="h-6 w-6 inline-flex" /> ที่อยู่ของฉัน
+        </h2>
         <Link to={`${url}/address`}>
-          <button className="py-2 px-4 bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-opacity-75">
+          <button className="py-2 px-4 bg-dark-100 text-white-100 font-semibold rounded-lg shadow-md hover:bg-dark-200 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-opacity-75">
             เพิ่มที่อยู่
           </button>
         </Link>

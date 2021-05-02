@@ -32,8 +32,8 @@ const Customer: FC = () => {
           <CustomerCreateAddressPage />
         </Route>
         <Route exact path={path}>
+          <CustomerDashboardPage />
           <div className="lg:px-20 md:px-10 px-4">
-            <CustomerDashboardPage />
             <CustomerInfo />
             <CustomerAddress />
           </div>
