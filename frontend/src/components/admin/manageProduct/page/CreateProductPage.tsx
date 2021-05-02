@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import { FC, lazy, useState, useEffect } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICreateProduct, IProduct } from '../../../commons/type/IProduct';
@@ -6,6 +6,10 @@ import { useMutation } from '@apollo/client';
 import { CREATE_PRODUCT_MUTATION } from '../../../../graphql/createProductMutation';
 import useModal from '../../../../hooks/useModalv2';
 import { useHistory } from 'react-router-dom';
+
+import { CollectionIcon } from '@heroicons/react/outline';
+
+const Navigator = lazy(() => import('../../../commons/Navigator'));
 
 const CreateProductPage: FC = () => {
   const [productDetail, setProductDetail] = useState<ICreateProduct>({
@@ -112,100 +116,105 @@ const CreateProductPage: FC = () => {
   };
 
   return (
-    <div>
+    <div className="mt-8">
       <ModalElement />
-      <h2 className="text-2xl">สร้างสินค้าใหม่</h2>
-      <form onSubmit={handleSubmitForm}>
-        <div className="grid grid-cols-6 gap-6 my-3">
-          <div className="col-span-6 sm:col-span-3">
-            <div className="my-2">
-              <label htmlFor="product_name" className="block text-md font-medium text-dark-200">
-                ชื่อสินค้า *
-              </label>
-              <input
-                type="text"
-                name="product_name"
-                id="product_name"
-                required
-                onChange={handleProductNameChange}
-                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
-              />
-            </div>
-            <div className="my-2">
-              <label htmlFor="product_slug" className="block text-md font-medium text-dark-200">
-                ชื่อ Slug สินค้า *
-              </label>
-              <input
-                type="text"
-                name="product_slug"
-                id="product_slug"
-                value={productDetail.slug}
-                disabled
-                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
-              />
-            </div>
-            <div className="my-2">
-              <label htmlFor="product_brand" className="block text-md font-medium text-dark-200">
-                แบรนด์สินค้า *
-              </label>
-              <input
-                type="text"
-                name="product_brand"
-                id="product_brand"
-                required
-                onChange={handleProductBrandChange}
-                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
-              />
-            </div>
-            <div className="my-2">
-              <label htmlFor="product_price" className="block text-md font-medium text-dark-200">
-                ราคาสินค้า *
-              </label>
-              <input
-                type="number"
-                name="product_price"
-                id="product_price"
-                required
-                onChange={handleProductPriceChange}
-                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
-              />
-            </div>
-            <div className="my-2">
-              <label htmlFor="product_image" className="block text-md font-medium text-dark-200">
-                รูปสินค้า
-              </label>
-              <input
-                type="text"
-                name="product_image"
-                id="product_image"
-                onChange={handleProductImageChange}
-                className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
-              />
-            </div>
-            <div className="my-2">
-              <label
-                htmlFor="product_description"
-                className="block text-md font-medium text-dark-200"
-              >
-                รายละเอียดสินค้า
-              </label>
-              <CKEditor
-                editor={ClassicEditor}
-                id="product_description"
-                data=""
-                onChange={handleProductDescriptionChange}
-              />
-            </div>
-            <div className="my-4">
-              <input
-                type="submit"
-                className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
-                value="ยืนยันการสร้างสินค้าใหม่"
-              />
+      <Navigator listOfNode={['จัดการ', '>>', 'จัดการสินค้า', '>>', 'สร้างสินค้าใหม่']} />
+      <div className="lg:px-20 md:px-10 py-10">
+        <h2 className="text-2xl mb-4">
+          <CollectionIcon className="h-6 w-6 inline-flex" /> สร้างสินค้าใหม่
+        </h2>
+        <form onSubmit={handleSubmitForm}>
+          <div className="grid grid-cols-6 gap-6 my-3">
+            <div className="col-span-6 sm:col-span-3">
+              <div className="my-2">
+                <label htmlFor="product_name" className="block text-md font-medium text-dark-200">
+                  ชื่อสินค้า *
+                </label>
+                <input
+                  type="text"
+                  name="product_name"
+                  id="product_name"
+                  required
+                  onChange={handleProductNameChange}
+                  className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
+                />
+              </div>
+              <div className="my-2">
+                <label htmlFor="product_slug" className="block text-md font-medium text-dark-200">
+                  ชื่อ Slug สินค้า *
+                </label>
+                <input
+                  type="text"
+                  name="product_slug"
+                  id="product_slug"
+                  value={productDetail.slug}
+                  disabled
+                  className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
+                />
+              </div>
+              <div className="my-2">
+                <label htmlFor="product_brand" className="block text-md font-medium text-dark-200">
+                  แบรนด์สินค้า *
+                </label>
+                <input
+                  type="text"
+                  name="product_brand"
+                  id="product_brand"
+                  required
+                  onChange={handleProductBrandChange}
+                  className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
+                />
+              </div>
+              <div className="my-2">
+                <label htmlFor="product_price" className="block text-md font-medium text-dark-200">
+                  ราคาสินค้า *
+                </label>
+                <input
+                  type="number"
+                  name="product_price"
+                  id="product_price"
+                  required
+                  onChange={handleProductPriceChange}
+                  className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
+                />
+              </div>
+              <div className="my-2">
+                <label htmlFor="product_image" className="block text-md font-medium text-dark-200">
+                  รูปสินค้า
+                </label>
+                <input
+                  type="text"
+                  name="product_image"
+                  id="product_image"
+                  onChange={handleProductImageChange}
+                  className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
+                />
+              </div>
+              <div className="my-2">
+                <label
+                  htmlFor="product_description"
+                  className="block text-md font-medium text-dark-200"
+                >
+                  รายละเอียดสินค้า
+                </label>
+                <CKEditor
+                  editor={ClassicEditor}
+                  id="product_description"
+                  data=""
+                  onChange={handleProductDescriptionChange}
+                />
+              </div>
+              <div className="my-4">
+                <input
+                  type="submit"
+                  className="py-2 px-4 bg-gold-100 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
+                  value="ยืนยันการสร้างสินค้าใหม่"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

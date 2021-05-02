@@ -2,9 +2,10 @@ import { FC, lazy, useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import { FILTER_PRODUCT_QUERY } from '../../../graphql/filterProductQuery';
-import ReactPagination from '../components/ReactPagination';
 
 import { CollectionIcon } from '@heroicons/react/outline';
+
+import { IProduct } from '../../commons/type/IProduct';
 
 const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
@@ -13,6 +14,7 @@ const Loading = lazy(() => import('../../commons/loading/Loading'));
 const Navigator = lazy(() => import('../../commons/Navigator'));
 const FilterProductBar = lazy(() => import('../components/FilterProductBar'));
 const ProductWrapper = lazy(() => import('../components/ProductWrapper'));
+const ReactPagination = lazy(() => import('../components/ReactPagination'));
 
 const ProductPage: FC = () => {
   const history = useHistory();
@@ -22,8 +24,8 @@ const ProductPage: FC = () => {
   const [minPrice, setMinPrice] = useState<any>(undefined);
   const [maxPrice, setMaxPrice] = useState<any>(undefined);
 
-  const [allProduct, setAllProduct] = useState<any>([]);
-  const [showProduct, setShowProduct] = useState<any>([]);
+  const [allProduct, setAllProduct] = useState<IProduct[]>([]);
+  const [showProduct, setShowProduct] = useState<IProduct[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productPerPage = 8;
 
@@ -50,16 +52,9 @@ const ProductPage: FC = () => {
 
   // Update filter when have event with search
   useEffect(() => {
-    //Check NaN with delete minPrice
-    if (isNaN(minPrice)) {
-      setMinPrice(0);
-    }
-
-    //Check NaN with delete maxPrice
-    if (isNaN(maxPrice)) {
-      setMaxPrice(100000);
-    }
-
+    //Check NaN with delete minPrice and maxPrice
+    if (isNaN(minPrice)) setMinPrice(0);
+    if (isNaN(maxPrice)) setMaxPrice(100000);
     if (!nameInput && !maxPrice && !minPrice && !searchType) {
       setSearchType('PRICE_ASC');
       queryProduct();
@@ -82,9 +77,7 @@ const ProductPage: FC = () => {
 
   // Update all product when data change by new query
   useEffect(() => {
-    if (data?.filterProduct) {
-      setAllProduct(data?.filterProduct);
-    }
+    if (data?.filterProduct) setAllProduct(data?.filterProduct);
   }, [data]);
 
   // Update show product in each page when change page or new query product
@@ -95,28 +88,16 @@ const ProductPage: FC = () => {
     setShowProduct(currentProduct);
   }, [currentPage, allProduct]);
 
-  const handleSearchType = useCallback((e) => {
-    setSearchType(e.target.value);
-  }, []);
-
-  const handleName = useCallback((e) => {
-    setNameInput(e.target.value);
-  }, []);
-
-  const handleMaxPrice = useCallback((e) => {
-    setMaxPrice(parseInt(e.target.value));
-  }, []);
-
-  const handleMinPrice = useCallback((e) => {
-    setMinPrice(parseInt(e.target.value));
-  }, []);
+  const handleSearchType = useCallback((e) => setSearchType(e.target.value), []);
+  const handleName = useCallback((e) => setNameInput(e.target.value), []);
+  const handleMaxPrice = useCallback((e) => setMaxPrice(parseInt(e.target.value)), []);
+  const handleMinPrice = useCallback((e) => setMinPrice(parseInt(e.target.value)), []);
 
   const paginate = useCallback((pageNumber: any) => setCurrentPage(pageNumber), []);
 
   if (loading && !nameInput && !minPrice && !maxPrice && !searchType) {
     return <Loading />;
   }
-
   if (error) {
     history.push({ pathname: '/error' });
     return <></>;
