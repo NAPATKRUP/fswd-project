@@ -38,7 +38,7 @@ const NavbarMobile: FC = () => {
         <NavLink to={`/promotions`} activeClassName="text-gold-200">
           <TagIcon className="h-5 w-5" />
         </NavLink>
-        {user?.role === 'customer' && (
+        {(user?.role === 'customer' || user?.role === 'admin') && (
           <NavLink to={`/cart`} activeClassName="text-gold-200">
             <ShoppingCartIcon className="h-5 w-5" />
           </NavLink>

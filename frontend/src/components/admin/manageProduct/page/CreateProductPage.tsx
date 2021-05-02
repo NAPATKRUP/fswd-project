@@ -173,6 +173,7 @@ const CreateProductPage: FC = () => {
                   type="number"
                   name="product_price"
                   id="product_price"
+                  min={0}
                   required
                   onChange={handleProductPriceChange}
                   className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"

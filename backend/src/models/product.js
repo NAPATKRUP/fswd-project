@@ -12,7 +12,7 @@ export const ProductSchema = new Schema({
   image: {
     type: String,
     default:
-      'https://backend.central.co.th/media/catalog/product/c/d/cds70224856-1.jpg?impolicy=resize&width=553',
+      'https://e7n2g8x7.rocketcdn.me/wp-content/themes/labomba/images/wc-placeholder-cart.gif',
   },
   createAt: { type: Date, default: Date.now },
   updateAt: { type: Date, default: Date.now },

@@ -3,6 +3,7 @@ import { Switch, Route, useRouteMatch, useLocation, Redirect } from 'react-route
 import { useSession } from '../../../context/SessionContext';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
 import ProductManagerPage from '../manageProduct/page/ProductManagerPage';
+import OrderManagerPage from '../manageOrder/page/OrderManagerPage';
 import AdminDashboardPage from './AdminDashboardPage';
 
 const AdminManagerPage: FC = () => {
@@ -15,6 +16,9 @@ const AdminManagerPage: FC = () => {
       <Switch>
         <Route path={`${path}/product`}>
           <ProductManagerPage />
+        </Route>
+        <Route path={`${path}/orders`}>
+          <OrderManagerPage />
         </Route>
         <Route exact path={path}>
           <AdminDashboardPage />
