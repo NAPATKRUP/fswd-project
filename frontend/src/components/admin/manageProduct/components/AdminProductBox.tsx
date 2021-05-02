@@ -30,10 +30,14 @@ const AdminProductBox: FC<AdminProductBoxProps> = ({ item }: AdminProductBoxProp
 
   if (item) {
     return (
-      <div className="hover:bg-white-100">
+      <div>
         <ModalElement />
         <div className="flex flex-col h-full justify-items-stretch">
-          <img src={item?.image} className="w-full object-cover bg-center" alt={item?.name} />
+          <img
+            src={item?.image}
+            className="w-full object-scale-down h-60 bg-center"
+            alt={item?.name}
+          />
           <div className="p-4 h-full flex flex-col items-stretch">
             <h5 className="text-md font-bold mb-2 uppercase">{item?.brand}</h5>
             <p>{item?.name}</p>
