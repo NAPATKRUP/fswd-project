@@ -307,7 +307,7 @@ const EditProductPage: FC = () => {
                     onChange={handleProductDescriptionChange}
                   />
                 </div>
-                <div className="flex gap-3 my-4">
+                <div className="flex flex-wrap gap-3 my-4">
                   <input
                     type="submit"
                     className="py-2 px-4 bg-gold-100 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75 cursor-pointer"
