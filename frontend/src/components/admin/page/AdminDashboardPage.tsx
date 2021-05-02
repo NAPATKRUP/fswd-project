@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client';
 import { IProduct } from '../../commons/type/IProduct';
 
 const Loading = lazy(() => import('../../commons/loading/Loading'));
-const GraphforDashboard = lazy(() => import('../manageProduct/components/GraphForDashboard'));
+const GraphforDashboard = lazy(() => import('../dashboard/components/GraphForDashboard'));
 
 const AdminDashboardPage: FC = () => {
   let { url } = useRouteMatch();
