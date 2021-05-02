@@ -13,7 +13,7 @@ const ConfirmOrderCard: FC<OrderProps> = ({ data }: OrderProps) => {
   return (
     <div className="lg:px-20 px-10 pt-12">
       <div className="lg:text-2xl md:text-xl font-semibold">
-        <DocumentReportIcon className="h-8 w-8 inline-flex" /> ยืนยันคำสั่งซื้อ ID: #{data._id}
+        <DocumentReportIcon className="h-8 w-8 inline-flex" /> เลขที่คำสั่งซื้อ #{data._id}
       </div>
       <div className="w-full border-2 border-dark-100 bg-dark-100 rounded-full mt-4 mb-8"></div>
       {data.cart.items?.map((item: IItem, index: number) => (

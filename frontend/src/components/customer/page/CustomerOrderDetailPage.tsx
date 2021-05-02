@@ -2,7 +2,7 @@ import { FC, lazy } from 'react';
 import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { ORDER_BY_ID_OF_USER_CONTEXT_QUERY } from '../../../graphql/orderByIdOfUserContextQuery';
+import { ORDER_BY_ID_CUSTOMER_QUERY } from '../../../graphql/orderByIdCustomerQuery';
 import ConfirmOrderCard from '../../commons/ConfirmOrderCard';
 import AddressCard from '../../commons/AddressCard';
 import PaymentCard from '../../commons/PaymentCard';
@@ -14,6 +14,7 @@ interface RouteParams {
 }
 
 const Loading = lazy(() => import('../../commons/loading/Loading'));
+const Navigator = lazy(() => import('../../commons/Navigator'));
 
 const CustomerOrderDetailPage: FC = () => {
   const { orderId } = useParams<RouteParams>();
@@ -24,7 +25,7 @@ const CustomerOrderDetailPage: FC = () => {
     error: orderError,
     data: orderData,
     refetch: orderRefetch,
-  } = useQuery(ORDER_BY_ID_OF_USER_CONTEXT_QUERY, { variables: { orderId: orderId } });
+  } = useQuery(ORDER_BY_ID_CUSTOMER_QUERY, { variables: { orderId: orderId } });
 
   if (orderLoading) {
     return <Loading />;
@@ -36,7 +37,8 @@ const CustomerOrderDetailPage: FC = () => {
   const { orderById } = orderData;
 
   return (
-    <>
+    <div className="mt-8">
+      <Navigator listOfNode={['บัญชีของฉัน', '>>', 'คำสั่งซื้อ', '>>', orderById._id]} />
       <div className="lg:text-4xl text-3xl text-right text-dark-100 lg:mx-20 mx-10 mt-8">
         <button onClick={() => orderRefetch()}>
           <RefreshIcon className="h-5 w-5" />
@@ -48,7 +50,7 @@ const CustomerOrderDetailPage: FC = () => {
         <AddressCard address={orderById.address} />
         <PaymentCard payment={orderById.payment} />
       </div>
-    </>
+    </div>
   );
 };
 

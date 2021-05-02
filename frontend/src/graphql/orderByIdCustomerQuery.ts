@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const ORDER_BY_ID_OF_USER_CONTEXT_QUERY = gql`
+export const ORDER_BY_ID_CUSTOMER_QUERY = gql`
   query($orderId: MongoID!) {
     orderById(_id: $orderId) {
       _id

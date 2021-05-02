@@ -10,6 +10,7 @@ export interface IOrder {
   usePromotion: IUsePromotion[];
   checkoutAt: Date;
   cancelAt: Date;
+  userId: string;
 }
 
 export interface IUsePromotion {

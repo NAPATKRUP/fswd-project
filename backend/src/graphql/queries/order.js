@@ -22,23 +22,6 @@ export const orderByUserContext = schemaComposer
   })
   .wrapResolve(requiredAuth);
 
-export const orderByIdOfUser = schemaComposer
-  .createResolver({
-    name: 'orderByIdOfUser',
-    kind: 'query',
-    type: OrderTC.getType(),
-    args: {
-      orderId: 'MongoID!',
-    },
-    resolve: async ({ args, context }) => {
-      const { orderId } = args;
-      const { _id: userId } = context.user;
-      const order = await OrderModel.findOne({ _id: orderId, userId });
-      return order;
-    },
-  })
-  .wrapResolve(requiredAuth);
-
 const orderSummaryPayload = schemaComposer.createObjectTC({
   name: 'orderSummaryPayload',
   fields: {

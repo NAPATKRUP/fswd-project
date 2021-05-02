@@ -68,7 +68,7 @@ const Navbar: FC = () => {
             โปรโมชั่น
           </NavLink>
         </li>
-        {user?.role === 'customer' && (
+        {(user?.role === 'customer' || user?.role === 'admin') && (
           <li className="p-5">
             <NavLink to={`/cart`} activeClassName="text-gold-200">
               ตะกร้าสินค้า

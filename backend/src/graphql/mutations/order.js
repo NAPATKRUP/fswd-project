@@ -122,9 +122,14 @@ export const cancelOrder = schemaComposer
     },
     resolve: async ({ args, context }) => {
       const { orderId } = args;
-      const { _id: userId } = context.user;
+      const { _id: userId, role } = context.user;
 
-      const order = await OrderModel.findOne({ userId, _id: orderId });
+      let order;
+      if (role === 'admin') {
+        order = await OrderModel.findById(orderId);
+      } else {
+        order = await OrderModel.findOne({ userId, _id: orderId });
+      }
       if (!order) {
         throw new ValidationError('ไม่พบออเดอร์สินค้า');
       }
@@ -138,7 +143,7 @@ export const cancelOrder = schemaComposer
         throw new ValidationError('ออเดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
       }
 
-      const cart = await CartModel.findOne({ userId, _id: order.cartId });
+      const cart = await CartModel.findById(order.cartId);
       for (const item of cart.items) {
         const product = await ProductModel.findById(item.product._id);
         await ProductModel.findByIdAndUpdate(item.product._id, {
@@ -146,12 +151,44 @@ export const cancelOrder = schemaComposer
         });
       }
 
-      await OrderModel.findOneAndUpdate(
-        { userId, _id: orderId },
-        { orderStatus: 'CANCEL', cancelAt: Date.now() }
-      );
+      await OrderModel.findByIdAndUpdate(orderId, { orderStatus: 'CANCEL', cancelAt: Date.now() });
 
-      const updateOrder = await OrderModel.findOne({ userId, _id: orderId });
+      const updateOrder = await OrderModel.findById(orderId);
+      return updateOrder;
+    },
+  })
+  .wrapResolve(requiredAuth);
+
+export const changeStatusByAdmin = schemaComposer
+  .createResolver({
+    name: 'changeStatusByAdmin',
+    kind: 'mutation',
+    type: OrderTC.getType(),
+    args: {
+      orderId: 'MongoID!',
+      status: 'String!',
+    },
+    resolve: async ({ args, context }) => {
+      const { orderId, status } = args;
+      const { role } = context.user;
+      if (role !== 'admin') {
+        throw new ValidationError('โปรดใช้บัญชีแอดมินในการเข้าใช้งาน');
+      }
+
+      const order = await OrderModel.findById(orderId);
+      if (!order) {
+        throw new ValidationError('ไม่พบออเดอร์สินค้า');
+      }
+      if (order.orderStatus === 'ARRIVED') {
+        throw new ValidationError('ออเดอร์นี้ได้ทำการจัดส่งถึงปลายทางแล้ว');
+      }
+      if (order.orderStatus === 'CANCEL') {
+        throw new ValidationError('ออเดอร์นี้ถูกยกเลิกการสั่งซื้อแล้ว');
+      }
+
+      await OrderModel.findByIdAndUpdate(orderId, { orderStatus: status, checkoutAt: Date.now() });
+
+      const updateOrder = await OrderModel.findById(orderId);
       return updateOrder;
     },
   })
