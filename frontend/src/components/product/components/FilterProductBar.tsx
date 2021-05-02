@@ -23,7 +23,9 @@ const FilterProductBar: FC<FilterProductBarProps> = ({
           className="lg:col-span-3 col-span-5 border border-black rounded p-1"
           onChange={handleSearchType}
         >
-          <option value="เรียงจากราคามากสุด">เรียงจากราคามากสุด</option>
+          <option value="" disabled>
+            เลือกประเภทการค้นหา
+          </option>
           <option value="PRICE_ASC">เรียงจากราคาต่ำสุด</option>
           <option value="PRICE_DESC">เรียงจากราคาสูงสุด</option>
           <option value="NAME_ASC">เรียงตามชื่อสินค้า (A-Z)</option>
