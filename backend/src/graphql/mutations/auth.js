@@ -80,3 +80,37 @@ export const login = schemaComposer.createResolver({
     };
   },
 });
+
+const UpdateUserPayload = schemaComposer.createObjectTC({
+  name: 'UpdateUserPayload',
+  fields: {
+    status: 'String!',
+  },
+});
+
+export const updateUser = schemaComposer.createResolver({
+  name: 'updateUser',
+  args: {
+    displayName: 'String!',
+    password: 'String!',
+  },
+  type: UpdateUserPayload,
+  resolve: async ({ context, args }) => {
+    const { displayName, password } = args;
+    const { _id: userId } = context.user;
+
+    const user = await UserModel.findById(userId);
+    const valid = await user.verifyPassword(password);
+
+    if (valid) {
+      throw new UserInputError('Same password');
+    }
+
+    await UserModel.findByIdAndUpdate(user._id, {
+      displayName,
+      password,
+    });
+
+    return { status: 'Success' };
+  },
+});

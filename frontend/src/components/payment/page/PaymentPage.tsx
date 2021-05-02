@@ -1,11 +1,12 @@
 import { FC, lazy, useState, useCallback } from 'react';
 import { useLocation, useHistory } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
-import { ORDER_BY_ID_QUERY } from '../../../graphql/orderByIdQuery';
-import { ADDRESS_BY_ID_QUERY } from '../../../graphql/addressByIdQuery';
+import { ADDRESS_BY_ORDERID_QUERY } from '../../../graphql/addressByOrderIdQuery';
 import { PAYMENT_BY_USERCONTEXT_QUERY } from '../../../graphql/paymentByUserContextQuery';
 import { PAYMENT_ORDER_MUTATION } from '../../../graphql/paymentOrderMutation';
 import { CANCEL_ORDER_MUTATION } from '../../../graphql/cancelOrderMutation';
+
+import { RefreshIcon } from '@heroicons/react/outline';
 
 import useModal from '../../../hooks/useModal';
 
@@ -26,7 +27,7 @@ interface LocationState {
 
 const PaymentPage: FC = () => {
   const location = useLocation<LocationState>();
-  const { orderId, addressId } = location.state || '';
+  const { orderId } = location.state || '';
 
   const [paymentId, setPaymentId] = useState('');
   const [title, setTitle] = useState('');
@@ -38,16 +39,12 @@ const PaymentPage: FC = () => {
 
   const history = useHistory();
 
-  const { loading: orderLoading, error: orderError, data: orderData } = useQuery(
-    ORDER_BY_ID_QUERY,
-    { variables: { orderId } }
-  );
-  const { loading: addressLoading, error: addressError, data: addressData } = useQuery(
-    ADDRESS_BY_ID_QUERY,
-    {
-      variables: { addressId: addressId },
-    }
-  );
+  const {
+    loading: orderLoading,
+    error: orderError,
+    data: orderData,
+    refetch: addressRefetch,
+  } = useQuery(ADDRESS_BY_ORDERID_QUERY, { variables: { orderId } });
   const { loading: paymentLoading, error: paymentError, data: paymentData } = useQuery(
     PAYMENT_BY_USERCONTEXT_QUERY
   );
@@ -65,8 +62,8 @@ const PaymentPage: FC = () => {
   const handleCallBack = (stats: boolean) => {
     if (!stats) {
       toggle();
-      if (isPayment) history.replace({ pathname: '/' });
-      if (isCancel) history.replace({ pathname: '/' });
+      if (isPayment) history.push({ pathname: '/customer/order/' + orderId });
+      if (isCancel) history.push({ pathname: '/' });
     }
   };
 
@@ -112,15 +109,14 @@ const PaymentPage: FC = () => {
     setPaymentId(event.target.value);
   }, []);
 
-  if (orderLoading || addressLoading || paymentLoading) {
+  if (orderLoading || paymentLoading) {
     return <Loading />;
   }
-  if (orderError || addressError || paymentError) {
+  if (orderError || paymentError) {
     history.push({ pathname: '/error' });
     return <></>;
   }
   const { orderById } = orderData;
-  const { addressById } = addressData;
   const { paymentByUserContext } = paymentData;
 
   return (
@@ -133,11 +129,15 @@ const PaymentPage: FC = () => {
         bodyMessage={bodyMessage}
         callBackFunction={handleCallBack}
       />
-      <Navigator
-        listOfNode={['หน้าหลัก', '>>', 'ตะกร้า', '>>', 'ตรวจสอบสินค้า', '>>', 'ชำระเงิน']}
-      />
-      <AddressCard address={addressById} />
-
+      <div className="flex">
+        <Navigator
+          listOfNode={['หน้าหลัก', '>>', 'ตะกร้า', '>>', 'ตรวจสอบสินค้า', '>>', 'ชำระเงิน']}
+        />
+        <button className="mx-3 my-5" onClick={() => addressRefetch()}>
+          <RefreshIcon className="h-5 w-5" />
+        </button>
+      </div>
+      <AddressCard address={orderById.address} />
       <form onSubmit={handleSubmitPayment} className="lg:px-20 px-10 pt-10 pb-4 mt-8 text-right">
         <label className="text-xl font-semibold lg:w-5/12 w-full px-4">
           โปรดเลือกช่องทางในการชำระเงิน
@@ -147,7 +147,7 @@ const PaymentPage: FC = () => {
           className="border-2 rounded-full lg:w-3/12 w-8/12 bg-dark-100 text-white-100 hover:bg-dark-200 p-1"
           onChange={handlePaymentIdChange}
         >
-          <option value="" selected>
+          <option value="" disabled>
             โปรดเลือกช่องทางในการชำระเงิน
           </option>
           {paymentByUserContext.map((payment: IPayment) => (
@@ -166,7 +166,7 @@ const PaymentPage: FC = () => {
         <div className="flex justify-end lg:mr-20 mr-10">
           <button
             onClick={() => {
-              history.push('/checkout', { orderId: orderId });
+              history.push({ pathname: '/checkout', state: { orderId: orderId } });
             }}
             className="font-semibold border-2 rounded-xl bg-dark-100 text-white-100 hover:bg-dark-200 ml-2 px-2 py-1"
           >

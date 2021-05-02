@@ -7,7 +7,7 @@ import { LATESTPRODUCT_PRODUCT_QUERY } from '../../../graphql/latestProductQuery
 const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
-const Loading = lazy(() => import('../../commons/layouts/ContentWithSidebarLayout'));
+const Loading = lazy(() => import('../../commons/loading/Loading'));
 const BannerWrapper = lazy(() => import('../components/BannerWrapper'));
 const NowPromotionWrapper = lazy(() => import('../components/NowPromotionWrapper'));
 const LatestProductWrapper = lazy(() => import('../components/LatestProductWrapper'));

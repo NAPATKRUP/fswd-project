@@ -1,11 +1,9 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSession } from '../../context/SessionContext';
 
-import { UserIcon } from '@heroicons/react/solid';
-
 const Navbar: FC = () => {
-  const { user, logout } = useSession();
+  const { loading, user, logout } = useSession();
 
   const handleOnClick = useCallback(() => {
     const handleLogout = async () => {
@@ -13,6 +11,42 @@ const Navbar: FC = () => {
     };
     handleLogout();
   }, [logout]);
+
+  const userBox = useMemo(() => {
+    if (loading) return <div></div>;
+
+    if (!user)
+      return (
+        <>
+          <li className="lg:p-5 p-2">
+            <NavLink exact to={`/login`} activeClassName="text-gold-200">
+              Login
+            </NavLink>
+          </li>
+          <li className="lg:p-5 p-2">
+            <NavLink exact to={`/register`} activeClassName="text-gold-200">
+              Register
+            </NavLink>
+          </li>
+        </>
+      );
+
+    if (user)
+      return (
+        <>
+          <li className="lg:p-5 p-2">
+            <NavLink to={`/customer`} activeClassName="text-gold-200">
+              {user.displayName}
+            </NavLink>
+          </li>
+          <li className="lg:p-5 p-2">
+            <div role="button" className="text-gold-200" onClick={handleOnClick}>
+              <p>ออกจากระบบ</p>
+            </div>
+          </li>
+        </>
+      );
+  }, [handleOnClick, loading, user]);
 
   return (
     <div className="text-white-100 w-1/5 h-100 bg-dark-100 hidden md:flex md:flex-col md:items-center">
@@ -51,7 +85,8 @@ const Navbar: FC = () => {
       </ul>
 
       <ul className="font-semibold text-center w-100 flex lg:flex-row md:flex-col justify-between mt-auto lg:py-10 py-5">
-        {!user && (
+        {userBox}
+        {/* {!user && (
           <>
             <li className="lg:p-5 p-2">
               <NavLink exact to={`/login`} activeClassName="text-gold-200">
@@ -69,8 +104,8 @@ const Navbar: FC = () => {
         {user && (
           <>
             <li className="lg:p-5 p-2">
-              <NavLink to={`/account`} activeClassName="text-gold-200">
-                <UserIcon className="h-5 w-5 inline-flex mb-1" /> {user.displayName}
+              <NavLink to={`/customer`} activeClassName="text-gold-200">
+                {user.displayName}
               </NavLink>
             </li>
             <li className="lg:p-5 p-2">
@@ -79,7 +114,7 @@ const Navbar: FC = () => {
               </div>
             </li>
           </>
-        )}
+        )} */}
       </ul>
     </div>
   );

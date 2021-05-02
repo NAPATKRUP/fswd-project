@@ -9,6 +9,7 @@ import PromotionPage from './components/promotion/page/PromotionPage';
 import CartPage from './components/cart/page/CartPage';
 import CheckoutPage from './components/checkout/page/CheckoutPage';
 import PaymentPage from './components/payment/page/PaymentPage';
+import CusomterPage from './components/customer/page/CustomerPage';
 import ErrorPage from './components/error/page/ErrorPage';
 import NotFoundPage from './components/error/page/NotFoundPage';
 import NotPermissionPage from './components/error/page/NotPermissionPage';
@@ -28,6 +29,7 @@ const App: FC = () => {
           <Route exact path="/cart" component={CartPage} />
           <Route exact path="/checkout" component={CheckoutPage} />
           <Route exact path="/payment" component={PaymentPage} />
+          <Route path="/customer" component={CusomterPage} />
           <Route exact path="/no-permission" component={NotPermissionPage} />
           <Route exact path="/error" component={ErrorPage} />
           <Route path="/admin" component={AdminManagerPage} />

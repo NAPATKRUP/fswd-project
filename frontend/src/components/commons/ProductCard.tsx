@@ -36,7 +36,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }: ProductCardProps) => {
   const handleCallBack = (status: boolean) => {
     if (!status) {
       toggle();
-      if (isBuyNow) history.replace({ pathname: 'cart' });
+      if (isBuyNow) history.push({ pathname: '/cart' });
     }
   };
 

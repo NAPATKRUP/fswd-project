@@ -26,7 +26,7 @@ const PromotionCard: FC<PromotionProp> = ({ promotions }: PromotionProp) => {
             {data?.description && (
               <div className="my-4">
                 <p className="text-lg">รายละเอียด</p>
-                <p className="text-sm">{data.description}</p>
+                <p className="text-sm" dangerouslySetInnerHTML={{ __html: data.description }}></p>
               </div>
             )}
             {data?.products.length > 0 && (
