@@ -20,15 +20,11 @@ const CreateProductPage: FC = () => {
     description: '',
   });
   const [imageFile, setImageFile] = useState<File>();
-  const [createProduct, { error }] = useMutation<{ createProduct: IProduct }, ICreateProduct>(
+  const [createProduct] = useMutation<{ createProduct: IProduct }, ICreateProduct>(
     CREATE_PRODUCT_MUTATION
   );
   const { updateModalAndToggle, ModalElement } = useModal({});
   const history = useHistory();
-
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
 
   const onUpdateProductDetail = (detail: ICreateProduct) => {
     setProductDetail({

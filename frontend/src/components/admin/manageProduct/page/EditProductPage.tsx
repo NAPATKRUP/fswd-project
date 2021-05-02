@@ -36,7 +36,6 @@ const EditProductPage: FC = () => {
       setIsFetching(false);
     },
     onError: (error: ApolloError) => {
-      console.log(error);
       setIsFetching(false);
     },
   });

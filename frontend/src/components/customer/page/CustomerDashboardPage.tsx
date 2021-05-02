@@ -1,10 +1,8 @@
 import { FC } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-// import { useSession } from '../../../context/SessionContext';
 
 const CustomerDashboardPage: FC = () => {
   let { url } = useRouteMatch();
-  // const { loading, user } = useSession();
 
   return (
     <div className="bg-dark-100 text-white p-4 rounded-xl">
