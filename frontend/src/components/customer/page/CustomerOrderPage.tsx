@@ -6,16 +6,19 @@ import { IOrder } from '../../commons/type/IOrder';
 import moment from 'moment';
 import 'moment/locale/th';
 
-import { DocumentReportIcon, HomeIcon } from '@heroicons/react/outline';
+import { DocumentReportIcon, RefreshIcon, HomeIcon } from '@heroicons/react/outline';
 
 const Loading = lazy(() => import('../../commons/loading/Loading'));
 
 const CustomerOrderPage: FC = () => {
   const history = useHistory();
 
-  const { loading: customerLoading, error: customerError, data: customerData } = useQuery(
-    CUSTOMER_ORDERS_QUERY
-  );
+  const {
+    loading: customerOrderLoading,
+    error: customerOrderError,
+    data: customerOrderData,
+    refetch: customerOrderRefetch,
+  } = useQuery(CUSTOMER_ORDERS_QUERY);
 
   const handleChangeToDetailPage = useCallback(
     async (e, orderId, orderStatus) => {
@@ -35,19 +38,23 @@ const CustomerOrderPage: FC = () => {
     [history]
   );
 
-  if (customerLoading) {
+  if (customerOrderLoading) {
     return <Loading />;
   }
-  if (customerError) {
+  if (customerOrderError) {
     history.push({ pathname: '/error' });
     return <></>;
   }
-  const { orderByUserContext } = customerData;
+  const { orderByUserContext } = customerOrderData;
 
   return (
     <div className="lg:px-20 md:px-10 px-4 pt-12">
       <div className="lg:text-2xl text-xl">
-        <DocumentReportIcon className="h-8 w-8 inline-flex" /> รายการคำสั่งซื้อของฉัน
+        <DocumentReportIcon className="h-8 w-8 inline-flex" />{' '}
+        <span className="mr-1">รายการคำสั่งซื้อของฉัน </span>
+        <button onClick={() => customerOrderRefetch()}>
+          <RefreshIcon className="h-5 w-5" />
+        </button>{' '}
       </div>
       {orderByUserContext.length === 0 && <p className="mt-6 ml-2">คุณไม่มีคำสั่งซื้อ</p>}
       {orderByUserContext.length !== 0 && (
