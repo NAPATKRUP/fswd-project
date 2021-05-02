@@ -11,11 +11,10 @@ const ProductCard = lazy(() => import('../../commons/ProductCard'));
 const ProductWrapper: FC<ProductProps> = ({ product }: ProductProps) => {
   return (
     <div>
-      <p className="text-lg">
-        ค้นพบน้ำหอมทั้งหมด <span className="font-semibold">{product?.length && undefined}</span>{' '}
-        รายการ
+      <p>
+        ค้นพบน้ำหอมทั้งหมด <span className="font-semibold">{product?.length}</span> รายการ
       </p>
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2">
         {product?.map((item: IProduct) => (
           <ProductCard product={item} key={item._id} />
         ))}

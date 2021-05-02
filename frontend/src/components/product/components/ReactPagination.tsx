@@ -1,4 +1,3 @@
-import React from 'react';
 import './Pagination.css';
 
 const ReactPagination = (props: any) => {
@@ -17,7 +16,7 @@ const ReactPagination = (props: any) => {
   let pageNum = Math.ceil(totalSize / sizePerPage);
 
   return (
-    <div className={`react-pagination-js-${theme}`}>
+    <div className={`react-pagination-js-${theme} mt-12`}>
       <ul>
         {showFirstLastPages ? (
           <Page
@@ -81,7 +80,7 @@ const Pagination = (props: any) => {
     if (l && i - l !== 1) {
       rangeWithEllipsis.push(
         <li key={isEllipsisIncludes ? -1 : 0} className="pageElli">
-          <a> . . .</a>
+          <div role="button"> . . .</div>
         </li>
       );
       isEllipsisIncludes = true;
@@ -95,7 +94,7 @@ const Pagination = (props: any) => {
           props.changeCurrentPage(i);
         }}
       >
-        <a>{i}</a>
+        <div role="button">{i}</div>
       </li>
     );
     l = i;
@@ -107,7 +106,7 @@ const Page = (props: any) => {
   const { className, label, pageNum } = props;
   return (
     <li className={className} onClick={() => props.changeCurrentPage(pageNum)}>
-      <a>{label}</a>
+      <p>{label}</p>
     </li>
   );
 };

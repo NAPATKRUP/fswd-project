@@ -4,6 +4,8 @@ import { useLazyQuery } from '@apollo/client';
 import { FILTER_PRODUCT_QUERY } from '../../../graphql/filterProductQuery';
 import ReactPagination from '../components/ReactPagination';
 
+import { CollectionIcon } from '@heroicons/react/outline';
+
 const ContentWithSidebarLayout = lazy(
   () => import('../../commons/layouts/ContentWithSidebarLayout')
 );
@@ -23,7 +25,7 @@ const ProductPage: FC = () => {
   const [allProduct, setAllProduct] = useState<any>([]);
   const [showProduct, setShowProduct] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const productPerPage = 1;
+  const productPerPage = 8;
 
   const [queryProduct, { loading, error, data }] = useLazyQuery<any>(FILTER_PRODUCT_QUERY, {
     variables: {
@@ -122,29 +124,28 @@ const ProductPage: FC = () => {
 
   return (
     <ContentWithSidebarLayout>
-      <div className="flex flex-col justify-center items-center">
-        <div className="px-20 pt-10 text-3xl">Products</div>
-        <FilterProductBar
-          handleName={handleName}
-          handleSearchType={handleSearchType}
-          handleMaxPrice={handleMaxPrice}
-          handleMinPrice={handleMinPrice}
-          nameInput={nameInput}
-          searchType={searchType}
-          maxPrice={maxPrice}
-          minPrice={minPrice}
-        />
-        <hr className="h-1 w-4/5 color-gold mt-4"></hr>
-        <ProductWrapper product={showProduct} />
-
-        {/* Reference  : https://github.com/isaurssaurav/react-pagination-js */}
-        <ReactPagination
-          currentPage={currentPage}
-          totalSize={allProduct?.length}
-          changeCurrentPage={paginate}
-          sizePerPage={productPerPage}
-        />
-        <hr className="h-1 w-4/5 color-gold mt-4"></hr>
+      <Navigator listOfNode={['หน้าหลัก', '>>', 'สินค้า']} />
+      <div className="flex flex-col lg:px-20 md:px-10 py-10">
+        <p className="lg:text-2xl text-xl text-left mt-2 mb-4 block">
+          <CollectionIcon className="h-6 w-6 inline-flex" /> สินค้า
+        </p>
+        <div className="flex flex-col items-center mt-2">
+          <FilterProductBar
+            handleName={handleName}
+            handleSearchType={handleSearchType}
+            handleMaxPrice={handleMaxPrice}
+            handleMinPrice={handleMinPrice}
+          />
+          <div className="w-full border-2 border-dark-100 bg-dark-100 rounded-full mt-8 mb-8"></div>
+          <ProductWrapper product={showProduct} />
+          <ReactPagination
+            currentPage={currentPage}
+            totalSize={allProduct?.length}
+            changeCurrentPage={paginate}
+            sizePerPage={productPerPage}
+          />
+          <div className="w-full border-2 border-dark-100 bg-dark-100 rounded-full mt-8 mb-8"></div>
+        </div>
       </div>
     </ContentWithSidebarLayout>
   );

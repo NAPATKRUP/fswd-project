@@ -1,27 +1,27 @@
-import { FC, useState, useCallback } from 'react';
+import { FC } from 'react';
 
-const FilterProductBar: any = (prop: any) => {
-  const {
-    handleName,
-    handleMinPrice,
-    handleMaxPrice,
-    handleSearchType,
-    nameInput,
-    minPrice,
-    maxPrice,
-    searchType,
-  } = prop;
+interface FilterProductBarProps {
+  handleName: (e: any) => void;
+  handleMinPrice: (e: any) => void;
+  handleMaxPrice: (e: any) => void;
+  handleSearchType: (e: any) => void;
+}
 
+const FilterProductBar: FC<FilterProductBarProps> = ({
+  handleName,
+  handleMinPrice,
+  handleMaxPrice,
+  handleSearchType,
+}: FilterProductBarProps) => {
   return (
     <div className="w-full">
-      <p className="text-xl">ค้นหาน้ำหอม</p>
-      <form className="mt-2 flex gap-2 justify-items-center	items-center">
+      <p className="text-lg">ค้นหาน้ำหอม</p>
+      <form className="grid grid-cols-12 mt-2 gap-2">
         <select
           name="searchType"
           id="searchType"
-          className="lg:w-3/12 w-1/3 border border-black rounded p-1"
+          className="lg:col-span-3 col-span-5 border border-black rounded p-1"
           onChange={handleSearchType}
-          value={searchType}
         >
           <option value="เรียงจากราคามากสุด">เรียงจากราคามากสุด</option>
           <option value="PRICE_ASC">เรียงจากราคาต่ำสุด</option>
@@ -34,29 +34,32 @@ const FilterProductBar: any = (prop: any) => {
         <input
           type="text"
           name="name"
-          className="lg:w-3/12 w-2/3 border-b border-black p-1"
+          className="lg:col-span-3 col-span-7 border-b border-black p-1"
           placeholder="ค้นหาชื่อและแบรนด์น้ำหอม"
           onChange={handleName}
-          value={nameInput}
         />
-        <label className="lg:w-1/12 w-1/4">ในราคา</label>
-        <input
-          type="number"
-          name="minPrice"
-          className="lg:w-2/12 md:w-1/3 w-1/4 border-b border-black p-1"
-          placeholder="ราคาขั้นต่ำ"
-          min="1"
-          onChange={handleMinPrice}
-        />
-        <label className="lg:w-1/12 w-1/4">ถึง</label>
-        <input
-          type="number"
-          name="maxPrice"
-          className="lg:w-2/12 md:w-1/3 w-1/4 border-b border-black p-1"
-          placeholder="ราคาขั้นสูง"
-          min="1"
-          onChange={handleMaxPrice}
-        />
+        <div className="lg:col-span-3 col-span-6 grid grid-cols-12">
+          <p className="col-span-3 inline-flex mt-1">ราคา</p>
+          <input
+            type="number"
+            name="minPrice"
+            className="col-span-9 border-b border-black p-1"
+            placeholder="ราคาขั้นต่ำ"
+            min="1"
+            onChange={handleMinPrice}
+          />
+        </div>
+        <div className="lg:col-span-3 col-span-6 grid grid-cols-12">
+          <p className="col-span-2 inline-flex mt-1">ถึง</p>
+          <input
+            type="number"
+            name="maxPrice"
+            className="col-span-9 border-b border-black p-1"
+            placeholder="ราคาขั้นสูง"
+            min="1"
+            onChange={handleMaxPrice}
+          />
+        </div>
       </form>
     </div>
   );
