@@ -4,6 +4,7 @@ import { useSession } from '../../../context/SessionContext';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
 import ProductManagerPage from '../manageProduct/page/ProductManagerPage';
 import OrderManagerPage from '../manageOrder/page/OrderManagerPage';
+import PromotionManagerPage from '../managePromotion/page/PromotionManagerPage';
 import AdminDashboardPage from './AdminDashboardPage';
 
 const AdminManagerPage: FC = () => {
@@ -16,6 +17,9 @@ const AdminManagerPage: FC = () => {
       <Switch>
         <Route path={`${path}/product`}>
           <ProductManagerPage />
+        </Route>
+        <Route path={`${path}/promotion`}>
+          <PromotionManagerPage />
         </Route>
         <Route path={`${path}/orders`}>
           <OrderManagerPage />

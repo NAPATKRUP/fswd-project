@@ -61,7 +61,7 @@ const Navigator: FC<NavigatorProp> = ({ listOfNode }: NavigatorProp) => {
               );
             } else if (n === 'จัดการโปรโมชั่น') {
               return (
-                <NavLink to="/admin/promotions" key={n} className="hover:text-gold-200">
+                <NavLink to="/admin/promotion" key={n} className="hover:text-gold-200">
                   จัดการโปรโมชั่น
                 </NavLink>
               );
