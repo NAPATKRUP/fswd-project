@@ -8,8 +8,8 @@ import { ApolloError, useMutation, useQuery } from '@apollo/client';
 import { UPDATE_PRODUCT_BY_ID_MUTATION } from '../../../../graphql/updateProductMutation';
 import { PRODUCT_BY_ID_QUERY } from '../../../../graphql/productByIdQuery';
 import useModal from '../../../../hooks/useModalv2';
-
 import { CollectionIcon } from '@heroicons/react/outline';
+import uploadImage from '../../../../api/uploadImage';
 
 const Navigator = lazy(() => import('../../../commons/Navigator'));
 
@@ -18,6 +18,7 @@ const EditProductPage: FC = () => {
   const [productDetail, setProductDetail] = useState<IProduct>();
   const [defaultProductDetail, setDefaultProductDetail] = useState<IProduct>();
   const [isFetching, setIsFetching] = useState<boolean>(true);
+  const [imageFile, setImageFile] = useState<File>();
   const { updateModalAndToggle, ModalElement } = useModal({});
   const { loading: queryLoading, error: queryError } = useQuery<
     { productById: IProduct },
@@ -74,8 +75,8 @@ const EditProductPage: FC = () => {
   };
 
   const handleProductImageChange = (event) => {
-    const image: string = event.target.value;
-    onUpdateProductDetail({ image });
+    const image: File = event.target.files[0];
+    setImageFile(image);
   };
 
   const handleProductDescriptionChange = (event, editor: any) => {
@@ -106,25 +107,28 @@ const EditProductPage: FC = () => {
         isHasDecline: true,
         title: 'แก้ไขข้อมูลสินค้า',
         bodyMessage: 'คุณยืนยันการแก้ไขข้อมูลสินค้าหรือไม่',
-        callBackFunction: (status: boolean) => {
+        callBackFunction: async (status: boolean) => {
           if (status) {
-            updateProduct({
-              variables: {
-                ...product,
-              },
-            });
-
-            setDefaultProductDetail(productDetail);
-
-            setTimeout(() => {
-              updateModalAndToggle({
-                isHasAccept: true,
-                isHasDecline: false,
-                title: 'แก้ไขข้อมูลสินค้าสำเร็จ',
-                bodyMessage: 'การแก้ไขข้อมูลสินค้านี้เสร็จสิ้น',
-                callBackFunction: (status: boolean) => {},
-              });
-            }, 1000);
+            if (imageFile) {
+              await uploadImage(imageFile)
+                .then((result) => {
+                  const { location } = result.data;
+                  onUpdateProductDetail({ image: location });
+                  sendUpdateData({ ...product, image: location });
+                })
+                .catch((error) => {
+                  setTimeout(() => {
+                    updateModalAndToggle({
+                      isHasAccept: true,
+                      isHasDecline: false,
+                      title: 'เกิดข้อผิดพลาด',
+                      bodyMessage: `กรุณาลองใหม่อีกครั้ง (${error})`,
+                    });
+                  }, 1000);
+                });
+            } else {
+              sendUpdateData(product);
+            }
           }
         },
       });
@@ -135,6 +139,30 @@ const EditProductPage: FC = () => {
         title: 'ตรวจสอบข้อมูลอีกครั้ง',
         bodyMessage: 'ดูเหมือนคุณกรอกข้อมูลบางส่วนหายไป! <b>กรุณาตรวจสอบข้อมูลอีกครั้ง</b>',
       });
+    }
+  };
+
+  const sendUpdateData: (product: IProduct) => void = (product: IProduct) => {
+    if (product) {
+      const { promotion, createAt, updateAt, ...cutProduct } = product;
+
+      updateProduct({
+        variables: {
+          ...cutProduct,
+        },
+      });
+
+      setDefaultProductDetail(productDetail);
+
+      setTimeout(() => {
+        updateModalAndToggle({
+          isHasAccept: true,
+          isHasDecline: false,
+          title: 'แก้ไขข้อมูลสินค้าสำเร็จ',
+          bodyMessage: 'การแก้ไขข้อมูลสินค้านี้เสร็จสิ้น',
+          callBackFunction: (status: boolean) => {},
+        });
+      }, 1000);
     }
   };
 
@@ -158,7 +186,20 @@ const EditProductPage: FC = () => {
           </h2>
           <form onSubmit={handleSubmitForm}>
             <div className="grid grid-cols-6 gap-6 my-3">
-              <div className="col-span-6 lg:col-span-3">
+              <div className="col-span-6 md:col-span-3">
+                <img
+                  src={
+                    imageFile
+                      ? URL.createObjectURL(imageFile)
+                      : productDetail.image
+                      ? productDetail.image
+                      : 'https://via.placeholder.com/240'
+                  }
+                  className="w-full"
+                  alt="Product"
+                />
+              </div>
+              <div className="col-span-6 md:col-span-3">
                 <div className="my-2">
                   <label htmlFor="product_name" className="block text-md font-medium text-dark-200">
                     ชื่อสินค้า *
@@ -169,7 +210,7 @@ const EditProductPage: FC = () => {
                     id="product_name"
                     value={productDetail.name}
                     onChange={handleProductNameChange}
-                    className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
+                    className="form-input rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
                   />
                 </div>
                 <div className="my-2">
@@ -182,7 +223,7 @@ const EditProductPage: FC = () => {
                     id="product_slug"
                     value={productDetail.slug}
                     disabled
-                    className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
+                    className="form-input rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm border-dark-400"
                   />
                 </div>
                 <div className="my-2">
@@ -199,7 +240,7 @@ const EditProductPage: FC = () => {
                     required
                     value={productDetail.brand}
                     onChange={handleProductBrandChange}
-                    className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
+                    className="form-input rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
                   />
                 </div>
                 <div className="my-2">
@@ -217,7 +258,7 @@ const EditProductPage: FC = () => {
                     required
                     value={productDetail.price}
                     onChange={handleProductPriceChange}
-                    className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
+                    className="form-input rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
                   />
                 </div>
                 <div className="my-2">
@@ -228,12 +269,11 @@ const EditProductPage: FC = () => {
                     รูปสินค้า
                   </label>
                   <input
-                    type="text"
+                    type="file"
+                    accept="image/*"
                     name="product_image"
                     id="product_image"
-                    value={productDetail.image}
                     onChange={handleProductImageChange}
-                    className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
                   />
                 </div>
                 <div className="my-2">
@@ -250,7 +290,7 @@ const EditProductPage: FC = () => {
                     min={0}
                     value={productDetail.stock}
                     onChange={handleProductStockChange}
-                    className="form-input rounded-md mt-1 px-2 py-2 sm:w-full md:w-1/2 lg:w-3/4 shadow-sm sm:text-sm"
+                    className="form-input rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
                   />
                 </div>
                 <div className="my-2">

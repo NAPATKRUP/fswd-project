@@ -3,11 +3,14 @@ import { ApolloServer } from 'apollo-server-express';
 import jwt from 'express-jwt';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import multer from 'multer';
+import multerS3 from 'multer-s3';
+import aws from 'aws-sdk';
 
 import './mongoose-connect';
 import schema from './graphql';
 
-const path = '/graphql';
+const graphqlPath = '/graphql';
 const app = express();
 const server = new ApolloServer({
   schema,
@@ -20,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(
-  path,
+  graphqlPath,
   jwt({
     secret: process.env.SECRET ?? 'default-secret',
     algorithms: ['HS256'],
@@ -49,9 +52,41 @@ app.use(
   }
 );
 
+// upload image
+aws.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY || 'xxx',
+  secretAccessKey: process.env.AWS_SECERT_KEY || 'xxx',
+});
+const s3 = new aws.S3();
+
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'perfume-house-bucket',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: 'public-read',
+    key: function (req, file, cb) {
+      cb(null, `${Date.now()}-${Math.floor(Math.random() * 1000000)}-${file.originalname}`);
+    },
+  }),
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+      req.fileValidationError = 'Only image files are allowed!';
+      return cb(null, false);
+    }
+    cb(null, true);
+  },
+});
+
+//use by upload form
+app.post('/upload', upload.single('image'), function (req, res, next) {
+  if (req.fileValidationError) res.status(400).send({ error: req.fileValidationError });
+  else res.send({ name: req.file.key, location: req.file.location });
+});
+
 server.applyMiddleware({
   app,
-  path,
+  graphqlPath,
   cors: { origin: 'http://localhost:3000', credentials: true },
 });
 
