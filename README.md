@@ -73,7 +73,7 @@ It is an online store web application intended for selling perfumes.
 - :heavy_check_mark:Products Pagination of Product 8 items per page `ReactPagination`
 - :heavy_check_mark:Product Card implement 2 button type `BuyNow, addToCart`
 - :heavy_check_mark:Product Card implement status of now promotion or stock with `tag`
-- :heavy_check_mark:Upload image to s3 storage in aws `Product, Promotion`
+- :heavy_check_mark:Upload image to S3 storage in aws `Product, Promotion`
 - :heavy_check_mark:Product and Promotion description can read with HTML syntax use `CKEditor` for HTML editor
 - :heavy_check_mark:Admin Dashboard
     1. use `nivo.rocks/line` to show summary of totals Daily sales
@@ -82,7 +82,7 @@ It is an online store web application intended for selling perfumes.
 - :heavy_check_mark:Implement Modal to show status of process
 - :heavy_check_mark:Responsive Website with `grid system` use by tailwindcss or set by size of page `lg:, md:, sm:`
 - :heavy_check_mark:Set up Frontend project with `typescript`
-### 4. Deploy Frontend, Backend and Database to server `DigitalOcean`
+### 4. Deploy Frontend, Backend and Database to server `DigitalOcean, MongoDB Atlas, AWS S3`
 - :heavy_check_mark:Setup and deploy with DockerCompose
 
 Team
