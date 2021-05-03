@@ -11,17 +11,23 @@ import './mongoose-connect';
 import schema from './graphql';
 
 const graphqlPath = '/graphql';
+const corsOptions = {
+  origin: true,
+  credentials: true,
+};
+
 const app = express();
 const server = new ApolloServer({
   schema,
   playground: true,
+  cors: cors(corsOptions),
   context: ({ req }) => ({ user: req.user }),
 });
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors(corsOptions));
 app.use(
   graphqlPath,
   jwt({
@@ -87,7 +93,7 @@ app.post('/upload', upload.single('image'), (req, res, next) => {
 server.applyMiddleware({
   app,
   graphqlPath,
-  cors: { origin: 'http://localhost:3000', credentials: true },
+  cors: corsOptions,
 });
 
 const port = process.env.PORT ?? 5001;

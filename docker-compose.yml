@@ -6,7 +6,9 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - .:/backend/app
+      - ./app:/backend
+    env_file:
+      - ./backend/.env
     ports:
       - 3500:3000
       - 3501:3001
@@ -18,7 +20,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - .:/frontend/app
+      - .:/frontend
+    env_file:
+      - ./frontend/.env
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=4096"
     ports:
       - 80:80
       - 443:443
