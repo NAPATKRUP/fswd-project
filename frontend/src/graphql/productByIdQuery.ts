@@ -11,6 +11,7 @@ export const PRODUCT_BY_ID_QUERY: DocumentNode = gql`
       image
       price
       stock
+      promotionId
       promotion {
         name
       }
