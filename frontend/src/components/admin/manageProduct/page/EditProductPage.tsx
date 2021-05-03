@@ -338,15 +338,6 @@ const EditProductPage: FC = () => {
                       </option>
                     ))}
                   </select>
-                  {/* <input
-                    type="number"
-                    name="product_stock"
-                    id="product_stock"
-                    min={0}
-                    value={productDetail.stock}
-                    onChange={handleProductStockChange}
-                    className="form-input rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
-                  /> */}
                 </div>
                 <div className="my-2">
                   <label
