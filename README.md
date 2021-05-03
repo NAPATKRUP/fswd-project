@@ -4,12 +4,8 @@
 - Database using by `MongoDB Atlas`
 - CSS using by `TailwaindCSS`
 
-# Perfume house
+# Perfume House
 It is an online store web application intended for selling perfumes.
-
-#### User for test
-- Admin username: **`super_admin`** password: **`admin123`**
-- Customer you can register on website
 
 ## Project requirements
 ### 1. Implement Frontend from sitemap
@@ -70,22 +66,22 @@ It is an online store web application intended for selling perfumes.
     3. ARRIVED `Arrived state and can't change to more state`
     4. CANCEL `Cancel state to restock product and can't change to more state`
 - :heavy_check_mark: Admin cancel order `Cancel order to restock product`
-- :heavy_check_mark: Update product stock when Customer make order `Alert Modal message to user`
+- :heavy_check_mark: Update product stock when Customer make order `Alert modal message to user`
 ### 3. Implement Frontend, Backend and Database support pages and features
-- :heavy_check_mark:Home Carousel of Promotion `OwlCarousel`
-- :heavy_check_mark:Products Filter Search by onChange `Debounce(300ms)`
-- :heavy_check_mark:Products Pagination of Product 8 items per page `ReactPagination`
-- :heavy_check_mark:Product Card implement 2 button type `BuyNow, addToCart`
-- :heavy_check_mark:Product Card implement status of now promotion or stock with `tag`
+- :heavy_check_mark:Home carousel of promotion `OwlCarousel`
+- :heavy_check_mark:Products filter search by onchange `Debounce(300ms)`
+- :heavy_check_mark:Products pagination of product 8 items per page `ReactPagination`
+- :heavy_check_mark:Product card implement 2 button type `BuyNow, addToCart`
+- :heavy_check_mark:Product card implement status of now promotion or stock with `tag`
 - :heavy_check_mark:Upload image to S3 storage in aws `Product, Promotion`
 - :heavy_check_mark:Product and Promotion description can read with HTML syntax use `CKEditor` for HTML editor
-- :heavy_check_mark:Admin Dashboard
-    1. use `nivo.rocks/line` to show summary of totals Daily sales
-    2. show orderStatus to total number `SUCCESS, SHIPPING`
+- :heavy_check_mark:Admin dashboard
+    1. use `nivo.rocks/line` to show summary of totals daily sales
+    2. show order status to total number `SUCCESS, SHIPPING`
     3. show list of `out of stock` product and can click to edit this product
-- :heavy_check_mark:Implement Modal to show status of process
-- :heavy_check_mark:Responsive Website with `grid system` use by tailwindcss or set by size of page `lg:, md:, sm:`
-- :heavy_check_mark:Set up Frontend project with `typescript`
+- :heavy_check_mark:Implement modal to show status of process
+- :heavy_check_mark:Responsive website with `grid system` use by tailwindcss or set by size of page `lg:, md:, sm:`
+- :heavy_check_mark:Set up frontend project with `typescript`
 ### 4. Deploy Frontend, Backend and Database to server `DigitalOcean, MongoDB Atlas, AWS S3`
 - :heavy_check_mark:Setup and deploy with DockerCompose
 
