@@ -8,7 +8,7 @@
 It is an online store web application intended for selling perfumes.
 
 #### User for test
-- Admin username: **`super_admin`** password: **`admin123`** \
+- Admin username: **`super_admin`** password: **`admin123`**
 - Customer you can register on website
 
 ## Project requirements
