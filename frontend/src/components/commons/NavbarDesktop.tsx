@@ -20,12 +20,12 @@ const Navbar: FC = () => {
         <>
           <li className="lg:p-5 p-2">
             <NavLink exact to={`/login`} activeClassName="text-gold-200">
-              Login
+              เข้าสู่ระบบ
             </NavLink>
           </li>
           <li className="lg:p-5 p-2">
             <NavLink exact to={`/register`} activeClassName="text-gold-200">
-              Register
+              สมัครสมาชิก
             </NavLink>
           </li>
         </>
@@ -86,35 +86,6 @@ const Navbar: FC = () => {
 
       <ul className="font-semibold text-center w-100 flex lg:flex-row md:flex-col justify-between mt-auto lg:py-10 py-5">
         {userBox}
-        {/* {!user && (
-          <>
-            <li className="lg:p-5 p-2">
-              <NavLink exact to={`/login`} activeClassName="text-gold-200">
-                Login
-              </NavLink>
-            </li>
-            <li className="lg:p-5 p-2">
-              <NavLink exact to={`/register`} activeClassName="text-gold-200">
-                Register
-              </NavLink>
-            </li>
-          </>
-        )}
-
-        {user && (
-          <>
-            <li className="lg:p-5 p-2">
-              <NavLink to={`/customer`} activeClassName="text-gold-200">
-                {user.displayName}
-              </NavLink>
-            </li>
-            <li className="lg:p-5 p-2">
-              <div role="button" className="text-gold-200" onClick={handleOnClick}>
-                <p>ออกจากระบบ</p>
-              </div>
-            </li>
-          </>
-        )} */}
       </ul>
     </div>
   );
