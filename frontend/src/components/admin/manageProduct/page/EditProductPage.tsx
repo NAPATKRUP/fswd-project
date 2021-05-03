@@ -5,11 +5,14 @@ import { useParams } from 'react-router-dom';
 import { IProduct, IUpdateProduct } from '../../../commons/type/IProduct';
 import Loading from '../../../commons/loading/Loading';
 import { ApolloError, useMutation, useQuery } from '@apollo/client';
-import { UPDATE_PRODUCT_BY_ID_MUTATION } from '../../../../graphql/updateProductMutation';
 import { PRODUCT_BY_ID_QUERY } from '../../../../graphql/productByIdQuery';
+import { ALL_PROMOTION_QUERY } from '../../../../graphql/allPromotionQuery';
+import { UPDATE_PRODUCT_BY_ID_MUTATION } from '../../../../graphql/updateProductMutation';
 import useModal from '../../../../hooks/useModalv2';
 import { CollectionIcon } from '@heroicons/react/outline';
 import uploadImage from '../../../../api/uploadImage';
+import { IPromotion } from '../../../commons/type/IPromotion';
+import { CHOOSE_PROMOTION_BY_ADMIN_MUTATION } from '../../../../graphql/choosePromotionByAdminMutation';
 
 const Navigator = lazy(() => import('../../../commons/Navigator'));
 
@@ -19,6 +22,7 @@ const EditProductPage: FC = () => {
   const [defaultProductDetail, setDefaultProductDetail] = useState<IProduct>();
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [imageFile, setImageFile] = useState<File>();
+
   const { updateModalAndToggle, ModalElement } = useModal({});
   const { loading: queryLoading, error: queryError } = useQuery<
     { productById: IProduct },
@@ -39,6 +43,13 @@ const EditProductPage: FC = () => {
       setIsFetching(false);
     },
   });
+
+  const {
+    loading: allPromotionLoading,
+    error: allPromotionError,
+    data: allPromotionData,
+  } = useQuery(ALL_PROMOTION_QUERY);
+
   const [updateProduct] = useMutation<{ updateProductById: IProduct }, IUpdateProduct>(
     UPDATE_PRODUCT_BY_ID_MUTATION
   );
@@ -82,6 +93,19 @@ const EditProductPage: FC = () => {
     const description: string = editor.getData();
     onUpdateProductDetail({ description });
   };
+
+  const [choosePromotionByAdmin] = useMutation(CHOOSE_PROMOTION_BY_ADMIN_MUTATION);
+  const handleChoosePromotion = useCallback(
+    async (e) => {
+      e.preventDefault();
+      try {
+        await choosePromotionByAdmin({
+          variables: { productId: productId, promotionId: e.target.value },
+        });
+      } catch ({ message }) {}
+    },
+    [choosePromotionByAdmin, productId]
+  );
 
   // convert string to slug
   // Reference: https://gist.github.com/silkyland/004e9c74ed9ed8b76d613bc2e4e48f52
@@ -170,11 +194,13 @@ const EditProductPage: FC = () => {
   };
 
   const renderFormContent = () => {
-    if (queryLoading || isFetching) return <Loading isFullscreen={false} />;
-    else if (queryError) return <h1>เกิดข้อผิดพลาด กรุณาติดต่อกับผู้พัฒนา</h1>;
+    if (queryLoading || allPromotionLoading || isFetching) return <Loading isFullscreen={false} />;
+    else if (queryError || allPromotionError) return <h1>เกิดข้อผิดพลาด กรุณาติดต่อกับผู้พัฒนา</h1>;
     else if (!productDetail) {
       return <h1>ขออภัย, ดูเหมือนเราจะไม่พบสินค้าทีคุณต้องการ</h1>;
     }
+
+    const { promotionByMany: allPromotion } = allPromotionData;
 
     return (
       <div className="mt-8">
@@ -291,6 +317,36 @@ const EditProductPage: FC = () => {
                     onChange={handleProductStockChange}
                     className="form-input rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
                   />
+                </div>
+                <div className="my-2">
+                  <label
+                    htmlFor="product_promotion"
+                    className="block text-md font-medium text-dark-200"
+                  >
+                    โปรโมชั่น
+                  </label>
+                  <select
+                    name="product_promotion"
+                    id="product_promotion"
+                    className="border-2 bg-dark-200 text-white rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
+                    onChange={handleChoosePromotion}
+                  >
+                    <option value="">เลือกโปรโมชั่นที่ต้องการ</option>
+                    {allPromotion.map((promotion: IPromotion) => (
+                      <option key={promotion._id} value={promotion._id}>
+                        {promotion.name}
+                      </option>
+                    ))}
+                  </select>
+                  {/* <input
+                    type="number"
+                    name="product_stock"
+                    id="product_stock"
+                    min={0}
+                    value={productDetail.stock}
+                    onChange={handleProductStockChange}
+                    className="form-input rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
+                  /> */}
                 </div>
                 <div className="my-2">
                   <label
