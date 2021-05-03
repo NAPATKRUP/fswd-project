@@ -1,11 +1,16 @@
-import { FC } from 'react';
-import { Link, Switch, Route, useRouteMatch } from 'react-router-dom';
+import { FC, useCallback } from 'react';
+import { Link, Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
 import CreateProductPage from './CreateProductPage';
 import EditProductPage from './EditProductPage';
 import ViewAllProductPage from './ViewAllProductPage';
 
 const ProductManagerPage: FC = () => {
   let { path, url } = useRouteMatch();
+  const history = useHistory();
+
+  const handleOnClick = useCallback(() => {
+    history.push('/admin/product/create');
+  }, [history]);
 
   return (
     <>
@@ -17,18 +22,18 @@ const ProductManagerPage: FC = () => {
               ดูสินค้าทั้งหมด
             </button>
           </Link>
-          <Link to={`${url}/create`}>
-            <button className="lg:text-base text-sm py-2 px-4 bg-gold-100 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75">
-              เพิ่มสินค้าใหม่
-            </button>
-          </Link>
+
+          <button
+            onClick={handleOnClick}
+            className="lg:text-base text-sm py-2 px-4 bg-gold-100 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
+          >
+            เพิ่มสินค้าใหม่
+          </button>
         </div>
       </div>
       <div className="w-100">
         <Switch>
-          <Route exact path={`${path}/create`} component={CreateProductPage} />
           <Route exact path={`${path}`} component={ViewAllProductPage} />
-          <Route path={`${path}/:productId`} component={EditProductPage} />
         </Switch>
       </div>
     </>

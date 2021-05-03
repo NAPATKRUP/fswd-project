@@ -20,7 +20,7 @@ const ViewAllOrderPage: FC = () => {
   const handleChangeToDetailPage = useCallback(
     async (e, orderId) => {
       e.preventDefault();
-      history.push({ pathname: '/admin/orders/' + orderId });
+      history.push({ pathname: '/admin/order/' + orderId });
     },
     [history]
   );

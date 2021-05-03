@@ -71,7 +71,7 @@ const Login: FC = () => {
         bodyMessage={bodyMessage}
         callBackFunction={handleModalCallBack}
       />
-      <div className="login-page flex justify-center items-center">
+      <div className="login-page bg-dark-100 flex justify-center items-center">
         <div className="login-box p-10">
           <form onSubmit={handleSubmit}>
             <p className="text-2xl">เข้าสู่ระบบ</p>
@@ -102,7 +102,7 @@ const Login: FC = () => {
             <div className="mt-16">
               <div className="flex justify-center items-center">
                 <div>
-                  <button className="text-blue-700 font-semibold bg-transparent hover:border-dark-200 hover:text-white py-2 px-4 border-2 border-gold-500 hover:border-transparent rounded">
+                  <button className="text-dark-100 font-semibold bg-transparent hover:border-dark-200 hover:text-dark-100 py-2 px-4 border-2 border-gold-500 hover:border-transparent rounded">
                     เข้าสู่ระบบ
                   </button>
                   <NavLink to="/" className="text-sm text-center mt-5 block text-blue-link">

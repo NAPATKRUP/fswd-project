@@ -99,12 +99,6 @@ export const SessionProvider: FC = ({ children }) => {
   }, [client, history, queryMe, removeCookie]);
 
   useEffect(() => {
-    if (location.pathname.includes('/admin') && user?.role === 'customer') {
-      history.push('no-permission');
-    }
-  }, [history, location, user?.role]);
-
-  useEffect(() => {
     if (data?.me) {
       setUser(data?.me);
     }
@@ -113,10 +107,8 @@ export const SessionProvider: FC = ({ children }) => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        await queryMe();
-      } catch (err) {
-        console.log(err);
-      }
+        queryMe();
+      } catch ({ message }) {}
     };
     loadData();
   }, [queryMe]);

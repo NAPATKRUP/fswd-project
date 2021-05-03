@@ -89,7 +89,7 @@ const UpdateOrderStatusPage: FC = () => {
         callBackFunction={handleCallBack}
       />
       <Navigator listOfNode={['จัดการ', '>>', 'จัดการออเดอร์', '>>', orderById._id]} />
-      <div className="lg:text-4xl text-3xl text-right text-dark-100 lg:mx-20 mx-10 mt-10">
+      <div className="lg:text-2xl text-xl text-right text-dark-100 lg:mx-20 mx-10 mt-10">
         <button onClick={() => orderRefetch()}>
           <RefreshIcon className="h-5 w-5" />
         </button>{' '}
@@ -97,14 +97,13 @@ const UpdateOrderStatusPage: FC = () => {
           onChange={handleChangeStatusOrder}
           name="orderStatus"
           className="border-2 border-dark-100 rounded-xl p-1"
+          defaultValue={orderById.orderStatus}
         >
           {['SUCCESS', 'SHIPPING', 'ARRIVED', 'CANCEL'].map((status) => {
-            return status === orderById.orderStatus ? (
-              <option value={status} selected>
+            return (
+              <option key={status} value={status}>
                 {status}
               </option>
-            ) : (
-              <option value={status}>{status}</option>
             );
           })}
         </select>

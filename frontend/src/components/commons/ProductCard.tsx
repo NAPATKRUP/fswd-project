@@ -86,7 +86,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }: ProductCardProps) => {
   );
 
   return (
-    <div className="hover:bg-white-200 mt-8 rounded-2xl">
+    <div className="mt-8 rounded-2xl">
       <Modal
         isOpen={isShowing}
         isHasAccept={false}
@@ -100,7 +100,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }: ProductCardProps) => {
           <div className="relative">
             <img
               src={product?.image}
-              className="w-full object-cover bg-center"
+              className="w-full object-scale-down h-60 bg-center"
               alt={product?.slug}
             />
             {product?.stock === 0 && (

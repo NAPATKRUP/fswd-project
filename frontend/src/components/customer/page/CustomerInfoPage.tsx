@@ -1,10 +1,12 @@
 import { useMutation } from '@apollo/client';
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { useSession } from '../../../context/SessionContext';
 import { UPDATE_USER_MUTATION } from '../../../graphql/updateUserMutation';
 import useModal from '../../../hooks/useModal';
 import Loading from '../../commons/loading/Loading';
 import Modal from '../../commons/Modal';
+
+import { UserIcon } from '@heroicons/react/outline';
 
 interface updateUserInput {
   displayName: string;
@@ -108,9 +110,11 @@ const CustomerInfo: FC = () => {
         bodyMessage={bodyMessage}
         callBackFunction={handleModalCallBack}
       />
-      <div className="mt-5">
-        <p>ข้อมูลของฉัน</p>
-        <p className="text-gold-200">จัดการข้อมูลส่วนตัวคุณเพื่อความปลอดภัยของบัญชีผู้ใช้นี้</p>
+      <div className="mt-8">
+        <h2 className="text-2xl mb-2">
+          <UserIcon className="h-6 w-6 inline-flex" /> ข้อมูลของฉัน
+        </h2>
+        <p className="text-dark-200">จัดการข้อมูลส่วนตัวคุณเพื่อความปลอดภัยของบัญชีผู้ใช้นี้</p>
 
         <form onSubmit={handleSubmitForm}>
           <div className="grid grid-cols-6 gap-6 my-3">
@@ -159,10 +163,10 @@ const CustomerInfo: FC = () => {
                 />
               </div>
 
-              <div className="flex gap-3 my-4">
+              <div className="flex gap-3 my-5">
                 <input
                   type="submit"
-                  className="py-2 px-4 bg-gold-200 text-white font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
+                  className="lg:text-base text-sm py-2 px-4 bg-gold-100 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-gold-300 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
                   value="ยืนยันการแก้ไขข้อมูลส่วนตัว"
                 />
               </div>

@@ -21,7 +21,6 @@ const OrderManagerPage: FC = () => {
       <div className="w-100">
         <Switch>
           <Route exact path={`${path}`} component={ViewAllOrderPage} />
-          <Route path={`${path}/:orderId`} component={UpdateOrderStatusPage} />
         </Switch>
       </div>
     </>

@@ -73,7 +73,7 @@ const Register: FC = () => {
   }, []);
 
   return (
-    <div className="register-page flex justify-center items-center">
+    <div className="register-page bg-dark-100 flex justify-center items-center">
       <Modal
         isOpen={isShowing}
         isHasAccept={false}
@@ -111,7 +111,7 @@ const Register: FC = () => {
             />
             <p className="text-right mt-5 text-sm">
               มีบัญชีแล้วเหรอ ?{' '}
-              <NavLink to="/register" className="text-blue-link">
+              <NavLink to="/login" className="text-blue-link">
                 เข้าสู่ระบบ
               </NavLink>
             </p>
@@ -119,7 +119,7 @@ const Register: FC = () => {
           <div className="mt-9">
             <div className="flex justify-center items-center">
               <div>
-                <button className="bg-transparent hover:border-dark-200 text-blue-700 font-semibold hover:text-white py-2 px-4 border-2  border-gold-500 hover:border-transparent rounded">
+                <button className="bg-transparent hover:border-dark-200 text-dark-100 font-semibold hover:text-dark-100 py-2 px-4 border-2  border-gold-500 hover:border-transparent rounded">
                   สมัครสมาชิก
                 </button>
                 <NavLink to="/" className="text-center text-sm mt-5 block text-blue-link">
