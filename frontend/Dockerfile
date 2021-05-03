@@ -3,8 +3,9 @@ FROM node:12-alpine as builder
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY yarn.lock ./
 
-RUN npm install
+RUN yarn install
 
 COPY . ./
 
