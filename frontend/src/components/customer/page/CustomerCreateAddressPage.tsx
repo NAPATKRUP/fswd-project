@@ -123,7 +123,7 @@ const CreateAddressPage = () => {
               <div className="flex gap-3 my-4">
                 <input
                   type="submit"
-                  className="lg:text-base text-sm py-2 px-4 bg-dark-100 text-white-100 font-semibold rounded-lg shadow-md hover:bg-dark-200 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
+                  className="cursor-pointer lg:text-base text-sm py-2 px-4 bg-dark-100 text-white-100 font-semibold rounded-lg shadow-md hover:bg-dark-200 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
                   value="เพิ่มที่อยู่"
                 />
               </div>

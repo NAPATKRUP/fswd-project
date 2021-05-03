@@ -159,7 +159,7 @@ const CustomerEditAddressPage = () => {
                 <input
                   type="submit"
                   className="lg:text-base text-sm py-2 px-4 bg-dark-500 text-dark-100 font-semibold rounded-lg shadow-md hover:bg-white-200 focus:outline-none focus:ring-2 focus:ring-gold-100 focus:ring-opacity-75"
-                  value="แก้ไข"
+                  value="ยืนยันแก้ไขที่อยู่"
                 />
               </div>
             </div>
