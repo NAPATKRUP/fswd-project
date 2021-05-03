@@ -1,0 +1,59 @@
+.react-pagination-js-default ul {
+  list-style: none;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  list-style: none;
+  font-size: 0.875em;
+  font-family: inherit;
+}
+
+li.page.disabled {
+  cursor: default;
+  pointer-events: none;
+  background: #eaeaea;
+  color: #111111;
+}
+
+.react-pagination-js-default .page {
+  display: inline-block;
+  padding: 0px 9px;
+  margin-right: 4px;
+  border-radius: 3px;
+  border: solid 1px #eaeaea;
+  background: #eaeaea;
+  font-weight: bold;
+  text-decoration: none;
+  color: #111111;
+  cursor: pointer;
+}
+.react-pagination-js-default .is-active {
+  display: inline-block;
+  padding: 0px 9px;
+  margin-right: 4px;
+  border-radius: 3px;
+  border: solid 1px #eaeaea;
+  background: #111111;
+  font-weight: bold;
+  text-decoration: none;
+  color: #eaeaea;
+  cursor: pointer;
+}
+.react-pagination-js-default .pageElli {
+  display: inline-block;
+  padding: 0px 9px;
+  margin-right: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #111111;
+}
+
+.react-pagination-js-default .page:hover,
+.page.gradient:hover {
+  background: #cccccc;
+}
+
+.react-pagination-js-default .page.active {
+  border: none;
+  background: #cccccc;
+  color: #111111;
+}

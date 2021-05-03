@@ -1,0 +1,7 @@
+import { FC, lazy } from 'react';
+
+const ErrorStatusCard = lazy(() => import('../components/ErrorStatusCard'));
+
+const NotPermissionPage: FC = () => <ErrorStatusCard title="คุณไม่มีสิทธิในการเข้าใช้งานส่วนนี้" />;
+
+export default NotPermissionPage;

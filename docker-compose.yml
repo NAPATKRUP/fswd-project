@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  backend:
+    container_name: "perfume-house-backend"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - 3500:3000
+      - 3501:3001
+    networks:
+      - perfume-house-network
+  frontend:
+    container_name: "perfume-house-frontend"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - .:/frontend
+    env_file:
+      - ./frontend/.env
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=4096"
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - perfume-house-network
+networks:
+  perfume-house-network:
+    name: perfume-house-internal
