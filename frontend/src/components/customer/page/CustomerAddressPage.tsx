@@ -26,9 +26,7 @@ const CustomerAddress: FC = () => {
   const { isShowing, toggle } = useModal(false);
 
   const [removeAddress] = useMutation(REMOVE_ADDRESS_BY_ID_MUTATION);
-  const { loading, data, error, refetch } = useQuery<userAddressPayload>(
-    ADDRESS_BY_USERCONTEXT_QUERY
-  );
+  const { data, refetch } = useQuery<userAddressPayload>(ADDRESS_BY_USERCONTEXT_QUERY);
 
   useEffect(() => {
     refetch();
@@ -60,21 +58,9 @@ const CustomerAddress: FC = () => {
     [handleModalMessage, refetch, removeAddress]
   );
 
-  if (loading) return <Loading />;
-
-  if (error) return <p>Error ...</p>;
-
   const renderAddress = (address) => {
     return (
       <div className="mt-2 flex justify-between" key={address._id}>
-        <Modal
-          isOpen={isShowing}
-          isHasAccept={false}
-          isHasDecline={false}
-          title={title}
-          bodyMessage={bodyMessage}
-          callBackFunction={handleModalCallBack}
-        />
         <div>
           <p className="lg:text-sm text-xs">{address?.name}</p>
           <p className="lg:text-sm text-xs">{address?.addressDetail}</p>
@@ -98,6 +84,14 @@ const CustomerAddress: FC = () => {
 
   return (
     <div className="mt-5">
+      <Modal
+        isOpen={isShowing}
+        isHasAccept={false}
+        isHasDecline={false}
+        title={title}
+        bodyMessage={bodyMessage}
+        callBackFunction={handleModalCallBack}
+      />
       <div className="flex justify-between">
         <h2 className="text-2xl mb-2">
           <HomeIcon className="h-6 w-6 inline-flex" /> ที่อยู่ของฉัน
