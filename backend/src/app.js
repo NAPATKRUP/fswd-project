@@ -59,18 +59,18 @@ aws.config.update({
 });
 const s3 = new aws.S3();
 
-var upload = multer({
+const upload = multer({
   storage: multerS3({
-    s3: s3,
+    s3,
     bucket: 'perfume-house-bucket',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
-    key: function (req, file, cb) {
+    key(req, file, cb) {
       cb(null, `${Date.now()}-${Math.floor(Math.random() * 1000000)}-${file.originalname}`);
     },
   }),
   fileFilter: (req, file, cb) => {
-    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|webp)$/)) {
       req.fileValidationError = 'Only image files are allowed!';
       return cb(null, false);
     }
@@ -78,8 +78,8 @@ var upload = multer({
   },
 });
 
-//use by upload form
-app.post('/upload', upload.single('image'), function (req, res, next) {
+// use by upload form
+app.post('/upload', upload.single('image'), (req, res, next) => {
   if (req.fileValidationError) res.status(400).send({ error: req.fileValidationError });
   else res.send({ name: req.file.key, location: req.file.location });
 });

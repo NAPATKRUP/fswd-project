@@ -33,7 +33,7 @@ const AdminPromotionBox: FC<AdminPromotionBoxProps> = ({ item }: AdminPromotionB
       case 'Giveaway':
         return (
           <h3>
-            ซื้อครบ {promotion.amount} แถม {promotion.condition}
+            ซื้อครบ {promotion.condition} แถม {promotion.amount}
           </h3>
         );
       case 'SaleFlat':

@@ -142,7 +142,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }: ProductCardProps) => {
               {product?.promotion.type === 'SaleFlat' && (
                 <p className="text-center text-white-100">ลด {product.promotion.discount} บาท</p>
               )}
-              {product?.promotion.type === 'SalePercente' && (
+              {product?.promotion.type === 'SalePercent' && (
                 <p className="text-center text-white-100">ลด {product.promotion.discount} %</p>
               )}
             </div>

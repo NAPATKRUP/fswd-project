@@ -330,8 +330,8 @@ const EditProductPage: FC = () => {
                     id="product_promotion"
                     className="border-2 bg-dark-200 text-white rounded-md mt-1 px-2 py-2 w-full lg:w-3/4 shadow-sm sm:text-sm"
                     onChange={handleChoosePromotion}
-                    defaultValue={productDetail.promotionId}
                   >
+                    <option value=""></option>
                     {allPromotion.map((promotion: IPromotion) => (
                       <option key={promotion._id} value={promotion._id}>
                         {promotion.name}
