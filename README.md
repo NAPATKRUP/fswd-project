@@ -1,11 +1,15 @@
 ## Full-stack Web Developer Project
 - Front-end created by `ReactJS`
-- Back-end created by `NodeJs(Express, GraphQL)`
+- Back-end created by `NodeJs(Express, GraphQL, Mongoose)`
 - Database using by `MongoDB Atlas`
 - CSS using by `TailwaindCSS`
 
 # Perfume house
 It is an online store web application intended for selling perfumes.
+
+#### User for test
+- Admin username: **`super_admin`** password: **`admin123`** \
+- Customer you can register on website
 
 ## Project requirements
 ### 1. Implement Frontend from sitemap
