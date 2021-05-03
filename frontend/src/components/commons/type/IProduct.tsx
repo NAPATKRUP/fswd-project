@@ -9,6 +9,7 @@ export interface IProduct {
   price: number;
   image?: string;
   stock: number;
+  promotionId?: string;
   promotion?: IPromotion;
   createAt?: string;
   updateAt?: string;

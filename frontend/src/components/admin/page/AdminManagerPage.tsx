@@ -4,6 +4,7 @@ import { useSession } from '../../../context/SessionContext';
 import ContentWithSidebarLayout from '../../commons/layouts/ContentWithSidebarLayout';
 import ProductManagerPage from '../manageProduct/page/ProductManagerPage';
 import OrderManagerPage from '../manageOrder/page/OrderManagerPage';
+import PromotionManagerPage from '../managePromotion/page/PromotionManagerPage';
 import AdminDashboardPage from './AdminDashboardPage';
 import NotPermissionPage from '../../error/page/NotPermissionPage';
 import Loading from '../../commons/loading/Loading';
@@ -11,6 +12,7 @@ import NeedAuthenticationPage from '../../error/page/NeedAuthenticationPage';
 import CreateProductPage from '../manageProduct/page/CreateProductPage';
 import EditProductPage from '../manageProduct/page/EditProductPage';
 import UpdateOrderStatusPage from '../manageOrder/page/UpdateOrderStatusPage';
+import EditPromotionPage from '../managePromotion/page/EditPromotionPage';
 
 const AdminManagerPage: FC = () => {
   const { user, loading } = useSession();
@@ -30,14 +32,17 @@ const AdminManagerPage: FC = () => {
         <Route path={`${path}/product/:productId`}>
           <EditProductPage />
         </Route>
-        <Route path={`${path}/order/:orderId`}>
-          <UpdateOrderStatusPage />
-        </Route>
         <Route path={`${path}/orders`}>
           <OrderManagerPage />
         </Route>
         <Route path={`${path}/order/:orderId`}>
           <UpdateOrderStatusPage />
+        </Route>
+        <Route path={`${path}/promotions`}>
+          <PromotionManagerPage />
+        </Route>
+        <Route path={`${path}/promotion/:promotionId`}>
+          <EditPromotionPage />
         </Route>
         <Route exact path={path}>
           <AdminDashboardPage />
