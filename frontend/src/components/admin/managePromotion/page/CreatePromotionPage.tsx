@@ -149,21 +149,21 @@ const CreatePromotionPage: FC = () => {
       case 'Giveaway':
         createGiveawayPromotion({
           variables: {
-            ...promotionDetail,
+            ...promotion,
           },
         });
         break;
       case 'SaleFlat':
         createSaleFlatPromotion({
           variables: {
-            ...promotionDetail,
+            ...promotion,
           },
         });
         break;
       case 'SalePercent':
         createSalePercentPromotion({
           variables: {
-            ...promotionDetail,
+            ...promotion,
           },
         });
         break;
