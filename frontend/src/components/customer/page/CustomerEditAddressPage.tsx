@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import { useSession } from '../../../context/SessionContext';
 import { ADDRESS_BY_ID_QUERY } from '../../../graphql/addressByIdQuery';

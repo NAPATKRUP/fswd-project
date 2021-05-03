@@ -1,6 +1,6 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from 'react';
 import { REGISTER_MUTATION } from '../graphql/registerMutation';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { useCookies } from 'react-cookie';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { ME_QUERY } from '../graphql/meQuery';
@@ -57,7 +57,6 @@ export const SessionProvider: FC = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [, setCookie, removeCookie] = useCookies(['token']);
   const history = useHistory();
-  const location = useLocation();
   const [login] = useMutation<ILoginPayload, ILoginInput>(LOGIN_MUTATION);
   const [register] = useMutation<IRegisterPayload, IRegisterInput>(REGISTER_MUTATION);
   const [queryMe, { loading, data, client }] = useLazyQuery<IQueryMePayload>(ME_QUERY, {
@@ -93,7 +92,7 @@ export const SessionProvider: FC = ({ children }) => {
   const handleLogout = useCallback(async () => {
     removeCookie('token', { maxAge: 86400 });
     await client?.clearStore();
-    await queryMe();
+    queryMe();
     history.push('/');
     setUser(null);
   }, [client, history, queryMe, removeCookie]);

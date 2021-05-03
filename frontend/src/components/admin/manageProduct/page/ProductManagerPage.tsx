@@ -1,7 +1,5 @@
 import { FC, useCallback } from 'react';
 import { Link, Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
-import CreateProductPage from './CreateProductPage';
-import EditProductPage from './EditProductPage';
 import ViewAllProductPage from './ViewAllProductPage';
 
 const ProductManagerPage: FC = () => {

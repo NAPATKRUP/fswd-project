@@ -43,15 +43,15 @@ const EditPromotionPage: FC = () => {
       setIsFetching(false);
     },
   });
-  const [updateGiveawayPromotion, { error: giveawayError }] = useMutation<
+  const [updateGiveawayPromotion] = useMutation<
     { updateGiveawayPromotion: PromotionType },
     UpdatePromotionType
   >(UPDATE_GIVEAWAY_PROMOTION_BY_ID_MUTATION);
-  const [updateSaleFlatPromotion, { error: saleFlatError }] = useMutation<
+  const [updateSaleFlatPromotion] = useMutation<
     { updateSaleFlatPromotion: PromotionType },
     UpdatePromotionType
   >(UPDATE_SALEFLAT_PROMOTION_BY_ID_MUTATION);
-  const [updateSalePercentPromotion, { error: salePercentError }] = useMutation<
+  const [updateSalePercentPromotion] = useMutation<
     { updateSalePercentPromotion: PromotionType },
     UpdatePromotionType
   >(UPDATE_SALEPERCENT_PROMOTION_BY_ID_MUTATION);
