@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { ADDRESS_BY_USERCONTEXT_QUERY } from '../../../graphql/addressByUserContextQuery';
-import Loading from '../../commons/loading/Loading';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { REMOVE_ADDRESS_BY_ID_MUTATION } from '../../../graphql/removeAddressByIdMutation';
 import useModal from '../../../hooks/useModal';

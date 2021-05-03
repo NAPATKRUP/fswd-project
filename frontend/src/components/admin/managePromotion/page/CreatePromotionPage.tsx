@@ -1,4 +1,4 @@
-import { FC, lazy, useState, useEffect } from 'react';
+import { FC, lazy, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CreatePromotionType, PromotionType } from '../../../commons/type/IPromotion';
@@ -16,15 +16,15 @@ const Navigator = lazy(() => import('../../../commons/Navigator'));
 const CreatePromotionPage: FC = () => {
   const [promotionDetail, setPromotionDetail] = useState<CreatePromotionType>({});
   const [imageFile, setImageFile] = useState<File>();
-  const [createGiveawayPromotion, { error: giveawayError }] = useMutation<
+  const [createGiveawayPromotion] = useMutation<
     { createGiveawayPromotion: PromotionType },
     CreatePromotionType
   >(CREATE_GIVEAWAY_PROMOTION_MUTATION);
-  const [createSaleFlatPromotion, { error: saleFlatError }] = useMutation<
+  const [createSaleFlatPromotion] = useMutation<
     { createSaleFlatPromotion: PromotionType },
     CreatePromotionType
   >(CREATE_SALEFLAT_PROMOTION_MUTATION);
-  const [createSalePercentPromotion, { error: salePercentError }] = useMutation<
+  const [createSalePercentPromotion] = useMutation<
     { createSalePercentPromotion: PromotionType },
     CreatePromotionType
   >(CREATE_SALEPERCENT_PROMOTION_MUTATION);

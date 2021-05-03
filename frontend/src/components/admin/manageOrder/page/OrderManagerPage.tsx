@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Link, Switch, Route, useRouteMatch } from 'react-router-dom';
 import ViewAllOrderPage from './ViewAllOrderPage';
-import UpdateOrderStatusPage from './UpdateOrderStatusPage';
 
 const OrderManagerPage: FC = () => {
   let { path, url } = useRouteMatch();

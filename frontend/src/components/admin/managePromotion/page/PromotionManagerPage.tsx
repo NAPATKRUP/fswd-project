@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Link, Switch, Route, useRouteMatch } from 'react-router-dom';
 import CreatePromotionPage from './CreatePromotionPage';
-import EditPromotionPage from './EditPromotionPage';
 import ViewAllPromotionPage from './ViewAllPromotionPage';
 
 const PromotionManagerPage: FC = () => {
